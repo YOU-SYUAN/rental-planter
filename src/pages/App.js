@@ -10,6 +10,7 @@ import card1 from "../assets/card1.png";
 import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
 import card4 from "../assets/card4.png";
+
 function App() {
   const imgPaths = [card1, card2, card3, card4];
   return (
@@ -20,7 +21,8 @@ function App() {
         class="w-full 
         h-[720px]
         tablet:h-[432px]
-        phone:h-[360px]"
+        phone:h-[360px]
+        "
         style={{ backgroundImage: `url(${background})` }}
       >
         <Grid container direction="row" spacing={2}>
@@ -47,10 +49,10 @@ function App() {
       </div>
       <Intro></Intro>
       <State></State>
-      <h1 class=" text-center pt-20 font-extrabold text-[44px] tablet:text-[20px] phone:text-[18px] tablet:pt-0">
+      <h1 class=" text-center pt-20 font-extrabold text-[44px] tablet:text-[20px] phone:text-[18px] tablet:pt-0 phone:pt-10">
         會員植物
       </h1>
-      <div class="flex flex-wrap flex-row justify-center mt-[60px] mb-20 tablet:mb-10 text-center tablet:ml-10 tablet:mt-0 tablet:mb-10">
+      <div class="flex flex-wrap flex-row justify-center mt-[60px] mb-20 tablet:mb-10 text-center tablet:ml-10 tablet:mt-0 phone:mt-5 phone:mb-10 phone:ml-[35.5px]">
         {imgPaths.map((item) => (
           <Showplant key={item} path={item}></Showplant>
         ))}
