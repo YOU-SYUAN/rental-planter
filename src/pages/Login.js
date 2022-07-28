@@ -1,4 +1,5 @@
 import "./App.css";
+import Background from "../assets/homeIMG.png";
 import Button from "@mui/material/Button";
 import { Grid } from "@mui/material";
 import { borderRadius, margin } from "@mui/system";
@@ -6,28 +7,37 @@ function App() {
   return (
     <div className="App">
       {/* style={{ backgroundImage: `url(${Background})` }} */}
-      <div class="relative">
-        <img
+      <div
+        class="relative bg-cover bg-center"
+        style={{ backgroundImage: `url(${Background})`, height: "100vh" }}
+      >
+        {/* <img
           src={require("../assets/homeIMG.png")}
-          class="object-cover h-[1280px] absolute"
-        />
+          class="object-cover h-[1280px] absolute overflow-hidden"
+        /> */}
         <div class="top-[100px] w-full fixed h-[93px]"></div>
-        <p class="mt-[99.5px] w-full text-center fixed text-[44px] text-white font-['Nova_Flat'] md:text-[64px] md:mt-[188px] lg:text-[120px] lg:mt-[100px]">
+        {/* <p class="mt-[99.5px] w-full text-center fixed text-[44px] text-white font-['Nova_Flat'] md:text-[80px] md:mt-[188px] lg:text-[120px] lg:mt-[100px]">
           Rental Planter
         </p>
         <p class="mt-[176.5px] text-center fixed text-[16px] w-full text-white tracking-[.40em] md:text-[20px] md:mt-[309px] lg:text-[36px] lg:mt-[243px]">
           用心照顧你的植物
-        </p>
+        </p> */}
 
         <div
           id="authentication-modal"
           tabindex="-1"
-          class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center flex"
+          class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-full md:h-full justify-center flex content-start"
           aria-modal="true"
           role="dialog"
         >
-          <div class="relative p-4 w-full max-w-md h-full md:h-auto">
-            <div class="relative bg-white rounded-lg mt-[240px] md:mt=[400px] lg:mt-[393px] shadow dark:bg-gray-700 py-12">
+          <div class="relative p-4 w-full max-w-lg h-full md:h-auto">
+            <p class="text-center text-[44px] text-white font-['Nova_Flat'] md:text-[80px] lg:text-[120px] ">
+              Rental Planter
+            </p>
+            <p class="text-center text-[16px mt-[24px] text-white tracking-[.40em] md:text-[20px] lg:text-[36px]">
+              用心照顧你的植物
+            </p>
+            <div class="relative bg-white rounded-lg mt-[64px] shadow dark:bg-gray-700 py-12">
               <p class="text-[24px] text-center font-semibold">Monospace VIP</p>
               <div class="relative mt-[48px]">
                 {/* <button
