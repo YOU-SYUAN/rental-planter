@@ -11,6 +11,7 @@ import card1 from "../assets/card1.png";
 import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
 import card4 from "../assets/card4.png";
+import RentForm from "../components/RentForm";
 
 function App() {
   const show = () => {
@@ -29,6 +30,7 @@ function App() {
   return (
     <div className="App">
       {/* <Navbar></Navbar> */}
+      {/* <div class="h-16 fixed bg-white flex flex-row flex-wrap justify-between items-center tablet:mx-9 phone:mx-4"> */}
       <nav class=" tablet:h-[69.71px] phone:h-[70px]">
         <div class=" mx-[140px] my-6 flex flex-row flex-wrap justify-between items-center tablet:mx-9 phone:mx-4">
           <img
@@ -68,8 +70,8 @@ function App() {
           >
             <ul class="space-y-2">
               <li>
-                <a
-                  href="#"
+                <button
+                  onClick={() => scrollToAnchor("introduce")}
                   class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   <svg
@@ -83,10 +85,13 @@ function App() {
                     <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                   </svg>
                   <span class="ml-3">系統介紹</span>
-                </a>
+                </button>
               </li>
               <li>
-                <a class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                <a
+                  onClick={() => scrollToAnchor("state")}
+                  class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
                   <svg
                     aria-hidden="true"
                     class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -104,8 +109,8 @@ function App() {
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
+                <button
+                  onClick={() => scrollToAnchor("showPlant")}
                   class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   <svg
@@ -122,10 +127,10 @@ function App() {
                     ></path>
                   </svg>
                   <span class="flex-1 ml-3 whitespace-nowrap">會員植物</span>
-                </a>
+                </button>
               </li>
               <li>
-                <a
+                <button
                   href="#"
                   class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
@@ -143,21 +148,21 @@ function App() {
                     ></path>
                   </svg>
                   <span class="flex-1 ml-3 whitespace-nowrap">登出</span>
-                </a>
+                </button>
               </li>
             </ul>
           </div>
 
           <div class="flex items-center text-[20px] tablet:text-[16px] phone:hidden">
-            <a onClick={() => scrollToAnchor("introduce")} class="mr-8  ">
+            <button onClick={() => scrollToAnchor("introduce")} class="mr-8  ">
               系統介紹
-            </a>
-            <a onClick={() => scrollToAnchor("state")} class="mr-8">
+            </button>
+            <button onClick={() => scrollToAnchor("state")} class="mr-8">
               盆栽狀態
-            </a>
-            <a onClick={() => scrollToAnchor("showPlant")} class="">
+            </button>
+            <button onClick={() => scrollToAnchor("showPlant")} class="">
               會員植物
-            </a>
+            </button>
           </div>
           {/* rounded-lg -> 8px */}
           <button class="bg-[#519E75] text-white w-20 h-9 rounded-lg phone:hidden">
@@ -165,6 +170,7 @@ function App() {
           </button>
         </div>
       </nav>
+      {/* </div> */}
       {/* 區塊2 */}
       <div
         class="w-full 
@@ -214,6 +220,9 @@ function App() {
         ))}
       </div>
       <RentalSticker></RentalSticker>
+      {/* <div class="flex justify-center">
+        <RentForm></RentForm>
+      </div> */}
     </div>
   );
 }
