@@ -30,14 +30,17 @@ function App() {
           aria-modal="true"
           role="dialog"
         >
-          <div class="relative p-4 w-full max-w-lg h-full md:h-auto">
-            <p class="text-center text-[44px] text-white font-['Nova_Flat'] md:text-[80px] lg:text-[120px] ">
-              Rental Planter
-            </p>
-            <p class="text-center text-[16px mt-[24px] text-white tracking-[.40em] md:text-[20px] lg:text-[36px]">
-              用心照顧你的植物
-            </p>
-            <div class="relative bg-white rounded-lg mt-[64px] shadow dark:bg-gray-700 py-12">
+          <div class="relative p-4 w-fit h-full md:h-auto">
+            <div class="w-full">
+              <p class="text-center text-[44px] text-white font-['Nova_Flat'] md:text-[80px] lg:text-[120px] ">
+                Rental Planter
+              </p>
+              <p class="text-center text-[16px mt-[24px] text-white tracking-[.40em] md:text-[20px] lg:text-[36px]">
+                用心照顧你的植物
+              </p>
+            </div>
+
+            <div class="relative bg-white m-auto max-w-lg rounded-lg mt-[64px] shadow dark:bg-gray-700 py-12">
               <p class="text-[24px] text-center font-semibold">Monospace VIP</p>
               <div class="relative mt-[48px]">
                 {/* <button
