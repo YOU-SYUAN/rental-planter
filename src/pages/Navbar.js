@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import logo from "../assets/logo.png";
+import App from "./App";
 function Navbar() {
   const show = () => {
     const sidebar = document.getElementById("sidebar");
     sidebar.style.display = sidebar.style.display == "none" ? "block" : "none";
   };
+
   return (
-    <nav class="px-[140px] py-6 bg-white h-24">
-      <div class=" flex flex-row flex-wrap justify-between items-center tablet:mx-9 phone:mx-4">
+    <nav class=" tablet:h-[69.71px] phone:h-[70px]">
+      <div class=" mx-[140px] my-6 flex flex-row flex-wrap justify-between items-center tablet:mx-9 phone:mx-4">
         <img
           src={logo}
           class="mr-3 h-6 tablet:w-[74px] tablet:h-[45.71px] phone:w-12 phone:h-[34.29px]"
@@ -63,10 +65,7 @@ function Navbar() {
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
+              <a class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                 <svg
                   aria-hidden="true"
                   class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -129,9 +128,7 @@ function Navbar() {
         </div>
 
         <div class="flex items-center text-[20px] tablet:text-[16px] phone:hidden">
-          <a href="" class="mr-8 ">
-            系統介紹
-          </a>
+          <a class="mr-8 ">系統介紹</a>
           <a class="mr-8 ">盆栽狀態</a>
           <a href="" class="">
             會員植物
@@ -141,15 +138,9 @@ function Navbar() {
         <button class="bg-[#519E75] text-white w-20 h-9 rounded-lg phone:hidden">
           租借盆器
         </button>
-        {/* <button
-          data-collapse-toggle="navbar-default"
-          type="button"
-          class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-          aria-controls="navbar-default"
-          aria-expanded="false"
-        ></button> */}
       </div>
     </nav>
   );
 }
+
 export default Navbar;
