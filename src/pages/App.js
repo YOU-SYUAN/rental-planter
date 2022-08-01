@@ -11,13 +11,54 @@ import card1 from "../assets/card1.png";
 import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
 import card4 from "../assets/card4.png";
-import RentForm from "../components/RentForm";
+import React, { useState, useEffect } from "react";
+import webSocket from "socket.io-client";
+import {
+  Routes,
+  Route,
+  Link,
+  Outlet,
+  useParams,
+  useNavigate,
+} from "react-router-dom";
 
 function App() {
+  // websocket
+  const [realtimeData, setRealtimeData] = useState({ temp: 0, humid: 0 });
+  const [ws, setWs] = useState(null);
+  useEffect(() => {
+    if (ws) {
+      console.log("success connect!");
+      initWebSocket();
+    }
+  }, [ws]);
+
+  const initWebSocket = () => {
+    ws.on("update", (data) => {
+      setRealtimeData(data);
+      console.log(data);
+
+      // setChat((preArray) => {
+      //   return [...preArray, data];
+      // });
+    });
+  };
+  useEffect(() => {
+    console.log(window.location.hostname);
+    setWs(
+      webSocket(`http://${window.location.hostname}`, {
+        transports: ["websocket"],
+      })
+    );
+  }, []);
+
+  // 顯示sidebar
   const show = () => {
     const sidebar = document.getElementById("sidebar");
     sidebar.style.display = sidebar.style.display == "none" ? "block" : "none";
   };
+
+  //錨點設定
   const scrollToAnchor = (anchorName) => {
     if (anchorName) {
       let anchorElement = document.getElementById(anchorName);
@@ -26,6 +67,12 @@ function App() {
       }
     }
   };
+  let navigate = useNavigate();
+  const logout = () => {
+    console.log("logout");
+    navigate("/");
+  };
+
   const imgPaths = [card1, card2, card3, card4];
   return (
     <div className="App">
@@ -111,7 +158,7 @@ function App() {
               <li>
                 <button
                   onClick={() => scrollToAnchor("showPlant")}
-                  class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 "
                 >
                   <svg
                     aria-hidden="true"
@@ -126,7 +173,7 @@ function App() {
                       clip-rule="evenodd"
                     ></path>
                   </svg>
-                  <span class="flex-1 ml-3 whitespace-nowrap">會員植物</span>
+                  <span class="flex-1 ml-3 whitespace-nowrap ">會員植物</span>
                 </button>
               </li>
               <li>
@@ -165,7 +212,10 @@ function App() {
             </button>
           </div>
           {/* rounded-lg -> 8px */}
-          <button class="bg-[#519E75] text-white w-20 h-9 rounded-lg phone:hidden">
+          <button
+            onClick={logout}
+            class="bg-[#519E75] text-white w-20 h-9 rounded-lg phone:hidden"
+          >
             登出
           </button>
         </div>

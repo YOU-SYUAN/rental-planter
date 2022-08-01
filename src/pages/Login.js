@@ -1,9 +1,38 @@
 import "./App.css";
+import React from "react";
 import Background from "../assets/homeIMG.png";
-import Button from "@mui/material/Button";
-import { Grid } from "@mui/material";
-import { borderRadius, margin } from "@mui/system";
+import axios from "axios";
+import {
+  Routes,
+  Route,
+  Link,
+  Outlet,
+  useParams,
+  useNavigate,
+} from "react-router-dom";
 function App() {
+  let navigate = useNavigate();
+
+  function log() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    // let body = {
+    //   account: email,
+    //   password: password,
+    // };
+    axios
+      .post("http://192.168.168.83:3000/api/auth", {
+        account: email,
+        password: password,
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.status == 200) {
+          navigate("./mainPage");
+        }
+      })
+      .catch((error) => console.log(error));
+  }
   return (
     <div className="App">
       {/* style={{ backgroundImage: `url(${Background})` }} */}
@@ -30,12 +59,12 @@ function App() {
           aria-modal="true"
           role="dialog"
         >
-          <div class="relative p-4 w-fit h-full md:h-auto">
+          <div class="relative p-4 w-fit h-full tablet:h-auto">
             <div class="w-full">
-              <p class="text-center text-[44px] text-white font-['Nova_Flat'] md:text-[80px] lg:text-[120px] ">
+              <p class="text-center text-[44px] text-white font-['Nova_Flat'] tablet:text-[80px] desktop:text-[120px] ">
                 Rental Planter
               </p>
-              <p class="text-center text-[16px mt-[24px] text-white tracking-[.40em] md:text-[20px] lg:text-[36px]">
+              <p class="text-center text-[16px] mt-[24px] text-white tracking-[.40em] tablet:text-[20px] desktop:text-[36px]">
                 用心照顧你的植物
               </p>
             </div>
@@ -63,7 +92,7 @@ function App() {
                 </svg>
                 <span class="sr-only">Close modal</span>
               </button> */}
-                <div class="py-6 px-6 lg:px-8">
+                <div class="py-6 px-6 desktop:px-8">
                   <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
                     登入會員植物管理系統
                   </h3>
@@ -126,7 +155,8 @@ function App() {
                     </a>
                   </div> */}
                     <button
-                      type="submit"
+                      onClick={log}
+                      type="button"
                       class="w-full text-white bg-[#519E75] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                       Login to your account
