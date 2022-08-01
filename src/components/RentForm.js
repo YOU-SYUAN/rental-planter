@@ -1,6 +1,6 @@
 function RentForm() {
   return (
-    <div class="flex justify-center mt-[10rem]">
+    <div class="flex justify-center mt-[5rem]">
       <div class="w-[1280px] h-[720px] border-4 border-[#CACACA] rounded-3xl tablet:w-[416px] tablet:h-[795px]">
         <h1 class="text-center text-[32px] font-semibold pt-12 tablet:pt-[20px] tablet:text-[20px]">
           租借表單

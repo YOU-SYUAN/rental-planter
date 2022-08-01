@@ -23,35 +23,6 @@ import {
 } from "react-router-dom";
 
 function App() {
-  // websocket
-  const [realtimeData, setRealtimeData] = useState({ temp: 0, humid: 0 });
-  const [ws, setWs] = useState(null);
-  useEffect(() => {
-    if (ws) {
-      console.log("success connect!");
-      initWebSocket();
-    }
-  }, [ws]);
-
-  const initWebSocket = () => {
-    ws.on("update", (data) => {
-      setRealtimeData(data);
-      console.log(data);
-
-      // setChat((preArray) => {
-      //   return [...preArray, data];
-      // });
-    });
-  };
-  useEffect(() => {
-    console.log(window.location.hostname);
-    setWs(
-      webSocket(`http://${window.location.hostname}`, {
-        transports: ["websocket"],
-      })
-    );
-  }, []);
-
   // 顯示sidebar
   const show = () => {
     const sidebar = document.getElementById("sidebar");
