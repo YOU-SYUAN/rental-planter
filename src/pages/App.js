@@ -17,7 +17,7 @@ import axios from "axios";
 function App() {
   console.log(localStorage.getItem("token"));
   //get user info
-  axios.get("http://192.168.168.83:3000/api/auth", {
+  axios.get("http://192.168.168.83:3000/api/user", {
     headers: { "Auth-Method": "JWT", Auth: localStorage.getItem("token") },
   });
   // 顯示sidebar
@@ -162,7 +162,9 @@ function App() {
                       clip-rule="evenodd"
                     ></path>
                   </svg>
-                  <span class="flex-1 ml-3 whitespace-nowrap">登出</span>
+                  <span onClick={logout} class="flex-1 ml-3 whitespace-nowrap">
+                    登出
+                  </span>
                 </button>
               </li>
             </ul>
@@ -214,8 +216,8 @@ function App() {
             <div class="text-[20px] text-white tablet:text-[16px] phone:text-[12px]">
               用心愛護你的植物
             </div>
-            <Button class="bg-[#519E75] rounded-lg mt-4 w-[136px] h-[60px] tablet:w-[96px] tablet:h-[48px] text-white phone:w-[88px] phone:h-[48px] phone:text-[12px]">
-              立即預約
+            <Button class="bg-[#519E75] rounded-lg mt-4 w-[136px] h-[60px] tablet:w-[96px] tablet:h-[48px] text-white phone:w-[72px] phone:h-9 phone:text-[12px]">
+              立即登記
             </Button>
           </Grid>
         </Grid>

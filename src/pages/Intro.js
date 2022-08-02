@@ -16,14 +16,14 @@ function Intro() {
         <Typography class="font-extrabold text-[44px] tablet:text-[20px] tablet:mt-2 phone:text-[18px] phone:flex phone:justify-center phone:mt-2">
           盆器租借系統
         </Typography>
-        <ul class="list-disc leading-10 text-[20px] tablet:text-[14px] p-6 tablet:leading-7 tablet:mt-5 phone:text-[14px] phone:leading-5 phone:pl-[60px] phone:pt-[31px]">
+        <ul class="list-disc leading-10 text-gray-500  text-[20px] tablet:text-[14px] pt-6 pl-6 tablet:leading-7 tablet:mt-5 phone:text-[14px] phone:leading-5 phone:pl-[60px] phone:pt-[31px]">
           <li>土壤溼度感測</li>
           <li>光照強度感測</li>
           <li>光照開關控制</li>
           <li>預約盆器租借</li>
-          <li>租竊盆器遞補通知</li>
+          <li>租借盆器遞補通知</li>
         </ul>
-        <Typography class="mt-5 text-[20px] tablet:text-[14px] tablet:mt-6 phone:text-[14px] phone:w-[203px] phone:h-[63px] phone:pb-[31px] phone:mb-5">
+        <Typography class="mt-6 text-[20px] text-[#ADADAD] tablet:text-[14px] tablet:mt-6 phone:text-[14px] phone:w-[203px] phone:h-[63px] phone:pb-[31px] phone:mb-5">
           打造自動化系統，隨時檢測植物生長環境，讓你的植物安心生長。
         </Typography>
       </div>

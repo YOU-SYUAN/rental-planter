@@ -10,7 +10,7 @@ function Rent() {
         </div>
         <div class="text-center">
           <button class="bg-[#519E75] w-[136px] h-[60px] text-[24px] text-white rounded-lg mt-6 mb-24 tablet:mb-[45px] tablet:mt-[45px] tablet:w-[104px] tablet:h-[48px] tablet:text-[16px] phone:w-[88px] phone:h-[42px] phone:text-[18px]">
-            立即租借
+            立即登記
           </button>
         </div>
       </div>

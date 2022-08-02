@@ -18,7 +18,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Login />} />
-      <Route path="/mainPage" element={<App />} />
+      <Route path="/main" element={<App />} />
       <Route path="/rentForm" element={<RentForm />} />
       <Route path="*" element={<h1>404 Page Not Found</h1>} />
     </Routes>
