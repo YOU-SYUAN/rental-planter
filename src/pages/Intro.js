@@ -16,7 +16,7 @@ function Intro() {
         <Typography class="font-extrabold text-[44px] tablet:text-[20px] tablet:mt-2 phone:text-[18px] phone:flex phone:justify-center phone:mt-2">
           盆器租借系統
         </Typography>
-        <ul class="list-disc leading-10 text-[20px] tablet:text-[14px] tablet:leading-7 tablet:mt-5 phone:text-[14px] phone:leading-5 phone:pl-[60px] phone:pt-[31px]">
+        <ul class="list-disc leading-10 text-[20px] tablet:text-[14px] p-6 tablet:leading-7 tablet:mt-5 phone:text-[14px] phone:leading-5 phone:pl-[60px] phone:pt-[31px]">
           <li>土壤溼度感測</li>
           <li>光照強度感測</li>
           <li>光照開關控制</li>

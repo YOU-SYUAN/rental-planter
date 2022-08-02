@@ -12,7 +12,7 @@ function Navbar() {
       <div class=" mx-[140px] my-6 flex flex-row flex-wrap justify-between items-center tablet:mx-9 phone:mx-4">
         <img
           src={logo}
-          class="mr-3 h-6 tablet:w-[74px] tablet:h-[45.71px] phone:w-12 phone:h-[34.29px]"
+          class="mr-3 w-[74px] h-[45.71px] tablet:w-[74px] tablet:h-[45.71px] phone:w-12 phone:h-[34.29px]"
           alt="Logo"
         />
         <button

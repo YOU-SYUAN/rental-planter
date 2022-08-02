@@ -5,6 +5,7 @@ import App from "./pages/App.js";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login.js";
+import RentForm from "./components/RentForm";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 // root.render(
@@ -16,8 +17,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Login />} />
+      <Route path="/mainPage" element={<App />} />
+      <Route path="/rentForm" element={<RentForm />} />
       <Route path="*" element={<h1>404 Page Not Found</h1>} />
     </Routes>
   </BrowserRouter>

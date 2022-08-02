@@ -1,9 +1,47 @@
 import "./App.css";
 import Background from "../assets/homeIMG.png";
-import Button from "@mui/material/Button";
-import { Grid } from "@mui/material";
-import { borderRadius, margin } from "@mui/system";
-function App() {
+import axios from "axios";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+function LoginForm() {
+  let token = useRef(null);
+  let navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState("");
+  function Login() {
+    //let errorMsg = document.getElementById("errorMsg").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    axios
+      .post("http://192.168.168.83:3000/api/auth", {
+        account: email,
+        password: password,
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.status == 200) {
+          // token = <App token={response.data.token} />;
+          token = response.data.token;
+          setLocalToken();
+          console.log("login: " + token);
+          navigate("./mainPage");
+        }
+      })
+      .catch((error) => {
+        if (error.response.status == 401) {
+          console.log("狀態" + error.response.status);
+          setErrorMsg("帳號/密碼 錯誤，請再試一次");
+        } else if (error.response.status == 500) {
+          setErrorMsg("伺服器錯誤");
+        }
+        console.log(error);
+      });
+  }
+
+  //local storage 存token
+  const setLocalToken = (token) => {
+    localStorage.setItem("token", token);
+    console.log(token);
+  };
   return (
     <div className="App">
       {/* style={{ backgroundImage: `url(${Background})` }} */}
@@ -11,17 +49,7 @@ function App() {
         class="relative bg-cover bg-center"
         style={{ backgroundImage: `url(${Background})`, height: "100vh" }}
       >
-        {/* <img
-          src={require("../assets/homeIMG.png")}
-          class="object-cover h-[1280px] absolute overflow-hidden"
-        /> */}
         <div class="top-[100px] w-full fixed h-[93px]"></div>
-        {/* <p class="mt-[99.5px] w-full text-center fixed text-[44px] text-white font-['Nova_Flat'] md:text-[80px] md:mt-[188px] lg:text-[120px] lg:mt-[100px]">
-          Rental Planter
-        </p>
-        <p class="mt-[176.5px] text-center fixed text-[16px] w-full text-white tracking-[.40em] md:text-[20px] md:mt-[309px] lg:text-[36px] lg:mt-[243px]">
-          用心照顧你的植物
-        </p> */}
 
         <div
           id="authentication-modal"
@@ -30,12 +58,12 @@ function App() {
           aria-modal="true"
           role="dialog"
         >
-          <div class="relative p-4 w-fit h-full md:h-auto">
+          <div class="relative p-4 w-fit h-full tablet:h-auto">
             <div class="w-full">
-              <p class="text-center text-[44px] text-white font-['Nova_Flat'] md:text-[80px] lg:text-[120px] ">
+              <p class="text-center text-[44px] text-white font-['Nova_Flat'] tablet:text-[80px] desktop:text-[120px] ">
                 Rental Planter
               </p>
-              <p class="text-center text-[16px mt-[24px] text-white tracking-[.40em] md:text-[20px] lg:text-[36px]">
+              <p class="text-center text-[16px] mt-[24px] text-white tracking-[.40em] tablet:text-[20px] desktop:text-[36px]">
                 用心照顧你的植物
               </p>
             </div>
@@ -43,27 +71,7 @@ function App() {
             <div class="relative bg-white m-auto max-w-lg rounded-lg mt-[64px] shadow dark:bg-gray-700 py-12">
               <p class="text-[24px] text-center font-semibold">Monospace VIP</p>
               <div class="relative mt-[48px]">
-                {/* <button
-                type="button"
-                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                data-modal-toggle="authentication-modal"
-              >
-                <svg
-                  aria-hidden="true"
-                  class="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                <span class="sr-only">Close modal</span>
-              </button> */}
-                <div class="py-6 px-6 lg:px-8">
+                <div class="py-6 px-6 desktop:px-8">
                   <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
                     登入會員植物管理系統
                   </h3>
@@ -100,33 +108,12 @@ function App() {
                         required=""
                       />
                     </div>
-                    {/* <div class="flex justify-between">
-                    <div class="flex items-start">
-                      <div class="flex items-center h-5">
-                        <input
-                          id="remember"
-                          type="checkbox"
-                          value=""
-                          class="w-4 h-4 bg-gray-50 rounded border border-gray-300 focus:ring-3 focus:ring-blue-300 dark:bg-gray-600 dark:border-gray-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                          required=""
-                        />
-                      </div>
-                      <label
-                        for="remember"
-                        class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                      >
-                        Remember me
-                      </label>
+                    <div>
+                      <label class="text-[#FF0000] ">{errorMsg}</label>
                     </div>
-                    <a
-                      href="#"
-                      class="text-sm text-blue-700 hover:underline dark:text-blue-500"
-                    >
-                      Lost Password?
-                    </a>
-                  </div> */}
                     <button
-                      type="submit"
+                      onClick={Login}
+                      type="button"
                       class="w-full text-white bg-[#519E75] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                       Login to your account
@@ -151,4 +138,4 @@ function App() {
   );
 }
 
-export default App;
+export default LoginForm;

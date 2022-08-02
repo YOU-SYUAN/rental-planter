@@ -11,13 +11,22 @@ import card1 from "../assets/card1.png";
 import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
 import card4 from "../assets/card4.png";
-import RentForm from "../components/RentForm";
-
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 function App() {
+  console.log(localStorage.getItem("token"));
+  //get user info
+  axios.get("http://192.168.168.83:3000/api/auth", {
+    headers: { "Auth-Method": "JWT", Auth: localStorage.getItem("token") },
+  });
+  // 顯示sidebar
   const show = () => {
     const sidebar = document.getElementById("sidebar");
     sidebar.style.display = sidebar.style.display == "none" ? "block" : "none";
   };
+
+  //錨點設定
   const scrollToAnchor = (anchorName) => {
     if (anchorName) {
       let anchorElement = document.getElementById(anchorName);
@@ -26,9 +35,15 @@ function App() {
       }
     }
   };
+  let navigate = useNavigate();
+  const logout = () => {
+    console.log("logout");
+    navigate("/");
+  };
+  localStorage.getItem("key");
   const imgPaths = [card1, card2, card3, card4];
   return (
-    <div className="App">
+    <div>
       {/* <Navbar></Navbar> */}
       {/* <div class="h-16 fixed bg-white flex flex-row flex-wrap justify-between items-center tablet:mx-9 phone:mx-4"> */}
       <nav class=" tablet:h-[69.71px] phone:h-[70px]">
@@ -111,7 +126,7 @@ function App() {
               <li>
                 <button
                   onClick={() => scrollToAnchor("showPlant")}
-                  class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 "
                 >
                   <svg
                     aria-hidden="true"
@@ -126,7 +141,7 @@ function App() {
                       clip-rule="evenodd"
                     ></path>
                   </svg>
-                  <span class="flex-1 ml-3 whitespace-nowrap">會員植物</span>
+                  <span class="flex-1 ml-3 whitespace-nowrap ">會員植物</span>
                 </button>
               </li>
               <li>
@@ -165,7 +180,10 @@ function App() {
             </button>
           </div>
           {/* rounded-lg -> 8px */}
-          <button class="bg-[#519E75] text-white w-20 h-9 rounded-lg phone:hidden">
+          <button
+            onClick={logout}
+            class="bg-[#8B8B8B] text-white w-[56px] h-10 rounded-lg phone:hidden"
+          >
             登出
           </button>
         </div>
