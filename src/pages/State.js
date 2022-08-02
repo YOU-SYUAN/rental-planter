@@ -10,7 +10,6 @@ function State() {
   const [ws, setWs] = useState(null);
   useEffect(() => {
     if (ws) {
-      console.log("success connect!");
       initWebSocket();
     }
   }, [ws]);
