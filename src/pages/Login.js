@@ -20,10 +20,10 @@ function LoginForm() {
         console.log(response);
         if (response.status == 200) {
           // token = <App token={response.data.token} />;
-          token = response.data.token;
-          setLocalToken();
-          console.log("login: " + token);
-          navigate("./mainPage");
+          // token = ;
+          setLocalToken(response.data.token);
+          // console.log("login: " + token);
+          navigate("./main");
         }
       })
       .catch((error) => {
@@ -58,8 +58,8 @@ function LoginForm() {
           aria-modal="true"
           role="dialog"
         >
-          <div class="relative p-4 w-fit h-full tablet:h-auto">
-            <div class="w-full mt-[188px] phone:mt-[99.5px]">
+          <div class="relative p-4 w-fit h-full tablet:h-auto flex flex-col items-center justify-center">
+            <div class="w-full  phone:mt-[99.5px]">
               <p class="text-center text-[80px] text-white font-['Nova_Flat'] tablet:text-[80px] phone:text-[44px] ">
                 Rental Planter
               </p>
@@ -68,7 +68,7 @@ function LoginForm() {
               </p>
             </div>
 
-            <div class="relative w-[480px] h-[520px] bg-white m-auto max-w-lg rounded-lg mt-[64px] shadow dark:bg-gray-700 py-12 phone:w-[343px] phone:h-[387px]">
+            <div class="relative w-[480px] h-[520px] bg-white max-w-lg rounded-lg mt-[64px] shadow dark:bg-gray-700 py-12 phone:w-[343px] phone:h-[387px]">
               <p class="text-[32px] text-center font-semibold phone:text-[24px]">
                 Monospace VIP
               </p>

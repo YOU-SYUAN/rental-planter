@@ -1,8 +1,11 @@
 import "./App.css";
 import background from "../assets/work.png";
 import Intro from "./Intro";
+import plant2 from "../assets/plant2.png";
+import lightImg from "../assets/light.png";
 import State from "./State";
 import Navbar from "./Navbar";
+import humid from "../assets/humid.png";
 import logo from "../assets/logo.png";
 import { Grid, Button } from "@mui/material";
 import Showplant from "./Showplant";
@@ -12,14 +15,26 @@ import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
 import card4 from "../assets/card4.png";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { BrowserRouter, useNavigate } from "react-router-dom";
+import webSocket from "socket.io-client";
 import axios from "axios";
 function App() {
   console.log(localStorage.getItem("token"));
+  const url = window.location.href;
   //get user info
-  axios.get("http://192.168.168.83:3000/api/user", {
-    headers: { "Auth-Method": "JWT", Auth: localStorage.getItem("token") },
-  });
+  axios
+    .get("http://192.168.168.83:3000/api/user", {
+      headers: { "Auth-Method": "JWT", Auth: localStorage.getItem("token") },
+    })
+    .catch((error) => {
+      if (error.response.status == 401) {
+        console.log("狀態" + error.response.status);
+        window.location.replace("/");
+      }
+      console.log(error);
+    });
+  //socket.io.client
+
   // 顯示sidebar
   const show = () => {
     const sidebar = document.getElementById("sidebar");
@@ -36,9 +51,10 @@ function App() {
     }
   };
   let navigate = useNavigate();
-  const logout = () => {
+  const logout = (e) => {
+    localStorage.clear();
     console.log("logout");
-    navigate("/");
+    window.location.replace("/");
   };
   localStorage.getItem("key");
   const imgPaths = [card1, card2, card3, card4];
@@ -226,7 +242,7 @@ function App() {
         <Intro></Intro>
       </div>
       <div id="state">
-        <State></State>
+        <State path={url}></State>
       </div>
       <h1
         id="showPlant"
