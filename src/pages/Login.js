@@ -107,8 +107,15 @@ function LoginForm() {
                         required=""
                       />
                     </div>
-                    <div>
-                      <label class="text-[#FF0000] ">{errorMsg}</label>
+                    <div class="grid grid-col-2 grid-flow-col space-between">
+                      <div class="">
+                        <label class="text-[#FF0000] ">{errorMsg}</label>
+                      </div>
+                      <div class=" mt-6 grid justify-items-end">
+                        <a href="./resetPwd" class=" text-[#1C64F2] ">
+                          忘記密碼?
+                        </a>
+                      </div>
                     </div>
                     <button
                       onClick={Login}
@@ -117,16 +124,13 @@ function LoginForm() {
                     >
                       登入
                     </button>
-                    {/* <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
-                    Not registered?{" "}
-                    <a
-                      href="#"
-                      class="text-blue-700 hover:underline dark:text-blue-500"
-                    >
-                      Create account
-                    </a>
-                  </div> */}
                   </form>
+                  <div class="flex flex-rox mt-4">
+                    <label class="text-gray-500">尚未註冊?</label>
+                    <a href="./register" class="text-[#1C64F2]">
+                      註冊
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
