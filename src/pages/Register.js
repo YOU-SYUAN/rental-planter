@@ -1,6 +1,33 @@
 import background from "../assets/registerIMG.png";
 import plantIMG from "../assets/bg.png";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 function Register() {
+  const [errorMsg, setErrorMsg] = useState("");
+  let navigate = useNavigate();
+  function Confirm() {
+    const email = document.getElementById("email").value;
+
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/user/register`, {
+        email: email,
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.status == 200) {
+          navigate("./");
+        }
+      })
+      .catch((error) => {
+        if (error.response.status == 404) {
+          console.log("狀態" + error.response.message);
+          setErrorMsg("您還不是Monospace的會員!");
+        }
+        console.log(error);
+      });
+  }
+
   return (
     <div
       class="relative bg-cover flex justify-center items-center"
@@ -33,8 +60,10 @@ function Register() {
                 required
               />
             </div>
-
-            <div class="flex justify-center mt-[60px]">
+            <div class="flex flex-col justify-center mt-12">
+              <div>
+                <label class="text-[#FF0000] ">{errorMsg}</label>
+              </div>
               <button class="w-[386px] h-[42px] text-[20px] bg-[#519E75] text-white rounded-lg mr-12 ">
                 註冊
               </button>
