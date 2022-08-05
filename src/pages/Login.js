@@ -3,38 +3,54 @@ import Background from "../assets/homeIMG.png";
 import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { userLogin } from "../Api.js";
 function LoginForm() {
   let token = useRef(null);
   let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
-  function Login() {
+  async function Login() {
     //let errorMsg = document.getElementById("errorMsg").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/auth`, {
-        account: email,
-        password: password,
-      })
-      .then((response) => {
-        console.log(response);
-        if (response.status == 200) {
-          // token = <App token={response.data.token} />;
-          // token = ;
-          setLocalToken(response.data.token);
-          // console.log("login: " + token);
-          navigate("./main");
-        }
-      })
-      .catch((error) => {
-        if (error.response.status == 401) {
-          console.log("狀態" + error.response.status);
-          setErrorMsg("帳號/密碼 錯誤，請再試一次");
-        } else if (error.response.status == 500) {
-          setErrorMsg("伺服器錯誤");
-        }
-        console.log(error);
-      });
+    try {
+      const post1 = await userLogin({ email, password });
+      if (post1.status == 200) {
+        setLocalToken(post1.data.token);
+        navigate("./main");
+      }
+    } catch (error) {
+      if (error.status == 401) {
+        console.log("狀態" + error.status);
+        setErrorMsg("帳號/密碼 錯誤，請再試一次");
+      } else if (error.response.status == 500) {
+        setErrorMsg("伺服器錯誤");
+      }
+      console.log(error);
+    }
+    // axios
+    //   .post(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/auth`, {
+    //     account: email,
+    //     password: password,
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //     if (response.status == 200) {
+    //       // token = <App token={response.data.token} />;
+    //       // token = ;
+    //       setLocalToken(response.data.token);
+    //       // console.log("login: " + token);
+    //       navigate("./main");
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     if (error.response.status == 401) {
+    //       console.log("狀態" + error.response.status);
+    //       setErrorMsg("帳號/密碼 錯誤，請再試一次");
+    //     } else if (error.response.status == 500) {
+    //       setErrorMsg("伺服器錯誤");
+    //     }
+    //     console.log(error);
+    //   });
   }
 
   //local storage 存token
