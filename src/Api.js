@@ -6,5 +6,5 @@ const userRequest = axios.create({
 });
 
 const userLogin = (data) => userRequest.post("./api/user/login", data);
-
-export { userLogin };
+const userRegister = (data) => userRequest.post("./api/user/register", data);
+export { userLogin, userRegister };

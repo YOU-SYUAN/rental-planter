@@ -1,36 +1,31 @@
 import background from "../assets/registerIMG.png";
 import plantIMG from "../assets/bg.png";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import { userRegister } from "../Api";
 function Register() {
   const [errorMsg, setErrorMsg] = useState("");
   let navigate = useNavigate();
-  function Confirm() {
+  async function Confirm() {
     const email = document.getElementById("email").value;
-
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/user/register`, {
-        email: email,
-      })
-      .then((response) => {
-        console.log(response);
-        if (response.status == 200) {
-          alert("您已註冊成功!請檢查您的電子郵件!");
-          navigate("/");
-        }
-      })
-      .catch((error) => {
-        if (error.response.status == 404) {
-          console.log("狀態" + error.response.message);
-          setErrorMsg("您還不是Monospace的會員!");
-        } else if (error.response.status == 409) {
-          alert("您已是Monospace的會員!請登入帳號");
-          navigate("/");
-          // setErrorMsg("您已是Monospace的會員!請登入帳號");
-        }
-        console.log(error);
-      });
+    try {
+      const post1 = await userRegister({ email });
+      if (post1.status == 200) {
+        // setLocalToken(post1.data.token);
+        alert("您已註冊成功!請檢查您的電子郵件!");
+        navigate("/");
+      }
+    } catch (error) {
+      if (error.response.status == 404) {
+        console.log("狀態" + error.response.message);
+        setErrorMsg("您還不是Monospace的會員!");
+      } else if (error.response.status == 409) {
+        alert("您已是Monospace的會員!請登入帳號");
+        navigate("/");
+        // setErrorMsg("您已是Monospace的會員!請登入帳號");
+      }
+      console.log(error);
+    }
   }
 
   return (
