@@ -16,13 +16,18 @@ function Register() {
       .then((response) => {
         console.log(response);
         if (response.status == 200) {
-          navigate("./");
+          alert("您已註冊成功!請檢查您的電子郵件!");
+          navigate("/");
         }
       })
       .catch((error) => {
         if (error.response.status == 404) {
           console.log("狀態" + error.response.message);
           setErrorMsg("您還不是Monospace的會員!");
+        } else if (error.response.status == 409) {
+          alert("您已是Monospace的會員!請登入帳號");
+          navigate("/");
+          // setErrorMsg("您已是Monospace的會員!請登入帳號");
         }
         console.log(error);
       });
@@ -64,7 +69,10 @@ function Register() {
               <div>
                 <label class="text-[#FF0000] ">{errorMsg}</label>
               </div>
-              <button class="w-[386px] h-[42px] text-[20px] bg-[#519E75] text-white rounded-lg mr-12 ">
+              <button
+                onClick={Confirm}
+                class="w-[386px] h-[42px] text-[20px] bg-[#519E75] text-white rounded-lg mr-12 "
+              >
                 註冊
               </button>
             </div>
