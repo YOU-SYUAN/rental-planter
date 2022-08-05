@@ -1,13 +1,18 @@
 import { Typography } from "@mui/material";
 import plant2 from "../assets/plant2.png";
-import light from "../assets/light.png";
+import lightImg from "../assets/light.png";
 import humid from "../assets/humid.png";
 import React, { useState, useEffect } from "react";
 import webSocket from "socket.io-client";
-function State() {
+function State(props) {
+  console.log(props.path);
+  if (props.path != "http://localhost:3000/main") {
+    registerDisconnectHandler();
+  }
   // websocket
-  const [realtimeData, setRealtimeData] = useState({ soil_humi: 0 });
+  const [realtimeData, setRealtimeData] = useState({ soil_humi: 0, light: 0 });
   const [ws, setWs] = useState(null);
+
   useEffect(() => {
     if (ws) {
       initWebSocket();
@@ -22,12 +27,20 @@ function State() {
   };
   useEffect(() => {
     console.log(window.location.hostname);
+    console.log(window.location.href);
     setWs(
       webSocket(`http://192.168.168.182:3000`, {
         transports: ["websocket"],
       })
     );
   }, []);
+  function registerDisconnectHandler() {
+    console.log("即將斷線");
+    ws.on("disconnect", () => {
+      console.log("Disconnected");
+      ws.close();
+    });
+  }
 
   return (
     <div class="mt-[60px] justify-center tablet:pt-5 tablet:mt-0 phone:mt-4">
@@ -52,10 +65,10 @@ function State() {
                 </div>
               </div>
               <div class="flex flex-row">
-                <img src={light} class="w-12 h-12 mr-4 mt-4"></img>
+                <img src={lightImg} class="w-12 h-12 mr-4 mt-4"></img>
                 <div>
                   <h2 class="font-bold text-[48px] tablet:text-[24px] phone:text-[20px]">
-                    100
+                    {realtimeData.light} lx
                   </h2>
                   <h5 class="text-[20px] tablet:text-[14px] phone:text-[12px]">
                     光照強度
