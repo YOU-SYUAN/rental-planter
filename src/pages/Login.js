@@ -12,7 +12,7 @@ function LoginForm() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     axios
-      .post("http://192.168.168.83:3000/api/auth", {
+      .post(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/auth`, {
         account: email,
         password: password,
       })

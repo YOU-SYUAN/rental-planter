@@ -23,7 +23,7 @@ function App() {
   const url = window.location.href;
   //get user info
   axios
-    .get("http://192.168.168.83:3000/api/user", {
+    .get(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/user`, {
       headers: { "Auth-Method": "JWT", Auth: localStorage.getItem("token") },
     })
     .catch((error) => {

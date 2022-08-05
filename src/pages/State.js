@@ -29,9 +29,13 @@ function State(props) {
     console.log(window.location.hostname);
     console.log(window.location.href);
     setWs(
-      webSocket(`http://192.168.168.182:3000`, {
-        transports: ["websocket"],
-      })
+      webSocket(
+        process.env.REACT_APP_BACKEND_HOST ||
+          `http://${window.location.hostname}/`,
+        {
+          transports: ["websocket"],
+        }
+      )
     );
   }, []);
   function registerDisconnectHandler() {
