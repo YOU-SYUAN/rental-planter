@@ -16,7 +16,12 @@ function LoginForm() {
       const post1 = await userLogin({ email, password });
       if (post1.status == 200) {
         setLocalToken(post1.data.token);
-        navigate("./main");
+        console.log(post1.data.user.role);
+        if (post1.data.user.role == 0) {
+          navigate("./main");
+        } else {
+          navigate("./admin");
+        }
       }
     } catch (error) {
       if (error.status == 401) {

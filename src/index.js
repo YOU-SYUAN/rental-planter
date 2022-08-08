@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./pages/App.js";
+import Admin from "./pages/Admin";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login.js";
@@ -20,6 +21,7 @@ root.render(
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/main" element={<App />} />
+      <Route path="/admin" element={<Admin />} />
       <Route path="/rentForm" element={<RentForm />} />
       <Route path="/register" element={<Register />} />
       <Route path="/resetPwd" element={<ResetPwd />} />
