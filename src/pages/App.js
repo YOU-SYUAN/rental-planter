@@ -19,20 +19,33 @@ import { BrowserRouter, useNavigate } from "react-router-dom";
 import webSocket from "socket.io-client";
 import axios from "axios";
 function App() {
-  console.log(localStorage.getItem("token"));
   const url = window.location.href;
-  //get user info
-  axios
-    .get(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/user`, {
-      headers: { "Auth-Method": "JWT", Auth: localStorage.getItem("token") },
-    })
-    .catch((error) => {
-      if (error.response.status == 401) {
-        console.log("狀態" + error.response.status);
-        window.location.replace("/");
-      }
-      console.log(error);
-    });
+  const [user, setUser] = useState({
+    user: {
+      id: "",
+      name: "",
+      email: "",
+    },
+    rents: [],
+  });
+
+  useEffect(() => {
+    //get user info
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/user`, {
+        headers: { "Auth-Method": "JWT", Auth: localStorage.getItem("token") },
+      })
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((error) => {
+        if (error.response.status == 401) {
+          console.log("狀態" + error.response.status);
+          window.location.replace("/");
+        }
+        console.log(error);
+      });
+  }, []);
   //socket.io.client
 
   // 顯示sidebar
@@ -242,7 +255,7 @@ function App() {
         <Intro></Intro>
       </div>
       <div id="state">
-        <State path={url}></State>
+        <State rents={user.rents} containerId={1} path={url}></State>
       </div>
       <h1
         id="showPlant"
