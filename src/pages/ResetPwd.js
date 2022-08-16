@@ -1,8 +1,44 @@
 import Background from "../assets/skyBgIMG.png";
 import plantIMG from "../assets/resetIMG.png";
+import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 function ResetPwd() {
-  //   const email = document.getElementById("email").value;
+  let token = useRef(null);
+  let navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState("");
+  function resetform() {
+    //let errorMsg = document.getElementById("errorMsg").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/user/password`, {
+        password,
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.status == 200) {
+          // token = <App token={response.data.token} />;
+          // token = ;
+          setLocalToken(response.data.token);
+          // console.log("login: " + token);
+          navigate("./");
+        }
+      })
+      .catch((error) => {
+        if (error.response.status == 400) {
+          console.log("狀態" + error.response.status);
+          setErrorMsg("Invalid header/body");
+        } else if (error.response.status == 401) {
+          setErrorMsg("Invalid JWT token");
+        }
+        console.log(error);
+      });
+  }
+  const setLocalToken = (token) => {
+    localStorage.setItem("token", token);
+    console.log(token);
+  };
   return (
     <div
       class="relative bg-cover flex justify-center items-center tablet:flex-col phone:flex-col"
@@ -50,7 +86,7 @@ function ResetPwd() {
             <input
               type="password"
               name="password"
-              id="password"
+              id="confirmPassword"
               placeholder="••••••••"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-1/2 h-[42px] tablet:w-full phone:w-full dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               required=""

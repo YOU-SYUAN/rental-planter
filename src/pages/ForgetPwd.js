@@ -6,6 +6,7 @@ import React, { useState } from "react";
 function ForgetPwd() {
   let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
+
   function forgetPwd() {
     const email = document.getElementById("email").value;
     axios
@@ -19,7 +20,7 @@ function ForgetPwd() {
           // token = ;
           // setLocalToken(response.data.token);
           // console.log("login: " + token);
-          navigate("./");
+          navigate("/");
         }
       })
       .catch((error) => {
@@ -80,7 +81,11 @@ function ForgetPwd() {
             >
               確認
             </button>
-            <button class="w-1/2 h-[42px] text-[14px] bg-[#929292] text-white rounded-lg tablet:w-full phone:w-full">
+            <button
+              onClick={() => navigate("/")}
+              type="button"
+              class="w-1/2 h-[42px] text-[14px] bg-[#929292] text-white rounded-lg tablet:w-full phone:w-full"
+            >
               取消
             </button>
           </div>
