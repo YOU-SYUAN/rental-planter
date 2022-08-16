@@ -1,6 +1,6 @@
 import Background from "../assets/skyBgIMG.png";
-import plantIMG from "../assets/bg2.png";
-function ForgetPwd() {
+import plantIMG from "../assets/resetIMG.png";
+function ResetPwd() {
   return (
     <div
       class="relative bg-cover flex justify-center items-center tablet:flex-col phone:flex-col"
@@ -18,25 +18,40 @@ function ForgetPwd() {
           {/* <div class="w-full justify-center"> */}
           <div class="w-full">
             <h1 class="text-center text-[40px] font-Nova_Flat font-normal tablet:text-[32px] phone:text-[24px]">
-              忘記密碼
+              重設密碼
             </h1>
             <h2 class="text-[20px] text-center text-[#929292] tracking-widest font-normal tablet:text-[20px] phone:text-[14px]">
-              Forget Password
+              Reset Password
             </h2>
           </div>
           <div class="w-full flex flex-col items-center tablet:px-10 phone:px-10">
             <label
-              for="email"
+              for="password"
               class="block mb-2 text-sm font-medium text-black w-1/2 tablet:w-full phone:w-full"
             >
-              電子郵件
+              密碼
             </label>
             <input
-              type="email"
-              id="email"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-1/2 h-[42px] tablet:w-full phone:w-full"
-              placeholder="name@flowbite.com"
-              required
+              type="password"
+              name="password"
+              id="password"
+              placeholder="••••••••"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-1/2 h-[42px] tablet:w-full phone:w-full dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+              required=""
+            />
+            <label
+              for="password"
+              class="block my-2 text-sm font-medium text-black w-1/2 tablet:w-full phone:w-full"
+            >
+              確認密碼
+            </label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="••••••••"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-1/2 h-[42px] tablet:w-full phone:w-full dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+              required=""
             />
           </div>
 
@@ -56,4 +71,4 @@ function ForgetPwd() {
   );
 }
 
-export default ForgetPwd;
+export default ResetPwd;
