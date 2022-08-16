@@ -1,6 +1,38 @@
 import Background from "../assets/skyBgIMG.png";
 import plantIMG from "../assets/bg2.png";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 function ForgetPwd() {
+  let navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState("");
+  function forgetPwd() {
+    const email = document.getElementById("email").value;
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/user/password`, {
+        email,
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.status == 200) {
+          // token = <App token={response.data.token} />;
+          // token = ;
+          // setLocalToken(response.data.token);
+          // console.log("login: " + token);
+          navigate("./");
+        }
+      })
+      .catch((error) => {
+        if (error.response.status == 400) {
+          console.log("狀態" + error.response.status);
+          setErrorMsg("Invalid Body");
+        } else if (error.response.status == 404) {
+          setErrorMsg("User Not Found");
+        }
+        console.log(error);
+      });
+  }
+
   return (
     <div
       class="relative bg-cover flex justify-center items-center tablet:flex-col phone:flex-col"
@@ -41,7 +73,11 @@ function ForgetPwd() {
           </div>
 
           <div class="flex flex-col w-full space-y-2 items-center tablet:px-10 phone:px-10">
-            <button class="w-1/2 h-[42px] text-[14px] bg-[#519E75] text-white rounded-lg tablet:w-full phone:w-full">
+            <button
+              onClick={forgetPwd}
+              type="button"
+              class="w-1/2 h-[42px] text-[14px] bg-[#519E75] text-white rounded-lg tablet:w-full phone:w-full"
+            >
               確認
             </button>
             <button class="w-1/2 h-[42px] text-[14px] bg-[#929292] text-white rounded-lg tablet:w-full phone:w-full">

@@ -1,6 +1,8 @@
 import Background from "../assets/skyBgIMG.png";
 import plantIMG from "../assets/resetIMG.png";
+import React, { useState, useEffect, useRef } from "react";
 function ResetPwd() {
+  //   const email = document.getElementById("email").value;
   return (
     <div
       class="relative bg-cover flex justify-center items-center tablet:flex-col phone:flex-col"
