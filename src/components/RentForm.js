@@ -1,7 +1,7 @@
 import background from "../assets/formbg.png";
 import vector from "../assets/Vector.png";
-import axios from "axios";
 import { useEffect } from "react";
+import { updatePlant } from "../Api";
 
 function RentForm() {
   useEffect(() => {
@@ -9,14 +9,7 @@ function RentForm() {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const formData = new FormData(form);
-      axios
-        .post("http://192.168.168.83:3000/api/rent/plantInfo", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "Auth-Method": "JWT",
-            Auth: localStorage.getItem("token"),
-          },
-        })
+      updatePlant(formData)
         .then((res) => {
           console.log(res);
         })
@@ -25,18 +18,6 @@ function RentForm() {
         });
     });
   }, []);
-  // const uploadIMG = document.getElementById("uploadIMG");
-  // const showIMG = document.getElementById("showIMG");
-  // function Change() {
-  //   console.log(uploadIMG);
-  //   var file = uploadIMG;
-  //   var reader = new FileReader();
-  //   reader.onload = function (e) {
-  //     showIMG.attr("src", e.target.result);
-  //   };
-  //   reader.readAsText(file);
-  //   // reader.readAsDataURL(file);
-  // }
   return (
     <div
       class=" w-full"

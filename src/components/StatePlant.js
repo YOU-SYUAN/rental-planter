@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import webSocket from "socket.io-client";
 
 function StatePlant(props) {
-  if (props.path != "http://localhost:3000/main") {
+  if (props.path != `${window.location.origin}/main`) {
     registerDisconnectHandler();
   }
   // websocket
@@ -33,8 +33,7 @@ function StatePlant(props) {
   useEffect(() => {
     setWs(
       webSocket(
-        process.env.REACT_APP_BACKEND_HOST ||
-          `http://${window.location.hostname}/`,
+        process.env.REACT_APP_BACKEND_HOST || `${window.location.origin}/`,
         {
           transports: ["websocket"],
         }
@@ -55,7 +54,7 @@ function StatePlant(props) {
 
   return (
     <div class=" w-full h-[307.64px] flex flex-row justify-center mt-20 mb-20 tablet:h-[264.59px] tablet:mt-0 tablet:mb-10 phone:mt-10 phone:h-full">
-      <div class="flex justify-center w-[1560px] phone:flex-wrap">
+      <div class="flex justify-center w-[1560px] phone:flex-wrap gap-[120px] tablet:gap-[16px] px-20">
         <div class="pt-10 pb-10 flex flex-col  justify-center  tablet:pr-10 phone:py-4">
           <div class="flex flex-row">
             <img src={humid} class="w-12 h-12 mr-4 mt-4"></img>
@@ -80,10 +79,10 @@ function StatePlant(props) {
             </div>
           </div>
         </div>
-        <div class="phone:flex justify-center phone:mt-0">
+        <div class="flex justify-center phone:mt-0 grow">
           <img
             src={plantIMG}
-            class="mx-[160px] w-[412px] h-[320px] tablet:w-[240px] tablet:h-[184.59px] tablet:mx-4 tablet:my-10 phone:w-[200px] phone:h-[153.82px] rounded-[24px]"
+            class="w-[412px] h-[320px] tablet:w-[240px] tablet:h-[184.59px] tablet:mx-4 tablet:my-10 phone:w-[200px] phone:h-[153.82px] rounded-[24px]"
           ></img>
         </div>
         <div class=" tablet:mt-[17.29px] tablet:pl-5">

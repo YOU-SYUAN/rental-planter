@@ -5,11 +5,11 @@ function RentedCard(props) {
       style={{ backgroundColor: props.data.bgColor }}
     >
       <div class="mt-4 ml-6">
-        <img src={props.data.img}></img>
+        <img class="h-[88px] w-[88px]" src={props.data.img}></img>
       </div>
-      <div class="text-white ml-6 py-4 mt-4 flex flex-col justify-center items-center">
-        <h2 class="text-[20px]">{props.data.state}</h2>
-        <label class="text-[60px]">{props.data.amount}</label>
+      <div class="text-white ml-6 py-4 flex flex-col justify-center items-center">
+        <span class="text-[20px]">{props.data.state}</span>
+        <span class="text-[60px] leading-none">{props.data.amount}</span>
       </div>
     </div>
   );

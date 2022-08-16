@@ -4,16 +4,28 @@ import humidIMG from "../assets/humid.png";
 import lightIMG from "../assets/light.png";
 import deleteIMG from "../assets/delete.png";
 import plant1 from "../assets/card1.png";
+import { Dropdown } from "flowbite-react";
 import { useState, useEffect } from "react";
 import webSocket from "socket.io-client";
 function Rented(props) {
+  const showDelete = () => {
+    const dropdownDots = document.getElementById("dropdownDots");
+    if (dropdownDots.classList.contains("hidden")) {
+      dropdownDots.classList.remove("hidden");
+    } else {
+      dropdownDots.classList.add("hidden");
+    }
+    // dropdown.show();
+    // dropdownDots.style.display =
+    //   dropdownDots.style.display == "none" ? "block" : "none";
+  };
   // websocket
   const [realtimeData, setRealtimeData] = useState({
     soil_humi: "--.--",
     light: "---",
   });
   const [ws, setWs] = useState(null);
-  if (props.path != "http://localhost:3000/admin") {
+  if (props.path != `${window.location.origin}/admin`) {
     registerDisconnectHandler();
   }
   function registerDisconnectHandler() {
@@ -60,12 +72,54 @@ function Rented(props) {
           src={plantIMG}
           class="w-20 h-20 rounded-full ml-[30px] mt-[27px]"
         ></img>
-        <div class="flex flex-wrap flex-col ml-6 mt-[44px] w-[220px]">
-          <label>{props.rentedInfo.name}</label>
-          <label class="flex flex-wrap">{props.rentedInfo.email}</label>
+        <div class="flex flex-wrap flex-col ml-6 mt-[52px] w-[220px]">
+          <label class="text-[24px]">{props.rentedInfo.name}</label>
         </div>
-        <img src={emailIcon} class="w-8 h-8 mt-[57px] ml-[9px]"></img>
-        <img src={deleteIMG} class="h-6 w-6 mt-[15px] mr-[15px]"></img>
+        <button
+          class="mt-10"
+          onClick={() => (window.location = `mailto:${props.rentedInfo.email}`)}
+        >
+          <img src={emailIcon} class="w-8 h-8  "></img>
+        </button>
+
+        {/* 下拉選項 */}
+        <button
+          onClick={showDelete}
+          id="dropdownMenuIconButton"
+          data-dropdown-toggle="dropdownDots"
+          class="inline-flex items-center  text-sm h-6 mt-[15px] ml-4 font-medium text-center text-gray-900 bg-transparent rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          type="button"
+        >
+          <svg
+            class="w-6 h-6"
+            aria-hidden="true"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+          </svg>
+        </button>
+
+        <div
+          id="dropdownDots"
+          // style={{ display: "none" }}
+          class="hidden z-10 w-44 h-12 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+        >
+          <ul
+            class="py-1 text-sm text-gray-700 dark:text-gray-200"
+            aria-labelledby="dropdownMenuIconButton"
+          >
+            <li>
+              <a
+                href="#"
+                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              >
+                刪除盆栽
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="ml-10 mt-[26px] flex flex-row">
         <label class="text-[20px]">{props.rentedInfo.plantName}</label>

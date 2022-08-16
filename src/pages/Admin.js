@@ -3,14 +3,17 @@ import img2 from "../assets/img2.png";
 import RentedCard from "../components/RentedCard";
 import Waitline from "../components/Waitline";
 import Rented from "../components/Rented";
-import plant1 from "../assets/card1.png";
-import plant2 from "../assets/card2.png";
-import plant3 from "../assets/card3.png";
-import plant4 from "../assets/card4.png";
 import logo from "../assets/logo.png";
 import AddAdmin from "../components/AddAdmin";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import {
+  addAdmin,
+  getUser,
+  getRentedAmount,
+  getWaitList,
+  getRentedInfo,
+} from "../Api.js";
+
 function Admin() {
   const url = window.location.href;
   const [amount, setAmount] = useState({ data: { remain: 0, rented: 0 } });
@@ -20,20 +23,25 @@ function Admin() {
       { id: 0, owner: { name: "", email: "" }, plant: null, container: null },
     ],
   });
-
-  const [ButtonPop, setButtonPop] = useState(false);
-
+  // 接收api資料
   useEffect(() => {
-    axios
-      .get(
-        `${process.env.REACT_APP_BACKEND_HOST || ""}/api/admin/rentedAmount`,
-        {
-          headers: {
-            "Auth-Method": "JWT",
-            Auth: localStorage.getItem("token"),
-          },
+    //get user info
+    getUser()
+      .then((response) => {
+        if (response.data.user.role !== 1) {
+          window.location.replace("/");
+          return;
         }
-      )
+      })
+      .catch((error) => {
+        if (error.response.status == 401) {
+          console.log("狀態" + error.response.status);
+          window.location.replace("/");
+        }
+        console.log(error);
+      });
+
+    getRentedAmount()
       .then((response) => {
         if (response.status == 200) {
           setAmount(response.data);
@@ -46,14 +54,9 @@ function Admin() {
         }
         console.log(error);
       });
+
     // 候補清單
-    axios
-      .get(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/admin/waitList`, {
-        headers: {
-          "Auth-Method": "JWT",
-          Auth: localStorage.getItem("token"),
-        },
-      })
+    getWaitList()
       .then((response) => {
         if (response.status == 200) {
           setWaitlist(response.data);
@@ -68,13 +71,7 @@ function Admin() {
         }
         console.log(error);
       });
-    axios
-      .get(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/admin/rentedInfo`, {
-        headers: {
-          "Auth-Method": "JWT",
-          Auth: localStorage.getItem("token"),
-        },
-      })
+    getRentedInfo()
       .then((response) => {
         if (response.status == 200) {
           setRentInfo(response.data);
@@ -87,22 +84,21 @@ function Admin() {
         }
         console.log(error);
       });
-  }, 1);
-  // 已租借清單
+  }, []);
 
-  console.log(amount);
+  // 已租借清單
   const data = [
-    {
-      img: img1,
-      amount: amount.data.rented,
-      bgColor: "#519E75",
-      state: "已租",
-    },
     {
       img: img2,
       amount: amount.data.remain,
       bgColor: "#FFC700",
       state: "未租",
+    },
+    {
+      img: img1,
+      amount: amount.data.rented,
+      bgColor: "#519E75",
+      state: "已租",
     },
   ];
   const info = waitlist.data;
@@ -116,14 +112,35 @@ function Admin() {
       plantIMG: x.plant !== null ? x.plant.imgPath : undefined,
     };
   });
+  const addmodal = document.getElementById("authentication-modal");
+  async function add() {
+    console.log("addadmin");
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+
+    addAdmin({ name, email })
+      .then((response) => {
+        if (response.status == 200) {
+          console.log("新增成功");
+          addmodal.style.display = "none";
+        }
+      })
+      .catch((error) => {
+        if (error.response.status == 401) {
+          console.log("狀態" + error.status);
+        } else if (error.status == 500) {
+        }
+        console.log(error);
+      });
+  }
   const show = () => {
     console.log("show");
-    const addAdmin = document.getElementById("authentication-modal");
-    addAdmin.style.display =
-      addAdmin.style.display == "none" ? "block" : "none";
+
+    addmodal.style.display =
+      addmodal.style.display == "none" ? "block" : "none";
   };
 
-  const logout = (e) => {
+  const logout = () => {
     localStorage.clear();
     console.log("logout");
     window.location.replace("/");
@@ -255,7 +272,8 @@ function Admin() {
           </div>
         </nav>
       </div>
-      <AddAdmin trigger={ButtonPop} setButtonPop={setButtonPop} />
+      {/* 新增管理員成功通知 */}
+      <div></div>
       {/* 第二層 */}
       {/* 新增管理員modal */}
       <div
@@ -266,15 +284,12 @@ function Admin() {
         class="bg-black bg-opacity-80 hidden  fixed top-0 left-0 right-0 z-10 m-auto w-full md:inset-0 h-modal md:h-full"
       >
         <div class="flex flex-col justify-center p-4 m-auto w-full max-w-md h-full md:h-auto">
-          <div
-            class="relative bg-white bg-opacity-100 rounded-lg shadow dark:bg-gray-700 z-50"
-            style={{ opacity: 1 }}
-          >
+          <div class="relative bg-white bg-opacity-100 rounded-lg shadow dark:bg-gray-700 z-50">
             <div class="py-6 px-6 lg:px-8">
               <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
                 新增管理員
               </h3>
-              <form class="space-y-6" action="#">
+              <div class="space-y-6" action="#">
                 <div>
                   <label
                     for="name"
@@ -309,7 +324,8 @@ function Admin() {
                 </div>
 
                 <button
-                  type="submit"
+                  onClick={add}
+                  type="button"
                   class="w-full text-white bg-[#519E75] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   新增
@@ -320,7 +336,7 @@ function Admin() {
                 >
                   取消
                 </button>
-              </form>
+              </div>
             </div>
           </div>
         </div>
@@ -340,7 +356,7 @@ function Admin() {
             </div>
             <div class="mt-[86px]">
               <h1 class="text-[28px] text-center  ml-24">候補名單</h1>
-              <div class=" w-[552px] h-[520px] overflow-scroll ml-[124px] mt-6 border border-[#F9F9F9] rounded-3xl shadow-md ">
+              <div class=" w-[552px] h-[520px] overflow-y-scroll overflow-x-hidden ml-[124px] mt-6 bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md ">
                 {info.map((item) => (
                   <Waitline key={item.index} data={item}></Waitline>
                 ))}
@@ -351,10 +367,12 @@ function Admin() {
           {/* 右半邊 */}
           <div class="grid col-start-6 col-span-7 flex-wrap mb-[53px]">
             <h1 class="text-[28px] text-center">已租資訊</h1>
-            <div class="w-[1000px] h-[784px] flex flex-wrap overflow-scroll border-[#F9F9F9] rounded-3xl shadow-md mt-6">
-              {rentedInfo.map((item) => (
-                <Rented key={item.id} rentedInfo={item} path={url}></Rented>
-              ))}
+            <div class="mt-6">
+              <div class="w-[1000px] h-[841px] flex flex-wrap overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md ">
+                {rentedInfo.map((item) => (
+                  <Rented key={item.id} rentedInfo={item} path={url}></Rented>
+                ))}
+              </div>
             </div>
           </div>
         </div>

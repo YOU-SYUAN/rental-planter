@@ -15,9 +15,9 @@ import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
 import card4 from "../assets/card4.png";
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, useNavigate } from "react-router-dom";
-import webSocket from "socket.io-client";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { getUser } from "../Api.js";
+
 function App() {
   const url = window.location.href;
   const [user, setUser] = useState({
@@ -31,11 +31,12 @@ function App() {
 
   useEffect(() => {
     //get user info
-    axios
-      .get(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/user`, {
-        headers: { "Auth-Method": "JWT", Auth: localStorage.getItem("token") },
-      })
+    getUser()
       .then((response) => {
+        if (response.data.user.role !== 0) {
+          window.location.replace("/");
+          return;
+        }
         setUser(response.data);
       })
       .catch((error) => {
