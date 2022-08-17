@@ -1,29 +1,40 @@
 import "./App.css";
 import Background from "../assets/homeIMG.png";
-import axios from "axios";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { userLogin, getUser } from "../Api.js";
 function LoginForm() {
-  let token = useRef(null);
   let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    //get user info
+    getUser()
+      .then((response) => {
+        if (response.data.user.role == 0) {
+          navigate("./main");
+        } else {
+          navigate("./admin");
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   function Login() {
     //let errorMsg = document.getElementById("errorMsg").value;
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/auth`, {
-        account: email,
-        password: password,
-      })
+
+    userLogin({ email, password })
       .then((response) => {
-        console.log(response);
         if (response.status == 200) {
-          // token = <App token={response.data.token} />;
-          // token = ;
           setLocalToken(response.data.token);
-          // console.log("login: " + token);
-          navigate("./main");
+          // console.log(response.data.user.role);
+          if (response.data.user.role == 0) {
+            navigate("./main");
+          } else {
+            navigate("./admin");
+          }
         }
       })
       .catch((error) => {
@@ -33,14 +44,14 @@ function LoginForm() {
         } else if (error.response.status == 500) {
           setErrorMsg("伺服器錯誤");
         }
-        console.log(error);
+        // console.log(error);
       });
   }
 
   //local storage 存token
   const setLocalToken = (token) => {
     localStorage.setItem("token", token);
-    console.log(token);
+    // console.log(token);
   };
   return (
     <div className="App">

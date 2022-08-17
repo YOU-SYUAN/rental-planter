@@ -1,6 +1,33 @@
 import background from "../assets/registerIMG.png";
 import plantIMG from "../assets/bg.png";
+import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { userRegister } from "../Api";
 function Register() {
+  const [errorMsg, setErrorMsg] = useState("");
+  let navigate = useNavigate();
+  async function Confirm() {
+    const email = document.getElementById("email").value;
+    try {
+      const post1 = await userRegister({ email });
+      if (post1.status == 200) {
+        // setLocalToken(post1.data.token);
+        alert("您已註冊成功!請檢查您的電子郵件!");
+        navigate("/");
+      }
+    } catch (error) {
+      if (error.response.status == 404) {
+        console.log("狀態" + error.response.message);
+        setErrorMsg("您還不是Monospace的會員!");
+      } else if (error.response.status == 409) {
+        alert("您已是Monospace的會員!請登入帳號");
+        navigate("/");
+        // setErrorMsg("您已是Monospace的會員!請登入帳號");
+      }
+      console.log(error);
+    }
+  }
+
   return (
     <div
       class="relative bg-cover flex justify-center items-center"
@@ -33,9 +60,14 @@ function Register() {
                 required
               />
             </div>
-
-            <div class="flex justify-center mt-[60px]">
-              <button class="w-[386px] h-[42px] text-[20px] bg-[#519E75] text-white rounded-lg mr-12 ">
+            <div class="flex flex-col justify-center mt-12">
+              <div>
+                <label class="text-[#FF0000] ">{errorMsg}</label>
+              </div>
+              <button
+                onClick={Confirm}
+                class="w-[386px] h-[42px] text-[20px] bg-[#519E75] text-white rounded-lg mr-12 "
+              >
                 註冊
               </button>
             </div>
