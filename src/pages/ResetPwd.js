@@ -7,38 +7,47 @@ function ResetPwd() {
   let token = useRef(null);
   let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
-  function resetform() {
-    //let errorMsg = document.getElementById("errorMsg").value;
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/user/password`, {
-        password,
-      })
-      .then((response) => {
-        console.log(response);
-        if (response.status == 200) {
-          // token = <App token={response.data.token} />;
-          // token = ;
-          setLocalToken(response.data.token);
-          // console.log("login: " + token);
-          navigate("./");
-        }
-      })
-      .catch((error) => {
-        if (error.response.status == 400) {
-          console.log("狀態" + error.response.status);
-          setErrorMsg("Invalid header/body");
-        } else if (error.response.status == 401) {
-          setErrorMsg("Invalid JWT token");
-        }
-        console.log(error);
-      });
-  }
-  const setLocalToken = (token) => {
-    localStorage.setItem("token", token);
-    console.log(token);
-  };
+  const password = document.getElementById("password").value;
+  console.log(password);
+  // const confirmPassword = document.getElementById("confirmPassword").value;
+  // function confirmPwd() {
+  //   if (password === confirmPassword) {
+  //     resetBtn();
+  //   } else {
+  //     setErrorMsg("輸入密碼錯誤輸入密碼不相同，失敗！");
+  //   }
+  // }
+  // function resetBtn() {
+  //   //let errorMsg = document.getElementById("errorMsg").value;
+  //   axios
+  //     .put(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/user/password`, {
+  //       password,
+  //       confirmPassword,
+  //     })
+  //     .then((response) => {
+  //       console.log(response);
+  //       if (response.status == 200) {
+  //         // token = <App token={response.data.token} />;
+  //         // token = ;
+  //         setLocalToken(response.data.token);
+  //         // console.log("login: " + token);
+  //         navigate("./");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       if (error.response.status == 400) {
+  //         console.log("狀態" + error.response.status);
+  //         setErrorMsg("Invalid header/body");
+  //       } else if (error.response.status == 401) {
+  //         setErrorMsg("Invalid JWT token");
+  //       }
+  //       console.log(error);
+  //     });
+  // }
+  // const setLocalToken = (token) => {
+  //   localStorage.setItem("token", token);
+  //   console.log(token);
+  // };
   return (
     <div
       class="relative bg-cover flex justify-center items-center tablet:flex-col phone:flex-col"
@@ -85,7 +94,7 @@ function ResetPwd() {
             </label>
             <input
               type="password"
-              name="password"
+              name="confirmPassword"
               id="confirmPassword"
               placeholder="••••••••"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-1/2 h-[42px] tablet:w-full phone:w-full dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -94,6 +103,9 @@ function ResetPwd() {
           </div>
 
           <div class="flex flex-col w-full space-y-2 items-center tablet:px-10 phone:px-10">
+            {/* <div class="">
+              <label class="text-[#FF0000] ">{errorMsg}</label>
+            </div> */}
             <button class="w-1/2 h-[42px] text-[14px] bg-[#519E75] text-white rounded-lg tablet:w-full phone:w-full">
               確認
             </button>
