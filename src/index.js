@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login.js";
 import RentForm from "./components/RentForm";
 import Register from "./pages/Register";
+import ForgetPwd from "./pages/ForgetPwd";
 import ResetPwd from "./pages/ResetPwd";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 // root.render(
@@ -24,6 +25,7 @@ root.render(
       <Route path="/admin" element={<Admin />} />
       <Route path="/rentForm" element={<RentForm />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/forgetPwd" element={<ForgetPwd />} />
       <Route path="/resetPwd" element={<ResetPwd />} />
       <Route path="*" element={<h1>404 Page Not Found</h1>} />
     </Routes>

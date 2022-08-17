@@ -123,7 +123,7 @@ function LoginForm() {
                         <label class="text-[#FF0000] ">{errorMsg}</label>
                       </div>
                       <div class=" mt-6 grid justify-items-end">
-                        <a href="./resetPwd" class=" text-[#1C64F2] ">
+                        <a href="./forgetPwd" class=" text-[#1C64F2] ">
                           忘記密碼?
                         </a>
                       </div>

@@ -1,44 +1,39 @@
 import Background from "../assets/skyBgIMG.png";
-import plantIMG from "../assets/resetIMG.png";
+import plantIMG from "../assets/bg2.png";
 import axios from "axios";
-import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-function ResetPwd() {
-  let token = useRef(null);
+import React, { useState } from "react";
+function ForgetPwd() {
   let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
-  function resetform() {
-    //let errorMsg = document.getElementById("errorMsg").value;
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
+
+  function forgetPwd() {
+    const email = document.getElementById("email").value;
     axios
       .post(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/user/password`, {
-        password,
+        email,
       })
       .then((response) => {
         console.log(response);
         if (response.status == 200) {
           // token = <App token={response.data.token} />;
           // token = ;
-          setLocalToken(response.data.token);
+          // setLocalToken(response.data.token);
           // console.log("login: " + token);
-          navigate("./");
+          navigate("/");
         }
       })
       .catch((error) => {
         if (error.response.status == 400) {
           console.log("狀態" + error.response.status);
-          setErrorMsg("Invalid header/body");
-        } else if (error.response.status == 401) {
-          setErrorMsg("Invalid JWT token");
+          setErrorMsg("Invalid Body");
+        } else if (error.response.status == 404) {
+          setErrorMsg("User Not Found");
         }
         console.log(error);
       });
   }
-  const setLocalToken = (token) => {
-    localStorage.setItem("token", token);
-    console.log(token);
-  };
+
   return (
     <div
       class="relative bg-cover flex justify-center items-center tablet:flex-col phone:flex-col"
@@ -56,48 +51,41 @@ function ResetPwd() {
           {/* <div class="w-full justify-center"> */}
           <div class="w-full">
             <h1 class="text-center text-[40px] font-Nova_Flat font-normal tablet:text-[32px] phone:text-[24px]">
-              重設密碼
+              忘記密碼
             </h1>
             <h2 class="text-[20px] text-center text-[#929292] tracking-widest font-normal tablet:text-[20px] phone:text-[14px]">
-              Reset Password
+              Forget Password
             </h2>
           </div>
           <div class="w-full flex flex-col items-center tablet:px-10 phone:px-10">
             <label
-              for="password"
+              for="email"
               class="block mb-2 text-sm font-medium text-black w-1/2 tablet:w-full phone:w-full"
             >
-              密碼
+              電子郵件
             </label>
             <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="••••••••"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-1/2 h-[42px] tablet:w-full phone:w-full dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              required=""
-            />
-            <label
-              for="password"
-              class="block my-2 text-sm font-medium text-black w-1/2 tablet:w-full phone:w-full"
-            >
-              確認密碼
-            </label>
-            <input
-              type="password"
-              name="password"
-              id="confirmPassword"
-              placeholder="••••••••"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-1/2 h-[42px] tablet:w-full phone:w-full dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              required=""
+              type="email"
+              id="email"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-1/2 h-[42px] tablet:w-full phone:w-full"
+              placeholder="name@flowbite.com"
+              required
             />
           </div>
 
           <div class="flex flex-col w-full space-y-2 items-center tablet:px-10 phone:px-10">
-            <button class="w-1/2 h-[42px] text-[14px] bg-[#519E75] text-white rounded-lg tablet:w-full phone:w-full">
+            <button
+              onClick={forgetPwd}
+              type="button"
+              class="w-1/2 h-[42px] text-[14px] bg-[#519E75] text-white rounded-lg tablet:w-full phone:w-full"
+            >
               確認
             </button>
-            <button class="w-1/2 h-[42px] text-[14px] bg-[#929292] text-white rounded-lg tablet:w-full phone:w-full">
+            <button
+              onClick={() => navigate("/")}
+              type="button"
+              class="w-1/2 h-[42px] text-[14px] bg-[#929292] text-white rounded-lg tablet:w-full phone:w-full"
+            >
               取消
             </button>
           </div>
@@ -109,4 +97,4 @@ function ResetPwd() {
   );
 }
 
-export default ResetPwd;
+export default ForgetPwd;
