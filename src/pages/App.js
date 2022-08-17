@@ -15,24 +15,38 @@ import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
 import card4 from "../assets/card4.png";
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, useNavigate } from "react-router-dom";
-import webSocket from "socket.io-client";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { getUser } from "../Api.js";
+
 function App() {
-  console.log(localStorage.getItem("token"));
   const url = window.location.href;
-  //get user info
-  axios
-    .get(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/user`, {
-      headers: { "Auth-Method": "JWT", Auth: localStorage.getItem("token") },
-    })
-    .catch((error) => {
-      if (error.response.status == 401) {
-        console.log("狀態" + error.response.status);
-        window.location.replace("/");
-      }
-      console.log(error);
-    });
+  const [user, setUser] = useState({
+    user: {
+      id: "",
+      name: "",
+      email: "",
+    },
+    rents: [],
+  });
+
+  useEffect(() => {
+    //get user info
+    getUser()
+      .then((response) => {
+        if (response.data.user.role !== 0) {
+          window.location.replace("/");
+          return;
+        }
+        setUser(response.data);
+      })
+      .catch((error) => {
+        if (error.response.status == 401) {
+          console.log("狀態" + error.response.status);
+          window.location.replace("/");
+        }
+        console.log(error);
+      });
+  }, []);
   //socket.io.client
 
   // 顯示sidebar
@@ -242,7 +256,7 @@ function App() {
         <Intro></Intro>
       </div>
       <div id="state">
-        <State path={url}></State>
+        <State rents={user.rents} containerId={1} path={url}></State>
       </div>
       <h1
         id="showPlant"
