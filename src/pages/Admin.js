@@ -110,6 +110,7 @@ function Admin() {
       email: x.owner.email,
       plantName: x.plant !== null ? x.plant.name : "尚未填寫",
       plantIMG: x.plant !== null ? x.plant.imgPath : undefined,
+      container: x.container,
     };
   });
   const addmodal = document.getElementById("authentication-modal");

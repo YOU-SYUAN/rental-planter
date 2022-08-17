@@ -42,7 +42,7 @@ function Rented(props) {
   //soil_humi
   const initWebSocket = () => {
     ws.on("Plant/Data", (data) => {
-      if (data.container_ID === props.rentedInfo.id) {
+      if (data.container_ID === props.rentedInfo.container) {
         setRealtimeData(data);
         // console.log(data);
       }
