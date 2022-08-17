@@ -7,7 +7,20 @@ import plant1 from "../assets/card1.png";
 import { Dropdown } from "flowbite-react";
 import { useState, useEffect } from "react";
 import webSocket from "socket.io-client";
+import axios from "axios";
+import { deleteRented } from "../Api";
 function Rented(props) {
+  const deleteInfo = (rentId) => {
+    console.log("即將刪除");
+    //get user info
+    deleteRented(rentId).then((res) => {
+      console.log(res);
+      console.log(res.data);
+
+      const posts = this.state.posts.filter((item) => item.rentId !== rentId);
+      this.setState({ posts });
+    });
+  };
   const showDelete = () => {
     const dropdownDots = document.getElementById("dropdownDots");
     if (dropdownDots.classList.contains("hidden")) {
@@ -15,9 +28,6 @@ function Rented(props) {
     } else {
       dropdownDots.classList.add("hidden");
     }
-    // dropdown.show();
-    // dropdownDots.style.display =
-    //   dropdownDots.style.display == "none" ? "block" : "none";
   };
   // websocket
   const [realtimeData, setRealtimeData] = useState({
@@ -111,12 +121,13 @@ function Rented(props) {
             aria-labelledby="dropdownMenuIconButton"
           >
             <li>
-              <a
-                href="#"
+              <button
+                onClick={() => {
+                  deleteInfo(props.rentedInfo.id);
+                }}
                 class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                刪除盆栽
-              </a>
+              ></button>
+              刪除盆栽
             </li>
           </ul>
         </div>
