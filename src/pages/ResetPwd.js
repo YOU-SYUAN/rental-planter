@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { changePassword } from "../Api.js";
 function ResetPwd() {
-  let token = useRef(null);
   let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
   const [password, setPassword] = useState("");
@@ -42,12 +41,11 @@ function ResetPwd() {
       .then((response) => {
         console.log(response);
         if (response.status == 200) {
-          // token = <App token={response.data.token} />;
-          // token = ;
-          // setLocalToken(response.data.token);
-          // console.log("login: " + token);
           localStorage.clear();
+          // setLocalToken(response.data.token);
+          // navigate("/");
           window.location.replace("/");
+          // window.location.reload();
         }
       })
       .catch((error) => {
