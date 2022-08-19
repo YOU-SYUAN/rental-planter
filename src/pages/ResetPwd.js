@@ -1,53 +1,72 @@
 import Background from "../assets/skyBgIMG.png";
 import plantIMG from "../assets/resetIMG.png";
-import axios from "axios";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { changePassword } from "../Api.js";
 function ResetPwd() {
   let token = useRef(null);
   let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
-  const password = document.getElementById("password").value;
-  console.log(password);
-  // const confirmPassword = document.getElementById("confirmPassword").value;
-  // function confirmPwd() {
-  //   if (password === confirmPassword) {
-  //     resetBtn();
-  //   } else {
-  //     setErrorMsg("輸入密碼錯誤輸入密碼不相同，失敗！");
-  //   }
-  // }
-  // function resetBtn() {
-  //   //let errorMsg = document.getElementById("errorMsg").value;
-  //   axios
-  //     .put(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/user/password`, {
-  //       password,
-  //       confirmPassword,
-  //     })
-  //     .then((response) => {
-  //       console.log(response);
-  //       if (response.status == 200) {
-  //         // token = <App token={response.data.token} />;
-  //         // token = ;
-  //         setLocalToken(response.data.token);
-  //         // console.log("login: " + token);
-  //         navigate("./");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       if (error.response.status == 400) {
-  //         console.log("狀態" + error.response.status);
-  //         setErrorMsg("Invalid header/body");
-  //       } else if (error.response.status == 401) {
-  //         setErrorMsg("Invalid JWT token");
-  //       }
-  //       console.log(error);
-  //     });
-  // }
-  // const setLocalToken = (token) => {
-  //   localStorage.setItem("token", token);
-  //   console.log(token);
-  // };
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [style, setStyle] = useState("");
+  const [disabled, setDisabled] = useState(true);
+  const [visibility, setVisibility] = useState("w-1/2 invisible");
+  const pwd = (e) => {
+    setPassword(e.target.value);
+  };
+  const pwd2 = (e) => {
+    setPassword2(e.target.value);
+    // console.log(e.target.value);
+  };
+  useEffect(() => {
+    // console.log(password);
+    // console.log(password2);
+    if (password != "") {
+      if (password === password2) {
+        setStyle("text-green-600 w-full text-left");
+        setVisibility("w-1/2 visible");
+        setErrorMsg("輸入密碼相同，成功！");
+        setDisabled(false);
+      } else {
+        setStyle("text-[#FF0000] w-full text-left");
+        setVisibility("w-1/2 visible");
+        setErrorMsg("輸入密碼不相同，失敗！");
+        setDisabled(true);
+      }
+    }
+  }, [password2]);
+
+  function resetPwd() {
+    changePassword({ password })
+      .then((response) => {
+        console.log(response);
+        if (response.status == 200) {
+          // token = <App token={response.data.token} />;
+          // token = ;
+          // setLocalToken(response.data.token);
+          // console.log("login: " + token);
+          localStorage.clear();
+          window.location.replace("/");
+        }
+      })
+      .catch((error) => {
+        if (error.response.status == 400) {
+          console.log("狀態" + error.response.status);
+          // setErrorMsg("Invalid header/body");
+        } else if (error.response.status == 401) {
+          console.log("狀態" + error.response.status);
+          // setErrorMsg("Invalid JWT token");
+        }
+        console.log(error);
+      });
+  }
+
+  const setLocalToken = (token) => {
+    localStorage.setItem("token", token);
+    console.log(token);
+  };
+
   return (
     <div
       class="relative bg-cover flex justify-center items-center tablet:flex-col phone:flex-col"
@@ -84,7 +103,8 @@ function ResetPwd() {
               id="password"
               placeholder="••••••••"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-1/2 h-[42px] tablet:w-full phone:w-full dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              required=""
+              required
+              onChange={pwd}
             />
             <label
               for="password"
@@ -94,22 +114,32 @@ function ResetPwd() {
             </label>
             <input
               type="password"
-              name="confirmPassword"
-              id="confirmPassword"
+              name="password2"
+              id="password2"
               placeholder="••••••••"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-1/2 h-[42px] tablet:w-full phone:w-full dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-              required=""
+              required
+              onChange={pwd2}
+              // onBlur 點旁邊空白
             />
           </div>
 
           <div class="flex flex-col w-full space-y-2 items-center tablet:px-10 phone:px-10">
-            {/* <div class="">
-              <label class="text-[#FF0000] ">{errorMsg}</label>
-            </div> */}
-            <button class="w-1/2 h-[42px] text-[14px] bg-[#519E75] text-white rounded-lg tablet:w-full phone:w-full">
+            <div class={visibility}>
+              <label class={style}>{errorMsg}</label>
+            </div>
+            <button
+              class="w-1/2 h-[42px] text-[14px] bg-[#519E75] text-white rounded-lg tablet:w-full phone:w-full"
+              disabled={disabled}
+              onClick={resetPwd}
+            >
               確認
             </button>
-            <button class="w-1/2 h-[42px] text-[14px] bg-[#929292] text-white rounded-lg tablet:w-full phone:w-full">
+            <button
+              class="w-1/2 h-[42px] text-[14px] bg-[#929292] text-white rounded-lg tablet:w-full phone:w-full"
+              onClick={() => navigate("/")}
+              // disabled={disabled}
+            >
               取消
             </button>
           </div>
