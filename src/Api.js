@@ -28,6 +28,8 @@ const updatePlant = (formData) =>
     },
   });
 
+const getOtherPlant = () => request.get("/rent/list/others");
+
 // admin methods
 const getRentedInfo = () => request.get("/admin/rentedInfo");
 const getWaitList = () => request.get("/admin/waitList");
@@ -51,4 +53,5 @@ export {
   setRentTaken,
   forgetPassword,
   changePassword,
+  getOtherPlant,
 };

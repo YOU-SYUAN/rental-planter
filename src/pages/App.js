@@ -1,11 +1,7 @@
 import "./App.css";
 import background from "../assets/work.png";
 import Intro from "./Intro";
-import plant2 from "../assets/plant2.png";
-import lightImg from "../assets/light.png";
 import State from "./State";
-import Navbar from "./Navbar";
-import humid from "../assets/humid.png";
 import logo from "../assets/logo.png";
 import { Grid, Button } from "@mui/material";
 import Showplant from "./Showplant";
@@ -14,10 +10,12 @@ import card1 from "../assets/card1.png";
 import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
 import card4 from "../assets/card4.png";
+import lamu from "../assets/img1.png";
+import checkIcon from "../assets/check.png";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUser } from "../Api.js";
-
+import { getUser, getOtherPlant } from "../Api.js";
+// plant: { name: "", intro: "", imgPaths: "", nickName: "", minHumid: 0 },
 function App() {
   const url = window.location.href;
   const [user, setUser] = useState({
@@ -27,6 +25,14 @@ function App() {
       email: "",
     },
     rents: [],
+  });
+  const [otherPlant, setOtherPlant] = useState({
+    data: [
+      {
+        plant: { name: "", intro: "", imgPath: "", nickName: "", minHumid: 0 },
+        container: null,
+      },
+    ],
   });
 
   useEffect(() => {
@@ -46,6 +52,18 @@ function App() {
         }
         console.log(error);
       });
+    getOtherPlant()
+      .then((response) => {
+        if (response.status == 200) {
+          console.log(response.data);
+          setOtherPlant(response.data);
+        }
+      })
+      .catch((error) => {
+        if (error.response.status == 401) {
+          console.log(error.response.status);
+        }
+      });
   }, []);
   //socket.io.client
 
@@ -53,6 +71,25 @@ function App() {
   const show = () => {
     const sidebar = document.getElementById("sidebar");
     sidebar.style.display = sidebar.style.display == "none" ? "block" : "none";
+  };
+  const popupModal = document.getElementById("popupModal");
+  const showModal = () => {
+    console.log("popupModal");
+    if (popupModal.classList.contains("hidden")) {
+      popupModal.classList.remove("hidden");
+    } else {
+      popupModal.classList.add("hidden");
+    }
+  };
+  const successModal = () => {
+    popupModal.classList.add("hidden");
+    console.log("successModal");
+    const successModal = document.getElementById("successModal");
+    if (successModal.classList.contains("hidden")) {
+      successModal.classList.remove("hidden");
+    } else {
+      successModal.classList.add("hidden");
+    }
   };
 
   //錨點設定
@@ -74,8 +111,6 @@ function App() {
   const imgPaths = [card1, card2, card3, card4];
   return (
     <div>
-      {/* <Navbar></Navbar> */}
-      {/* <div class="h-16 fixed bg-white flex flex-row flex-wrap justify-between items-center tablet:mx-9 phone:mx-4"> */}
       <nav class=" tablet:h-[69.71px] phone:h-[70px]">
         <div class=" mx-[140px] my-6 flex flex-row flex-wrap justify-between items-center tablet:mx-9 phone:mx-4">
           <img
@@ -221,6 +256,56 @@ function App() {
         </div>
       </nav>
       {/* </div> */}
+      {/* 登記表單 */}
+
+      <div
+        id="popupModal"
+        tabindex="-1"
+        class="bg-black bg-opacity-50 hidden overflow-y-auto overflow-x-hidden fixed top-0 m-auto right-0 left-0 z-50 md:inset-0 h-modal md:h-full"
+      >
+        <div class="relative flex flex-col justify-center p-4 w-full max-w-md m-auto h-full md:h-auto">
+          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="p-6 text-center">
+              <img src={lamu} class=" mx-auto mb-4 w-14 h-14 "></img>
+              <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                是否要登記盆栽?
+              </h3>
+              <button
+                onClick={successModal}
+                data-modal-toggle="popup-modal"
+                type="button"
+                class="text-white bg-[#519E75] hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
+              >
+                確定
+              </button>
+              <button
+                onClick={showModal}
+                data-modal-toggle="popup-modal"
+                type="button"
+                class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+              >
+                取消
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* 登記成功modal */}
+      <div
+        id="successModal"
+        tabindex="-1"
+        aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-20 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
+      >
+        <div class="relative flex p-4 w-full max-w-md ml-auto h-full md:h-auto">
+          <div class="flex flex-row justify-center items-center bg-green-200 rounded-[6px] w-[491px] h-16">
+            <img src={checkIcon} class="w-6 h-6 mr-[10px]"></img>
+            <h3 class="text-[24px] font-semibold text-green-800 dark:text-white">
+              恭喜您成功登記，請至信件查看！
+            </h3>
+          </div>
+        </div>
+      </div>
       {/* 區塊2 */}
       <div
         class="w-full 
@@ -246,7 +331,10 @@ function App() {
             <div class="text-[20px] text-white tablet:text-[16px] phone:text-[12px]">
               用心愛護你的植物
             </div>
-            <Button class="bg-[#519E75] rounded-lg mt-4 w-[136px] h-[60px] tablet:w-[96px] tablet:h-[48px] text-white phone:w-[72px] phone:h-9 phone:text-[12px]">
+            <Button
+              onClick={showModal}
+              class="bg-[#519E75] rounded-lg mt-4 w-[136px] h-[60px] tablet:w-[96px] tablet:h-[48px] text-white phone:w-[72px] phone:h-9 phone:text-[12px]"
+            >
               立即登記
             </Button>
           </Grid>
@@ -264,10 +352,15 @@ function App() {
       >
         會員植物
       </h1>
-      <div class="flex flex-wrap flex-row justify-center mt-[60px] mb-20 tablet:mb-10 text-center tablet:ml-10 tablet:mt-0 phone:mt-5 phone:mb-10 phone:ml-[35.5px]">
-        {imgPaths.map((item) => (
-          <Showplant key={item} path={item}></Showplant>
-        ))}
+      <div class="flex  flex-row justify-center ml-[180px] overflow-x-scroll overflow-y-hidden items-center w-[1560px] h-[803px]  mb-20 tablet:mb-10 text-center tablet:ml-10 tablet:mt-0 phone:mt-5 phone:mb-10 phone:ml-[35.5px]">
+        {/* {otherPlant.map((item) => (
+          <Showplant key={item.container} data={item}></Showplant>
+        ))} */}
+        {otherPlant.data.map((item) => {
+          if (item.plant != null) {
+            return <Showplant key={item.container} data={item}></Showplant>;
+          }
+        })}
       </div>
       <RentalSticker></RentalSticker>
       {/* <div class="flex justify-center">

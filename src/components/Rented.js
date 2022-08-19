@@ -31,7 +31,7 @@ function Rented(props) {
   };
   // websocket
   const [realtimeData, setRealtimeData] = useState({
-    soil_humi: "--.--",
+    soilHumid: "--.--",
     light: "---",
   });
   const [ws, setWs] = useState(null);
@@ -49,14 +49,16 @@ function Rented(props) {
       initWebSocket();
     }
   }, [ws]);
-  //soil_humi
+  //soilHumid
   const initWebSocket = () => {
     ws.on("Plant/Data", (data) => {
-      if (data.container_ID === props.rentedInfo.container) {
+      if (data.container === props.rentedInfo.container) {
         setRealtimeData(data);
         // console.log(data);
       }
     });
+
+    ws.emit("lastData", props.rentedInfo.container);
   };
   useEffect(() => {
     // console.log(window.location.hostname);
@@ -136,7 +138,7 @@ function Rented(props) {
         <label class="text-[20px]">{props.rentedInfo.plantName}</label>
         <div class="flex flex-row ml-[34px]">
           <img src={humidIMG} class="h-[28px] w-[28px] mr-1"></img>
-          <label class="text-[20px]">{realtimeData.soil_humi}%</label>
+          <label class="text-[20px]">{realtimeData.soilHumid}%</label>
         </div>
         <div class="flex flex-row ml-[19px]">
           <img src={lightIMG} class="h-[28px] w-[28px] mr-1"></img>
