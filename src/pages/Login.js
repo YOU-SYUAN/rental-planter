@@ -29,7 +29,7 @@ function LoginForm() {
       .then((response) => {
         if (response.status == 200) {
           setLocalToken(response.data.token);
-          // console.log(response.data.user.role);
+          // console.log(response.data);
           if (response.data.user.role == 0) {
             navigate("./main");
           } else {

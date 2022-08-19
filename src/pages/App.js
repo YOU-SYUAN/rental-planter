@@ -14,9 +14,10 @@ import lamu from "../assets/img1.png";
 import checkIcon from "../assets/check.png";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUser, getOtherPlant } from "../Api.js";
+import { getUser, getOtherPlant, registerRent } from "../Api.js";
 // plant: { name: "", intro: "", imgPaths: "", nickName: "", minHumid: 0 },
 function App() {
+  const [informMsg, setInformMsg] = useState("");
   const url = window.location.href;
   const [user, setUser] = useState({
     user: {
@@ -73,6 +74,7 @@ function App() {
     sidebar.style.display = sidebar.style.display == "none" ? "block" : "none";
   };
   const popupModal = document.getElementById("popupModal");
+  const success = document.getElementById("successModal");
   const showModal = () => {
     console.log("popupModal");
     if (popupModal.classList.contains("hidden")) {
@@ -82,16 +84,30 @@ function App() {
     }
   };
   const successModal = () => {
-    popupModal.classList.add("hidden");
-    console.log("successModal");
-    const successModal = document.getElementById("successModal");
-    if (successModal.classList.contains("hidden")) {
-      successModal.classList.remove("hidden");
-    } else {
-      successModal.classList.add("hidden");
-    }
+    console.log("確認候補");
+    registerRent().then((response) => {
+      if (response.status == 200) {
+        console.log(response.data);
+        if (response.data.waiting == false) {
+          setInformMsg("恭喜您登記成功!請至信箱查看信件!");
+        } else {
+          // console.log("error");
+          setInformMsg("目前已無空盆器，已將您排至候補!");
+        }
+        popupModal.classList.add("hidden");
+        console.log("success");
+        if (success.classList.contains("hidden")) {
+          success.classList.remove("hidden");
+        } else {
+          success.classList.add("hidden");
+        }
+      }
+    });
   };
 
+  const closeModal = () => {
+    success.classList.add("hidden");
+  };
   //錨點設定
   const scrollToAnchor = (anchorName) => {
     if (anchorName) {
@@ -292,6 +308,7 @@ function App() {
       </div>
       {/* 登記成功modal */}
       <div
+        onClick={closeModal}
         id="successModal"
         tabindex="-1"
         aria-hidden="true"
@@ -301,7 +318,7 @@ function App() {
           <div class="flex flex-row justify-center items-center bg-green-200 rounded-[6px] w-[491px] h-16">
             <img src={checkIcon} class="w-6 h-6 mr-[10px]"></img>
             <h3 class="text-[24px] font-semibold text-green-800 dark:text-white">
-              恭喜您成功登記，請至信件查看！
+              {informMsg}
             </h3>
           </div>
         </div>
