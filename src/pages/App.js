@@ -91,7 +91,6 @@ function App() {
         if (response.data.waiting == false) {
           setInformMsg("恭喜您登記成功!請至信箱查看信件!");
         } else {
-          // console.log("error");
           setInformMsg("目前已無空盆器，已將您排至候補!");
         }
         popupModal.classList.add("hidden");

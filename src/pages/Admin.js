@@ -369,7 +369,7 @@ function Admin() {
           <div class="grid col-start-6 col-span-7 flex-wrap mb-[53px]">
             <h1 class="text-[28px] text-center">已租資訊</h1>
             <div class="mt-6">
-              <div class="w-[1000px] h-[841px] flex flex-wrap flex-start overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md ">
+              <div class="w-[1000px] h-[841px] flex flex-wrap content-start flex-start overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md ">
                 {rentedInfo.map((item) => (
                   <Rented key={item.id} rentedInfo={item} path={url}></Rented>
                 ))}
