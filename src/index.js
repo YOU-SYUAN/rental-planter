@@ -4,12 +4,13 @@ import "./index.css";
 import App from "./pages/App.js";
 import Admin from "./pages/Admin";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import Login from "./pages/Login.js";
 import RentForm from "./components/RentForm";
 import Register from "./pages/Register";
 import ForgetPwd from "./pages/ForgetPwd";
 import ResetPwd from "./pages/ResetPwd";
+import Rent from "./pages/Rentalsticker";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 // root.render(
 //   <React.StrictMode>
@@ -23,7 +24,7 @@ root.render(
       <Route path="/" element={<Login />} />
       <Route path="/main" element={<App />} />
       <Route path="/admin" element={<Admin />} />
-      <Route path="/rentForm" element={<RentForm />} />
+      <Route path="/rentForm/:id" element={<RentForm />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgetPwd" element={<ForgetPwd />} />
       <Route path="/resetPwd" element={<ResetPwd />} />
