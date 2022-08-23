@@ -99,7 +99,7 @@ function ResetPwd() {
               type="password"
               name="password"
               id="password"
-              placeholder="••••••••"
+              placeholder="輸入密碼"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-1/2 h-[42px] tablet:w-full phone:w-full dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               required
               onChange={pwd}
@@ -114,7 +114,7 @@ function ResetPwd() {
               type="password"
               name="password2"
               id="password2"
-              placeholder="••••••••"
+              placeholder="再次輸入密碼"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-1/2 h-[42px] tablet:w-full phone:w-full dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
               required
               onChange={pwd2}
