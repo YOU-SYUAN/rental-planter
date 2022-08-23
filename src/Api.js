@@ -31,7 +31,7 @@ const getOtherRents = () =>
     },
   });
 const registerRent = () =>
-  request.post("/rent/register", {
+  request.post("/rent/register", {}, {
     headers: {
       "Content-Type": "application/json",
       "Auth-Method": "JWT",
