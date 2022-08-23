@@ -29,11 +29,16 @@ function LoginForm() {
       .then((response) => {
         if (response.status == 200) {
           setLocalToken(response.data.token);
-          // console.log(response.data);
-          if (response.data.user.role == 0) {
-            navigate("./main");
+          // console.log(response.data.user.role);
+          if (response.data.user.isDefaultPassword == false) {
+            if (response.data.user.role == 0) {
+              navigate("./main");
+            } else {
+              navigate("./admin");
+            }
           } else {
-            navigate("./admin");
+            console.log(response.data.user.isDefaultPassword);
+            navigate("/resetPwd");
           }
         }
       })

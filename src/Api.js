@@ -19,7 +19,14 @@ const getUser = () =>
 const userLogin = (data) => request.post("/user/login", data);
 const userRegister = (data) => request.post("/user/register", data);
 const forgetPassword = (data) => request.post("/user/password", data);
-const changePassword = (data) => request.put("/user/password", data);
+const changePassword = (data) =>
+  request.put("/user/password", data, {
+    headers: {
+      "Content-Type": "application/json",
+      "Auth-Method": "JWT",
+      Auth: localStorage.getItem("token"),
+    },
+  });
 
 // rent methods
 const getOtherRents = () =>
