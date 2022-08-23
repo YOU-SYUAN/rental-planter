@@ -3,7 +3,7 @@ function Showplant(props) {
     props.data.plant.imgPath
   }`;
   return (
-    <div class="flex flex-wrap justify-center mx-auto mx-5 ">
+    <div class="flex flex-wrap justify-center mx-auto px-5">
       {/* <div class="flex flex-wrap flex-row justify-center mt-[60px] mb-20 text-center "> */}
       <div class="rounded-2xl border border-[#E5E7EB] w-[304px] h-[531px] flex justify-center tablet:h-[513px]">
         <div class=" w-60 pt-8">
