@@ -2,8 +2,12 @@ import background from "../assets/formbg.png";
 import vector from "../assets/Vector.png";
 import { useEffect } from "react";
 import { updatePlant } from "../Api";
-
+import "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 function RentForm() {
+  let { id } = useParams();
+  console.log(id);
+  let navigate = useNavigate();
   useEffect(() => {
     const form = document.querySelector("form");
     form.addEventListener("submit", (e) => {
@@ -12,6 +16,9 @@ function RentForm() {
       updatePlant(formData)
         .then((res) => {
           console.log(res);
+          if (res.status == 200) {
+            navigate("/main");
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -26,7 +33,7 @@ function RentForm() {
       <div class="flex flex-col items-center justify-center">
         <div class="w-[1280px] h-[720px] mt-[180px] tablet:w-[416px] tablet:h-[795px]">
           <form id="form">
-            <input type="hidden" name="rent" value="21" />
+            <input type="hidden" name="rent" value={id} />
             <div class="flex flex-row  bg-white rounded-3xl">
               {/* 上傳圖片 */}
               <div class="w-[543px] h-[720px] bg-[#519E75] rounded-3xl">
@@ -72,45 +79,6 @@ function RentForm() {
                   </label>
                 </div>
               </div>
-              {/* <div class="w-[543px] h-[720px] bg-[#519E75] rounded-3xl">
-                <div class="flex justify-center items-center mt-[120px] w-[480px] h-[480px] mx-[31px] tablet:w-[352px] tablet:h-[220px] tablet:mt-6">
-                  <label
-                    for="dropzone-file"
-                    class="flex flex-col justify-center items-center w-[480px] h-[480px] tablet:w-[352px] tablet:h-[220px] bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-                  >
-                    <div class="flex flex-col justify-center items-center pt-5 pb-6">
-                      <svg
-                        aria-hidden="true"
-                        class="mb-3 w-10 h-10 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                        ></path>
-                      </svg>
-                      <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                        <span class="font-semibold">Click to upload</span> or
-                        drag and drop
-                      </p>
-                      <p class="text-xs text-gray-500 dark:text-gray-400">
-                        PNG, JPG or jpeg (MAX. 480x480px)
-                      </p>
-                    </div>
-                    <input
-                      id="uploadIMG"
-                      type="file"
-                      class="hidden"
-                      accept=".png, .jpg, .jpeg"
-                    />
-                  </label>
-                </div>
-              </div> */}
               {/* 植物資料 */}
               <div class="mt-[69px] ml-9 tablet:mt-6 tablet:ml-8 ">
                 <h1 class="text-left text-[32px]  font-semibold pt-12 tablet:pt-[20px] tablet:text-[20px]">

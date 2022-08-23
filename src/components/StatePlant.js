@@ -11,7 +11,7 @@ function StatePlant(props) {
   }
   // websocket
   const [realtimeData, setRealtimeData] = useState({
-    soil_humi: "--.--",
+    soilHumid: "--.--",
     light: "---",
   });
   const [ws, setWs] = useState(null);
@@ -21,14 +21,16 @@ function StatePlant(props) {
       initWebSocket();
     }
   }, [ws]);
-  //soil_humi
+  //soilHumid
   const initWebSocket = () => {
     ws.on("Plant/Data", (data) => {
-      if (data.container_ID === props.rent.container) {
+      if (data.container === props.rent.container) {
         setRealtimeData(data);
         // console.log(data);
       }
     });
+
+    ws.emit("lastData", props.rent.container);
   };
   useEffect(() => {
     setWs(
@@ -60,7 +62,7 @@ function StatePlant(props) {
             <img src={humid} class="w-12 h-12 mr-4 mt-4"></img>
             <div>
               <h2 class="font-bold text-[48px] tablet:text-[24px] phone:text-[20px]">
-                {realtimeData.soil_humi}%
+                {realtimeData.soilHumid}%
               </h2>
               <h5 class="text-[20px] tablet:text-[14px] phone:text-[12px]">
                 土壤濕度
