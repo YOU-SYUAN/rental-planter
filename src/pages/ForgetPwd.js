@@ -68,7 +68,7 @@ function ForgetPwd() {
               type="email"
               id="email"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-1/2 h-[42px] tablet:w-full phone:w-full"
-              placeholder="name@flowbite.com"
+              placeholder="輸入您註冊的電子郵件"
               required
             />
           </div>

@@ -56,7 +56,7 @@ function Register() {
                 type="email"
                 id="email"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-[386px] h-[42px]"
-                placeholder="name@flowbite.com"
+                placeholder="輸入 Monospace 會員電子郵件"
                 required
               />
             </div>

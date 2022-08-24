@@ -367,7 +367,7 @@ function App() {
       >
         會員植物
       </h1>
-      <div class="flex  flex-row justify-center pl-[180px] ml-[180px] overflow-x-scroll overflow-y-hidden items-center w-[1560px] h-[803px]  mb-20 tablet:mb-10 text-center tablet:ml-10 tablet:mt-0 phone:mt-5 phone:mb-10 phone:ml-[35.5px]">
+      <div class="flex flex-row mt-[60px] ml-[180px] overflow-x-scroll overflow-y-hidden items-center w-[1560px] h-[803px]  mb-20 tablet:mb-10 text-center tablet:ml-10 tablet:mt-0 phone:mt-5 phone:mb-10 phone:ml-[35.5px]">
         {/* {otherPlant.map((item) => (
           <Showplant key={item.container} data={item}></Showplant>
         ))} */}

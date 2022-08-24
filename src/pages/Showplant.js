@@ -3,9 +3,9 @@ function Showplant(props) {
     props.data.plant.imgPath
   }`;
   return (
-    <div class="mt-[60px] flex flex-wrap justify-center ">
+    <div class="flex flex-wrap justify-center mx-auto px-5">
       {/* <div class="flex flex-wrap flex-row justify-center mt-[60px] mb-20 text-center "> */}
-      <div class="rounded-2xl border border-[#E5E7EB] w-[304px] h-[531px] flex justify-center mr-10 tablet:h-[513px]">
+      <div class="rounded-2xl border border-[#E5E7EB] w-[304px] h-[531px] flex justify-center tablet:h-[513px]">
         <div class=" w-60 pt-8">
           <img src={plantIMG} class="h-[240px] w-[240px]"></img>
           <div class="font-semibold mt-6 text-[24px] tablet:text-[16px]">

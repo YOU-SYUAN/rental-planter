@@ -1,7 +1,7 @@
 //統一管理api
 import axios from "axios";
 const request = axios.create({
-  baseURL: `${process.env.REACT_APP_BACKEND_HOST}/api` || "/api",
+  baseURL: `${process.env.REACT_APP_BACKEND_HOST || ''}/api`,
   headers: {
     "Content-Type": "application/json",
   },
@@ -31,7 +31,7 @@ const getOtherRents = () =>
     },
   });
 const registerRent = () =>
-  request.post("/rent/register", {
+  request.post("/rent/register", {}, {
     headers: {
       "Content-Type": "application/json",
       "Auth-Method": "JWT",
