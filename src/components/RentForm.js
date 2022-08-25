@@ -1,12 +1,13 @@
 import background from "../assets/formbg.png";
 import vector from "../assets/Vector.png";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { updatePlant } from "../Api";
 import "react-router-dom";
 import { useParams, useNavigate } from "react-router-dom";
 function RentForm() {
   let { id } = useParams();
   console.log(id);
+  // const imgURL = useRef();
   let navigate = useNavigate();
   useEffect(() => {
     const form = document.querySelector("form");
@@ -25,6 +26,14 @@ function RentForm() {
         });
     });
   }, []);
+  const showIMG = () => {
+    const imgURL = document.getElementById("uploadIMG");
+    const temp = document.getElementById("tempIMG");
+    const [file] = imgURL.files;
+    if (file) {
+      temp.src = URL.createObjectURL(file);
+    }
+  };
   return (
     <div
       class=" w-full"
@@ -41,35 +50,13 @@ function RentForm() {
                   id="showIMG"
                   class="flex justify-center items-center mt-[120px] w-[480px] h-[480px] mx-[31px] tablet:w-[352px] tablet:h-[220px] tablet:mt-6"
                 >
+                  <img id="tempIMG"></img>
                   <label
                     for="uploadIMG"
-                    class="flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                    class="flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                   >
-                    <div class="flex flex-col justify-center items-center pt-5 pb-6">
-                      <svg
-                        aria-hidden="true"
-                        class="mb-3 w-10 h-10 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                        ></path>
-                      </svg>
-                      <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                        <span class="font-semibold">Click to upload</span> or
-                        drag and drop
-                      </p>
-                      <p class="text-xs text-gray-500 dark:text-gray-400">
-                        jpeg, PNG, JPG (MAX. 480x480px)
-                      </p>
-                    </div>
                     <input
+                      onChange={showIMG}
                       id="uploadIMG"
                       type="file"
                       name="image"
@@ -79,6 +66,7 @@ function RentForm() {
                   </label>
                 </div>
               </div>
+
               {/* 植物資料 */}
               <div class="mt-[69px] ml-9 tablet:mt-6 tablet:ml-8 ">
                 <h1 class="text-left text-[32px]  font-semibold pt-12 tablet:pt-[20px] tablet:text-[20px]">
