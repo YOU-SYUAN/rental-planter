@@ -5,7 +5,6 @@ import State from "./State";
 import logo from "../assets/logo.png";
 import { Grid, Button } from "@mui/material";
 import Showplant from "./Showplant";
-import RentalSticker from "./Rentalsticker";
 import card1 from "../assets/card1.png";
 import card2 from "../assets/card2.png";
 import card3 from "../assets/card3.png";
@@ -13,9 +12,7 @@ import card4 from "../assets/card4.png";
 import lamu from "../assets/img1.png";
 import checkIcon from "../assets/check.png";
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { getUser, getOtherPlant, registerRent } from "../Api.js";
-// plant: { name: "", intro: "", imgPaths: "", nickName: "", minHumid: 0 },
 function App() {
   const [informMsg, setInformMsg] = useState("");
   const url = window.location.href;
@@ -66,7 +63,6 @@ function App() {
         }
       });
   }, []);
-  //socket.io.client
 
   // 顯示sidebar
   const show = () => {
@@ -377,7 +373,6 @@ function App() {
           }
         })}
       </div>
-      {/* <RentalSticker></RentalSticker> */}
       <div class="flex justify-center bg-[#F9FAFB]">
         <div class="mt-[60px] flex flex-col tablet:mt-10">
           <h1 class="font-extrabold text-[36px] tablet:text-[24px] phone:text-[20px]">

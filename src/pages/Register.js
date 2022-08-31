@@ -11,7 +11,6 @@ function Register() {
     try {
       const post1 = await userRegister({ email });
       if (post1.status == 200) {
-        // setLocalToken(post1.data.token);
         alert("您已註冊成功!請檢查您的電子郵件!");
         navigate("/");
       }
@@ -22,7 +21,6 @@ function Register() {
       } else if (error.response.status == 409) {
         alert("您已是Monospace的會員!請登入帳號");
         navigate("/");
-        // setErrorMsg("您已是Monospace的會員!請登入帳號");
       }
       console.log(error);
     }

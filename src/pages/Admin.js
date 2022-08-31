@@ -4,7 +4,6 @@ import RentedCard from "../components/RentedCard";
 import Waitline from "../components/Waitline";
 import Rented from "../components/Rented";
 import logo from "../assets/logo.png";
-import AddAdmin from "../components/AddAdmin";
 import { useState, useEffect } from "react";
 import {
   addAdmin,
