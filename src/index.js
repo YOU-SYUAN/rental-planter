@@ -2,13 +2,35 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./pages/App.js";
+import Admin from "./pages/Admin";
 import reportWebVitals from "./reportWebVitals";
-
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
+import Login from "./pages/Login.js";
+import RentForm from "./components/RentForm";
+import Register from "./pages/Register";
+import ForgetPwd from "./pages/ForgetPwd";
+import ResetPwd from "./pages/ResetPwd";
+import Rent from "./pages/Rentalsticker";
 const root = ReactDOM.createRoot(document.getElementById("root"));
+// root.render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>
+// );
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/main" element={<App />} />
+      <Route path="/admin" element={<Admin />} />
+      <Route path="/rentForm/:id" element={<RentForm />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/forgetPwd" element={<ForgetPwd />} />
+      <Route path="/resetPwd" element={<ResetPwd />} />
+      <Route path="*" element={<h1>404 Page Not Found</h1>} />
+    </Routes>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
