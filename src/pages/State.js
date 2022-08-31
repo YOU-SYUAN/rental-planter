@@ -1,5 +1,5 @@
 import StatePlant from "../components/StatePlant";
-import React, { useState, useEffect } from "react";
+import React from "react";
 function State(props) {
   console.log(props);
 

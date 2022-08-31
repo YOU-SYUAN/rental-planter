@@ -2,17 +2,15 @@ import Background from "../assets/skyBgIMG.png";
 import plantIMG from "../assets/bg2.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { forgetPassword } from "../Api.js";
 function ForgetPwd() {
   let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
-
+  const email = useRef(undefined);
   function forgetPwd() {
-    const email = document.getElementById("email").value;
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_HOST || ""}/api/user/password`, {
-        email,
-      })
+    // const email = document.getElementById("email").value;
+    forgetPassword({ email: email.current.value })
       .then((response) => {
         console.log(response);
         if (response.status == 200) {
@@ -67,6 +65,7 @@ function ForgetPwd() {
             <input
               type="email"
               id="email"
+              ref={email}
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-1/2 h-[42px] tablet:w-full phone:w-full"
               placeholder="輸入您註冊的電子郵件"
               required

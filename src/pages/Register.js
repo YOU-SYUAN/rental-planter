@@ -1,15 +1,16 @@
 import background from "../assets/registerIMG.png";
 import plantIMG from "../assets/bg.png";
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { userRegister } from "../Api";
 function Register() {
   const [errorMsg, setErrorMsg] = useState("");
+  const email = useRef(undefined);
   let navigate = useNavigate();
   async function Confirm() {
-    const email = document.getElementById("email").value;
+    // const email = document.getElementById("email").value;
     try {
-      const post1 = await userRegister({ email });
+      const post1 = await userRegister({ email: email.current.value });
       if (post1.status == 200) {
         alert("您已註冊成功!請檢查您的電子郵件!");
         navigate("/");
@@ -53,6 +54,7 @@ function Register() {
               <input
                 type="email"
                 id="email"
+                ref={email}
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg w-[386px] h-[42px]"
                 placeholder="輸入 Monospace 會員電子郵件"
                 required

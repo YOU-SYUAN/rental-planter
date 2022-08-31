@@ -1,12 +1,13 @@
 import "./App.css";
 import Background from "../assets/homeIMG.png";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { userLogin, getUser } from "../Api.js";
 function LoginForm() {
   let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
-
+  const email = useRef(undefined);
+  const password = useRef(undefined);
   useEffect(() => {
     //get user info
     getUser()
@@ -21,11 +22,9 @@ function LoginForm() {
   }, []);
 
   function Login() {
-    //let errorMsg = document.getElementById("errorMsg").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    console.log(email.current.value);
 
-    userLogin({ email, password })
+    userLogin({ email: email.current.value, password: password.current.value })
       .then((response) => {
         if (response.status == 200) {
           setLocalToken(response.data.token);
@@ -43,8 +42,10 @@ function LoginForm() {
         }
       })
       .catch((error) => {
+        console.log(error.response);
+        console.log(email);
         if (error.response.status == 401) {
-          console.log("狀態" + error.response.status);
+          console.log("狀態" + error.response);
           setErrorMsg("帳號/密碼 錯誤，請再試一次");
         } else if (error.response.status == 500) {
           setErrorMsg("伺服器錯誤");
@@ -102,6 +103,7 @@ function LoginForm() {
                         type="email"
                         name="email"
                         id="email"
+                        ref={email}
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                         placeholder="輸入電子郵件"
                         required=""
@@ -118,6 +120,7 @@ function LoginForm() {
                         type="password"
                         name="password"
                         id="password"
+                        ref={password}
                         placeholder="輸入密碼"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                         required=""

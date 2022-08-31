@@ -4,7 +4,7 @@ import RentedCard from "../components/RentedCard";
 import Waitline from "../components/Waitline";
 import Rented from "../components/Rented";
 import logo from "../assets/logo.png";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   addAdmin,
   getUser,
@@ -113,12 +113,10 @@ function Admin() {
     };
   });
   const addmodal = document.getElementById("authentication-modal");
+  const name = useRef(undefined);
+  const email = useRef(undefined);
   async function add() {
-    console.log("addadmin");
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-
-    addAdmin({ name, email })
+    addAdmin({ name: name.current.value, email: email.current.value })
       .then((response) => {
         if (response.status == 200) {
           console.log("新增成功");
@@ -301,6 +299,7 @@ function Admin() {
                     type="name"
                     name="name"
                     id="name"
+                    ref={name}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="管理員名字"
                     required
@@ -317,6 +316,7 @@ function Admin() {
                     type="email"
                     name="email"
                     id="email"
+                    ref={email}
                     placeholder="管理員電子郵件"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required
