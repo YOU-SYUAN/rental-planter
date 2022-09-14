@@ -1,12 +1,12 @@
 import background from "../assets/formbg.png";
 import vector from "../assets/Vector.png";
+import { useEffect, useState } from "react";
 import { updatePlant, getUser } from "../Api";
 import { useParams, useNavigate } from "react-router-dom";
 
 function RentForm() {
   let { id } = useParams();
-  console.log(id);
-  // const imgURL = useRef();
+  const [errorMsg, setErrorMsg] = useState("");
   let navigate = useNavigate();
 
   const checkRentForm = () => {
@@ -36,12 +36,25 @@ function RentForm() {
       updatePlant(formData)
         .then((res) => {
           console.log(res);
-          if (res.status == 200) {
+          if (res.status === 200) {
+            alert("更新成功！")
             navigate("/main");
           }
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          if (error.response.status === 400) {
+            console.log("狀態" + error.status);
+            setErrorMsg("表單 / 檔案無效");
+          } else if (error.response.status === 404) {
+            console.log("狀態" + error.status);
+            setErrorMsg("找不到要求的租借資料");
+          } else if (error.response.status === 409) {
+            console.log("狀態" + error.status);
+            setErrorMsg("植物資料已存在");
+          } else if (error.response.status === 500) {
+            console.log("狀態" + error.status);
+            setErrorMsg("伺服器錯誤");
+          }
         });
     });
   }, []);
@@ -162,6 +175,7 @@ function RentForm() {
                     植物簡介
                   </label>
                 </div>
+                <label class="text-[#FF0000] ">{errorMsg}</label>
                 <div class="flex justify-end mt-2">
                   <button class="h-[54px] w-[140px] text-[20px] bg-[#707070] text-white rounded-lg mr-12 tablet:h-[41px] tablet:w-[120px]">
                     取消
