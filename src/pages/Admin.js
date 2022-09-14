@@ -15,6 +15,7 @@ import {
 
 function Admin() {
   const url = window.location.href;
+  const [errorMsgAdmin, setErrorMsgAdmin] = useState("");
   const [amount, setAmount] = useState({ data: { remain: 0, rented: 0 } });
   const [waitlist, setWaitlist] = useState({ data: [] });
   const [rentInfo, setRentInfo] = useState({
@@ -118,17 +119,23 @@ function Admin() {
   async function add() {
     addAdmin({ name: name.current.value, email: email.current.value })
       .then((response) => {
-        if (response.status == 200) {
-          console.log("新增成功");
+        if (response.status === 200) {
+          alert("新增成功");
+          setErrorMsgAdmin('');
           addmodal.style.display = "none";
         }
       })
       .catch((error) => {
-        if (error.response.status == 401) {
+        if (error.response.status === 400) {
           console.log("狀態" + error.status);
-        } else if (error.status == 500) {
+          setErrorMsgAdmin('表單格式錯誤');
+        } else if (error.response.status === 409) {
+          console.log("狀態" + error.status);
+          setErrorMsgAdmin("使用者已存在");
+        } else if (error.response.status === 500) {
+          console.log("狀態" + error.status);
+          setErrorMsgAdmin("伺服器錯誤");
         }
-        console.log(error);
       });
   }
   const show = () => {
@@ -322,7 +329,7 @@ function Admin() {
                     required
                   />
                 </div>
-
+                <label class="text-[#FF0000] ">{errorMsgAdmin}</label>
                 <button
                   onClick={add}
                   type="button"
