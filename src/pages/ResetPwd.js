@@ -2,7 +2,7 @@ import Background from "../assets/skyBgIMG.png";
 import plantIMG from "../assets/resetIMG.png";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { changePassword } from "../Api.js";
+import { changePassword, getUser } from "../Api.js";
 function ResetPwd() {
   let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
@@ -18,6 +18,18 @@ function ResetPwd() {
     setPassword2(e.target.value);
     // console.log(e.target.value);
   };
+
+  useEffect(() => {
+      //get user info
+    getUser()
+      .catch((error) => {
+        if (error.response.status === 401) {
+          console.log("狀態" + error.response.status);
+          window.location.replace("/");
+        }
+      });
+  })
+
   useEffect(() => {
     // console.log(password);
     // console.log(password2);
