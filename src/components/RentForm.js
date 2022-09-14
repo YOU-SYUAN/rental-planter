@@ -61,9 +61,12 @@ function RentForm() {
   const showIMG = () => {
     const imgURL = document.getElementById("uploadIMG");
     const temp = document.getElementById("tempIMG");
+    const imgHint = document.getElementById("imgHint");
     const [file] = imgURL.files;
     if (file) {
       temp.src = URL.createObjectURL(file);
+      temp.classList.remove('hidden');
+      imgHint.classList.add('hidden');
     }
   };
   return (
@@ -80,13 +83,20 @@ function RentForm() {
               <div class="w-[543px] h-[720px] bg-[#519E75] rounded-3xl">
                 <div
                   id="showIMG"
-                  class="flex justify-center items-center mt-[120px] w-[480px] h-[480px] mx-[31px] tablet:w-[352px] tablet:h-[220px] tablet:mt-6"
+                  class="flex justify-center items-center mt-[120px] w-[480px] h-[372px] mx-[31px] tablet:w-[352px] tablet:h-[220px] tablet:mt-6"
                 >
-                  <img id="tempIMG"></img>
                   <label
                     for="uploadIMG"
-                    class="flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                    class="flex flex-col justify-center items-center w-full h-full bg-gray-50 rounded-lg cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                   >
+                    <img id="tempIMG" class="w-full h-full hidden"></img>
+                    <span id="imgHint" class="text-center text-gray-500">
+                      點擊上傳圖片
+                      <br />
+                      需為 .png、.jpg、.jpeg 格式
+                      <br />
+                      檔案不得超過 10 MB
+                    </span>
                     <input
                       onChange={showIMG}
                       id="uploadIMG"
