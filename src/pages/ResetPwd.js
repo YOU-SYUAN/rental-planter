@@ -61,10 +61,10 @@ function ResetPwd() {
       .catch((error) => {
         if (error.response.status === 400) {
           console.log("狀態" + error.response.status);
-          // setErrorMsg("Invalid header/body");
-        } else if (error.response.status == 401) {
-          console.log("狀態" + error.response.status);
-          // setErrorMsg("Invalid JWT token");
+        } else if (error.response.status === 401) {
+          console.log("狀態" + error.status);
+          alert("登入狀態已逾期，請重新登入");
+          window.location.replace("/");
         }
         console.log(error);
       });

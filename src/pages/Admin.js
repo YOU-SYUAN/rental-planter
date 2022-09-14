@@ -128,7 +128,11 @@ function Admin() {
       .catch((error) => {
         if (error.response.status === 400) {
           console.log("狀態" + error.status);
-          setErrorMsgAdmin('表單格式錯誤');
+          setErrorMsgAdmin("表單格式錯誤");
+        } else if (error.response.status === 401) {
+          console.log("狀態" + error.status);
+          alert("登入狀態已逾期，請重新登入");
+          window.location.replace("/");
         } else if (error.response.status === 409) {
           console.log("狀態" + error.status);
           setErrorMsgAdmin("使用者已存在");

@@ -45,6 +45,10 @@ function RentForm() {
           if (error.response.status === 400) {
             console.log("狀態" + error.status);
             setErrorMsg("表單 / 檔案無效");
+          } else if (error.response.status === 401) {
+            console.log("狀態" + error.status);
+            alert("登入狀態已逾期，請重新登入");
+            window.location.replace("/");
           } else if (error.response.status === 404) {
             console.log("狀態" + error.status);
             setErrorMsg("找不到要求的租借資料");

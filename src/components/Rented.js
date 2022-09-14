@@ -19,7 +19,12 @@ function Rented(props) {
         //重新整理頁面
         window.location.reload();
       }
-    });
+    }).catch(error => {
+      if (error.response.status === 401) {
+        console.log("狀態" + error.status);
+        alert("登入狀態已逾期，請重新登入");
+        window.location.replace("/");
+      }});
   };
   const showDelete = (rentId) => {
     console.log(rentId);
