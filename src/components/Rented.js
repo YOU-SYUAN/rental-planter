@@ -14,12 +14,11 @@ function Rented(props) {
     console.log(rentId);
     //delete user info
     deleteRented(rentId).then((res) => {
-      console.log(rentId);
-      //重新整理頁面
-      window.location.reload();
-
-      console.log(res);
-      console.log(res.data);
+      if (res.status === 200) {
+        alert('刪除成功！');
+        //重新整理頁面
+        window.location.reload();
+      }
     });
   };
   const showDelete = (rentId) => {
