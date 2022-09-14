@@ -1,15 +1,34 @@
 import background from "../assets/formbg.png";
 import vector from "../assets/Vector.png";
-import { useEffect, useRef } from "react";
-import { updatePlant } from "../Api";
-import "react-router-dom";
+import { updatePlant, getUser } from "../Api";
 import { useParams, useNavigate } from "react-router-dom";
+
 function RentForm() {
   let { id } = useParams();
   console.log(id);
   // const imgURL = useRef();
   let navigate = useNavigate();
+
+  const checkRentForm = () => {
+    //get user info
+    getUser()
+      .then((response) => {
+        const rent = response.data.rents.find(x => x.id === parseInt(id)) 
+        if (!rent || rent.plant) {
+          alert("租借資料無效，將引導您回首頁");
+          window.location.replace("/main");
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          console.log("狀態" + error.response.status);
+          window.location.replace("/");
+        }
+      });
+  }
+
   useEffect(() => {
+    checkRentForm();
     const form = document.querySelector("form");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
