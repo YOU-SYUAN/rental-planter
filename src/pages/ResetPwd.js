@@ -52,16 +52,14 @@ function ResetPwd() {
     changePassword({ password })
       .then((response) => {
         console.log(response);
-        if (response.status == 200) {
+        if (response.status === 200) {
           localStorage.clear();
-          // setLocalToken(response.data.token);
-          // navigate("/");
+          alert('更新成功！請重新登入')
           window.location.replace("/");
-          // window.location.reload();
         }
       })
       .catch((error) => {
-        if (error.response.status == 400) {
+        if (error.response.status === 400) {
           console.log("狀態" + error.response.status);
           // setErrorMsg("Invalid header/body");
         } else if (error.response.status == 401) {
