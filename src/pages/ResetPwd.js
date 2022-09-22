@@ -2,10 +2,10 @@ import Background from "../assets/skyBgIMG.png";
 import plantIMG from "../assets/resetIMG.png";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { changePassword } from "../Api.js";
+import { changePassword, getUser } from "../Api.js";
 function ResetPwd() {
   let navigate = useNavigate();
-  const [errorMsg, setErrorMsg] = useState("");
+  const [msg, setMsg] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [style, setStyle] = useState("");
@@ -18,19 +18,31 @@ function ResetPwd() {
     setPassword2(e.target.value);
     // console.log(e.target.value);
   };
+
+  useEffect(() => {
+      //get user info
+    getUser()
+      .catch((error) => {
+        if (error.response.status === 401) {
+          console.log("狀態" + error.response.status);
+          window.location.replace("/");
+        }
+      });
+  })
+
   useEffect(() => {
     // console.log(password);
     // console.log(password2);
-    if (password != "") {
+    if (password !== "") {
       if (password === password2) {
         setStyle("text-green-600 w-full text-left");
         setVisibility("w-1/2 visible");
-        setErrorMsg("輸入密碼相同，成功！");
+        setMsg("輸入密碼相同，成功！");
         setDisabled(false);
       } else {
         setStyle("text-[#FF0000] w-full text-left");
         setVisibility("w-1/2 visible");
-        setErrorMsg("輸入密碼不相同，失敗！");
+        setMsg("輸入密碼不相同，失敗！");
         setDisabled(true);
       }
     }
@@ -40,21 +52,19 @@ function ResetPwd() {
     changePassword({ password })
       .then((response) => {
         console.log(response);
-        if (response.status == 200) {
+        if (response.status === 200) {
           localStorage.clear();
-          // setLocalToken(response.data.token);
-          // navigate("/");
+          alert('更新成功！請重新登入')
           window.location.replace("/");
-          // window.location.reload();
         }
       })
       .catch((error) => {
-        if (error.response.status == 400) {
+        if (error.response.status === 400) {
           console.log("狀態" + error.response.status);
-          // setErrorMsg("Invalid header/body");
-        } else if (error.response.status == 401) {
-          console.log("狀態" + error.response.status);
-          // setErrorMsg("Invalid JWT token");
+        } else if (error.response.status === 401) {
+          console.log("狀態" + error.status);
+          alert("登入狀態已逾期，請重新登入");
+          window.location.replace("/");
         }
         console.log(error);
       });
@@ -124,7 +134,7 @@ function ResetPwd() {
 
           <div class="flex flex-col w-full space-y-2 items-center tablet:px-10 phone:px-10">
             <div class={visibility}>
-              <label class={style}>{errorMsg}</label>
+              <label class={style}>{msg}</label>
             </div>
             <button
               class="w-1/2 h-[42px] text-[14px] bg-[#519E75] text-white rounded-lg tablet:w-full phone:w-full"

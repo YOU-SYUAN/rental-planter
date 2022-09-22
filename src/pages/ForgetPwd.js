@@ -14,21 +14,17 @@ function ForgetPwd() {
       .then((response) => {
         console.log(response);
         if (response.status == 200) {
-          // token = <App token={response.data.token} />;
-          // token = ;
-          // setLocalToken(response.data.token);
-          // console.log("login: " + token);
+          alert('請求成功，請檢查電子郵件！');
           navigate("/");
         }
       })
       .catch((error) => {
-        if (error.response.status == 400) {
+        if (error.response.status === 400) {
           console.log("狀態" + error.response.status);
-          setErrorMsg("Invalid Body");
-        } else if (error.response.status == 404) {
-          setErrorMsg("User Not Found");
+          setErrorMsg("請輸入電子郵件！");
+        } else if (error.response.status === 404) {
+          setErrorMsg("請求失敗");
         }
-        console.log(error);
       });
   }
 
@@ -70,8 +66,10 @@ function ForgetPwd() {
               placeholder="輸入您註冊的電子郵件"
               required
             />
+            <div class="w-1/2 tablet:w-full phone:w-full">
+              <label class="text-[#FF0000] ">{errorMsg}</label>
+            </div>
           </div>
-
           <div class="flex flex-col w-full space-y-2 items-center tablet:px-10 phone:px-10">
             <button
               onClick={forgetPwd}

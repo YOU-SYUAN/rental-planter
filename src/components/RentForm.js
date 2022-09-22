@@ -1,15 +1,34 @@
 import background from "../assets/formbg.png";
 import vector from "../assets/Vector.png";
-import { useEffect, useRef } from "react";
-import { updatePlant } from "../Api";
-import "react-router-dom";
+import { useEffect, useState } from "react";
+import { updatePlant, getUser } from "../Api";
 import { useParams, useNavigate } from "react-router-dom";
+
 function RentForm() {
   let { id } = useParams();
-  console.log(id);
-  // const imgURL = useRef();
+  const [errorMsg, setErrorMsg] = useState("");
   let navigate = useNavigate();
+
+  const checkRentForm = () => {
+    //get user info
+    getUser()
+      .then((response) => {
+        const rent = response.data.rents.find(x => x.id === parseInt(id)) 
+        if (!rent || rent.plant) {
+          alert("租借資料無效，將引導您回首頁");
+          window.location.replace("/main");
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          console.log("狀態" + error.response.status);
+          window.location.replace("/");
+        }
+      });
+  }
+
   useEffect(() => {
+    checkRentForm();
     const form = document.querySelector("form");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -17,21 +36,41 @@ function RentForm() {
       updatePlant(formData)
         .then((res) => {
           console.log(res);
-          if (res.status == 200) {
+          if (res.status === 200) {
+            alert("更新成功！")
             navigate("/main");
           }
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          if (error.response.status === 400) {
+            console.log("狀態" + error.status);
+            setErrorMsg("表單 / 檔案無效");
+          } else if (error.response.status === 401) {
+            console.log("狀態" + error.status);
+            alert("登入狀態已逾期，請重新登入");
+            window.location.replace("/");
+          } else if (error.response.status === 404) {
+            console.log("狀態" + error.status);
+            setErrorMsg("找不到要求的租借資料");
+          } else if (error.response.status === 409) {
+            console.log("狀態" + error.status);
+            setErrorMsg("植物資料已存在");
+          } else if (error.response.status === 500) {
+            console.log("狀態" + error.status);
+            setErrorMsg("伺服器錯誤");
+          }
         });
     });
   }, []);
   const showIMG = () => {
     const imgURL = document.getElementById("uploadIMG");
     const temp = document.getElementById("tempIMG");
+    const imgHint = document.getElementById("imgHint");
     const [file] = imgURL.files;
     if (file) {
       temp.src = URL.createObjectURL(file);
+      temp.classList.remove('hidden');
+      imgHint.classList.add('hidden');
     }
   };
   return (
@@ -48,13 +87,20 @@ function RentForm() {
               <div class="w-[543px] h-[720px] bg-[#519E75] rounded-3xl">
                 <div
                   id="showIMG"
-                  class="flex justify-center items-center mt-[120px] w-[480px] h-[480px] mx-[31px] tablet:w-[352px] tablet:h-[220px] tablet:mt-6"
+                  class="flex justify-center items-center mt-[120px] w-[480px] h-[372px] mx-[31px] tablet:w-[352px] tablet:h-[220px] tablet:mt-6"
                 >
-                  <img id="tempIMG"></img>
                   <label
                     for="uploadIMG"
-                    class="flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                    class="flex flex-col justify-center items-center w-full h-full bg-gray-50 rounded-lg cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                   >
+                    <img id="tempIMG" class="w-full h-full hidden"></img>
+                    <span id="imgHint" class="text-center text-gray-500">
+                      點擊上傳圖片
+                      <br />
+                      需為 .png、.jpg、.jpeg 格式
+                      <br />
+                      檔案不得超過 10 MB
+                    </span>
                     <input
                       onChange={showIMG}
                       id="uploadIMG"
@@ -143,6 +189,7 @@ function RentForm() {
                     植物簡介
                   </label>
                 </div>
+                <label class="text-[#FF0000] ">{errorMsg}</label>
                 <div class="flex justify-end mt-2">
                   <button class="h-[54px] w-[140px] text-[20px] bg-[#707070] text-white rounded-lg mr-12 tablet:h-[41px] tablet:w-[120px]">
                     取消

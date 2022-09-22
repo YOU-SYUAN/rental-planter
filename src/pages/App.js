@@ -82,7 +82,7 @@ function App() {
   const successModal = () => {
     console.log("確認候補");
     registerRent().then((response) => {
-      if (response.status == 200) {
+      if (response.status === 200) {
         console.log(response.data);
         if (response.data.waiting == false) {
           setInformMsg("恭喜您登記成功!請至信箱查看信件!");
@@ -97,6 +97,12 @@ function App() {
           success.classList.add("hidden");
         }
       }
+    }).catch(error => {
+       if (error.response.status === 401) {
+          console.log("狀態" + error.status);
+          alert("登入狀態已逾期，請重新登入");
+          window.location.replace("/");
+        }
     });
   };
 
