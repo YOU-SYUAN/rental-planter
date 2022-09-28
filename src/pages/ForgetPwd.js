@@ -1,26 +1,24 @@
 import Background from "../assets/skyBgIMG.png";
 import plantIMG from "../assets/bg2.png";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { forgetPassword } from "../Api.js";
-function ForgetPwd() {
+
+const ForgetPwd = () => {
   let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
   const email = useRef(undefined);
   function forgetPwd() {
-    // const email = document.getElementById("email").value;
     forgetPassword({ email: email.current.value })
       .then((response) => {
         console.log(response);
-        if (response.status == 200) {
-          alert('請求成功，請檢查電子郵件！');
+        if (response.status === 200) {
+          alert("請求成功，請檢查電子郵件！");
           navigate("/");
         }
       })
       .catch((error) => {
         if (error.response.status === 400) {
-          console.log("狀態" + error.response.status);
           setErrorMsg("請輸入電子郵件！");
         } else if (error.response.status === 404) {
           setErrorMsg("請求失敗");
@@ -34,15 +32,12 @@ function ForgetPwd() {
       style={{ backgroundImage: `url(${Background})`, height: "100vh" }}
     >
       <div class="rounded-3xl bg-white flex flex-row h-3/5 w-4/5 tablet:flex-col tablet:w-3/5 phone:flex-col phone:w-4/5">
-        {/* <div class=""> */}
         <img
           src={plantIMG}
           class="desktop:rounded-l-3xl object-cover w-2/5 tablet:w-full tablet:h-2/5 tablet:rounded-t-3xl phone:w-full phone:h-2/5 phone:rounded-t-3xl"
+          alt="plant"
         ></img>
-        {/* </div> */}
-        {/* <div class="flex justify-center"> */}
         <div class="flex flex-wrap flex-row py-12 w-3/5 space-y-12 overflow-y-auto tablet:w-full phone:w-full">
-          {/* <div class="w-full justify-center"> */}
           <div class="w-full">
             <h1 class="text-center text-[40px] font-Nova_Flat font-normal tablet:text-[32px] phone:text-[24px]">
               忘記密碼
@@ -86,12 +81,10 @@ function ForgetPwd() {
               取消
             </button>
           </div>
-          {/* </div> */}
         </div>
-        {/* </div> */}
       </div>
     </div>
   );
-}
+};
 
 export default ForgetPwd;

@@ -1,8 +1,6 @@
 import StatePlant from "../components/StatePlant";
-import React from "react";
-function State(props) {
-  console.log(props);
 
+const State = (props) => {
   return (
     <div class="mt-[60px] justify-center tablet:pt-5 tablet:mt-0 phone:mt-4">
       <div class="justify-center">
@@ -11,14 +9,14 @@ function State(props) {
             盆栽狀態
           </h1>
         </div>
-        {props.rents.map((x) => {
-          if (x.plant !== null)
-            return (
-              <StatePlant key={x.id} rent={x} path={props.path}></StatePlant>
-            );
-        })}
+        {props.rents
+          .filter((x) => x.plant !== null)
+          .map((x) => (
+            <StatePlant key={x.id} rent={x} path={props.path}></StatePlant>
+          ))}
       </div>
     </div>
   );
-}
+};
+
 export default State;

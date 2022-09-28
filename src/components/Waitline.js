@@ -1,5 +1,6 @@
 import emailIcon from "../assets/img3.png";
-function Waitline(props) {
+
+const Waitline = (props) => {
   return (
     <div class="flex flex-row h-[73px] w-[520px] rounded-[48px] mx-4 ">
       {/* 資訊 */}
@@ -7,11 +8,13 @@ function Waitline(props) {
         <label>{props.data.name}</label>
         <label>{props.data.email}</label>
       </div>
-      <button onClick={() => (window.location = `mailto:${props.data.email}`)}>
-        <img src={emailIcon} class="mt-4"></img>
+      <button
+        onClick={() => window.open(`mailto:${props.data.email}`, "_blank")}
+      >
+        <img src={emailIcon} class="mt-4" alt="email"></img>
       </button>
     </div>
   );
-}
+};
 
 export default Waitline;

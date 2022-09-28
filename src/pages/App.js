@@ -5,15 +5,12 @@ import State from "./State";
 import logo from "../assets/logo.png";
 import { Grid, Button } from "@mui/material";
 import Showplant from "./Showplant";
-import card1 from "../assets/card1.png";
-import card2 from "../assets/card2.png";
-import card3 from "../assets/card3.png";
-import card4 from "../assets/card4.png";
 import lamu from "../assets/img1.png";
 import checkIcon from "../assets/check.png";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getUser, getOtherPlant, registerRent } from "../Api.js";
-function App() {
+
+const App = () => {
   const [informMsg, setInformMsg] = useState("");
   const url = window.location.href;
   const [user, setUser] = useState({
@@ -42,35 +39,40 @@ function App() {
           return;
         }
         setUser(response.data);
+        getOthers();
       })
       .catch((error) => {
-        if (error.response.status == 401) {
-          console.log("狀態" + error.response.status);
+        if (error.response.status === 401) {
+          alert("登入狀態已逾期，請重新登入");
           window.location.replace("/");
         }
-        console.log(error);
       });
+  }, []);
+
+  const getOthers = () => {
     getOtherPlant()
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           console.log(response.data);
           setOtherPlant(response.data);
         }
       })
       .catch((error) => {
-        if (error.response.status == 401) {
-          console.log(error.response.status);
+        if (error.response.status === 401) {
+          alert("登入狀態已逾期，請重新登入");
+          window.location.replace("/");
         }
       });
-  }, []);
+  };
 
   // 顯示sidebar
   const show = () => {
     const sidebar = document.getElementById("sidebar");
-    sidebar.style.display = sidebar.style.display == "none" ? "block" : "none";
+    sidebar.style.display = sidebar.style.display === "none" ? "block" : "none";
   };
   const popupModal = document.getElementById("popupModal");
   const success = document.getElementById("successModal");
+
   const showModal = () => {
     console.log("popupModal");
     if (popupModal.classList.contains("hidden")) {
@@ -79,36 +81,36 @@ function App() {
       popupModal.classList.add("hidden");
     }
   };
+
   const successModal = () => {
-    console.log("確認候補");
-    registerRent().then((response) => {
-      if (response.status === 200) {
-        console.log(response.data);
-        if (response.data.waiting == false) {
-          setInformMsg("恭喜您登記成功!請至信箱查看信件!");
-        } else {
-          setInformMsg("目前已無空盆器，已將您排至候補!");
+    registerRent()
+      .then((response) => {
+        if (response.status === 200) {
+          if (!response.data.waiting) {
+            setInformMsg("恭喜您登記成功!請至信箱查看信件!");
+          } else {
+            setInformMsg("目前已無空盆器，已將您排至候補!");
+          }
+          popupModal.classList.add("hidden");
+          if (success.classList.contains("hidden")) {
+            success.classList.remove("hidden");
+          } else {
+            success.classList.add("hidden");
+          }
         }
-        popupModal.classList.add("hidden");
-        console.log("success");
-        if (success.classList.contains("hidden")) {
-          success.classList.remove("hidden");
-        } else {
-          success.classList.add("hidden");
-        }
-      }
-    }).catch(error => {
-       if (error.response.status === 401) {
-          console.log("狀態" + error.status);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
           alert("登入狀態已逾期，請重新登入");
           window.location.replace("/");
         }
-    });
+      });
   };
 
   const closeModal = () => {
     success.classList.add("hidden");
   };
+
   //錨點設定
   const scrollToAnchor = (anchorName) => {
     if (anchorName) {
@@ -118,13 +120,13 @@ function App() {
       }
     }
   };
+
   const logout = () => {
     localStorage.clear();
     console.log("logout");
     window.location.replace("/");
   };
-  localStorage.getItem("key");
-  const imgPaths = [card1, card2, card3, card4];
+
   return (
     <div>
       <nav class=" tablet:h-[69.71px] phone:h-[70px]">
@@ -184,7 +186,7 @@ function App() {
                 </button>
               </li>
               <li>
-                <a
+                <button
                   onClick={() => scrollToAnchor("state")}
                   class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
@@ -202,7 +204,7 @@ function App() {
                     ></path>
                   </svg>
                   <span class="flex-1 ml-3 whitespace-nowrap">盆栽狀態</span>
-                </a>
+                </button>
               </li>
               <li>
                 <button
@@ -262,7 +264,6 @@ function App() {
               會員植物
             </button>
           </div>
-          {/* rounded-lg -> 8px */}
           <button
             onClick={logout}
             class="bg-[#8B8B8B] text-white w-[56px] h-10 rounded-lg phone:hidden"
@@ -271,9 +272,7 @@ function App() {
           </button>
         </div>
       </nav>
-      {/* </div> */}
       {/* 登記表單 */}
-
       <div
         id="popupModal"
         tabindex="-1"
@@ -282,7 +281,7 @@ function App() {
         <div class="relative flex flex-col justify-center p-4 w-full max-w-md m-auto h-full md:h-auto">
           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <div class="p-6 text-center">
-              <img src={lamu} class=" mx-auto mb-4 w-14 h-14 "></img>
+              <img src={lamu} class=" mx-auto mb-4 w-14 h-14 " alt=""></img>
               <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                 是否要登記盆栽?
               </h3>
@@ -316,7 +315,7 @@ function App() {
       >
         <div class="relative flex p-4 w-full max-w-md ml-auto h-full md:h-auto">
           <div class="flex flex-row justify-center items-center bg-green-200 rounded-[6px] w-[491px] h-16">
-            <img src={checkIcon} class="w-6 h-6 mr-[10px]"></img>
+            <img src={checkIcon} class="w-6 h-6 mr-[10px]" alt=""></img>
             <h3 class="text-[24px] font-semibold text-green-800 dark:text-white">
               {informMsg}
             </h3>
@@ -371,14 +370,11 @@ function App() {
       </h1>
       <div class="flex justify-center">
         <div class="flex flex-row overflow-x-scroll overflow-y-hidden items-center w-full max-w-[1560px] h-[803px] mb-20 tablet:mb-10 text-center phone:mb-10">
-          {/* {otherPlant.map((item) => (
-          <Showplant key={item.container} data={item}></Showplant>
-        ))} */}
-          {otherPlant.data.map((item) => {
-            if (item.plant != null) {
-              return <Showplant key={item.container} data={item}></Showplant>;
-            }
-          })}
+          {otherPlant.data
+            .filter((item) => item.plant !== null)
+            .map((item) => (
+              <Showplant key={item.container} data={item}></Showplant>
+            ))}
         </div>
       </div>
       <div class="flex justify-center bg-[#F9FAFB]">
@@ -401,5 +397,6 @@ function App() {
       </div>
     </div>
   );
-}
+};
+
 export default App;

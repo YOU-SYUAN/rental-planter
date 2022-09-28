@@ -19,7 +19,6 @@ if (document.getElementById('map')) {
             colorMin: '#A4CAFE',
             colorMax: '#1A56DB',
             flagType: 'image',
-            // flagURL: 'http://192.168.80.201:1313/images/flags/{0}.svg',
             flagURL: 'https://flowbite.com/application-ui/demo/images/flags/{0}.svg',
             data: {
                 data: {

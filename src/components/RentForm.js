@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { updatePlant, getUser } from "../Api";
 import { useParams, useNavigate } from "react-router-dom";
 
-function RentForm() {
+const RentForm = () => {
   let { id } = useParams();
   const [errorMsg, setErrorMsg] = useState("");
   let navigate = useNavigate();
@@ -13,7 +13,7 @@ function RentForm() {
     //get user info
     getUser()
       .then((response) => {
-        const rent = response.data.rents.find(x => x.id === parseInt(id)) 
+        const rent = response.data.rents.find((x) => x.id === parseInt(id));
         if (!rent || rent.plant) {
           alert("租借資料無效，將引導您回首頁");
           window.location.replace("/main");
@@ -21,11 +21,11 @@ function RentForm() {
       })
       .catch((error) => {
         if (error.response.status === 401) {
-          console.log("狀態" + error.response.status);
+          alert("登入狀態已逾期，請重新登入");
           window.location.replace("/");
         }
       });
-  }
+  };
 
   useEffect(() => {
     checkRentForm();
@@ -37,7 +37,7 @@ function RentForm() {
         .then((res) => {
           console.log(res);
           if (res.status === 200) {
-            alert("更新成功！")
+            alert("更新成功！");
             navigate("/main");
           }
         })
@@ -61,7 +61,9 @@ function RentForm() {
           }
         });
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const showIMG = () => {
     const imgURL = document.getElementById("uploadIMG");
     const temp = document.getElementById("tempIMG");
@@ -69,10 +71,11 @@ function RentForm() {
     const [file] = imgURL.files;
     if (file) {
       temp.src = URL.createObjectURL(file);
-      temp.classList.remove('hidden');
-      imgHint.classList.add('hidden');
+      temp.classList.remove("hidden");
+      imgHint.classList.add("hidden");
     }
   };
+
   return (
     <div
       class=" w-full"
@@ -93,7 +96,11 @@ function RentForm() {
                     for="uploadIMG"
                     class="flex flex-col justify-center items-center w-full h-full bg-gray-50 rounded-lg cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                   >
-                    <img id="tempIMG" class="w-full h-full hidden"></img>
+                    <img
+                      id="tempIMG"
+                      class="w-full h-full hidden"
+                      alt="preview"
+                    ></img>
                     <span id="imgHint" class="text-center text-gray-500">
                       點擊上傳圖片
                       <br />
@@ -168,7 +175,11 @@ function RentForm() {
                     最低土壤溼度標準
                   </label>
                   <div class="flex flex-row mt-2">
-                    <img src={vector} class="mr-2 mt-1 h-3 w-3 "></img>
+                    <img
+                      src={vector}
+                      class="mr-2 mt-1 h-3 w-3 "
+                      alt="info"
+                    ></img>
                     <label class="text-gray-500">說明</label>
                   </div>
                 </div>
@@ -200,9 +211,6 @@ function RentForm() {
                     value="確定"
                     class="h-[54px] w-[140px] text-[20px] bg-[#FFC700] rounded-lg mr-[68px] tablet:h-[41px] tablet:w-[120px]"
                   ></input>
-                  {/* <button class="h-[54px] w-[140px] text-[20px] bg-[#FFC700] rounded-lg mr-[68px] tablet:h-[41px] tablet:w-[120px]">
-                    確定
-                  </button> */}
                 </div>
               </div>
             </div>
@@ -211,5 +219,5 @@ function RentForm() {
       </div>
     </div>
   );
-}
+};
 export default RentForm;
