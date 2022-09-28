@@ -6,7 +6,7 @@ import Admin from "./pages/Admin";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login.js";
-import RentForm from "./components/RentForm";
+import RentForm from "./pages/RentForm";
 import Register from "./pages/Register";
 import ForgetPwd from "./pages/ForgetPwd";
 import ResetPwd from "./pages/ResetPwd";

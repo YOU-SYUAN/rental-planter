@@ -1,10 +1,10 @@
 import "./App.css";
 import background from "../assets/work.png";
-import Intro from "./Intro";
-import State from "./State";
+import Intro from "../components/Intro";
+import State from "../components/State";
 import logo from "../assets/logo.png";
 import { Grid, Button } from "@mui/material";
-import Showplant from "./Showplant";
+import Showplant from "../components/Showplant";
 import lamu from "../assets/img1.png";
 import checkIcon from "../assets/check.png";
 import { useState, useEffect } from "react";

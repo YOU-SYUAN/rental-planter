@@ -220,4 +220,5 @@ const RentForm = () => {
     </div>
   );
 };
+
 export default RentForm;
