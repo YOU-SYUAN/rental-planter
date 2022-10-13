@@ -29,14 +29,6 @@ const changePassword = (data) =>
   });
 
 // rent methods
-const getOtherRents = () =>
-  request.get("/rent/list/others", {
-    headers: {
-      "Content-Type": "application/json",
-      "Auth-Method": "JWT",
-      Auth: localStorage.getItem("token"),
-    },
-  });
 const registerRent = () =>
   request.post(
     "/rent/register",
@@ -127,7 +119,6 @@ export {
   getWaitList,
   getRentedInfo,
   deleteRented,
-  getOtherRents,
   registerRent,
   setRentTaken,
   forgetPassword,

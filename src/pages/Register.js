@@ -1,31 +1,30 @@
 import background from "../assets/registerIMG.png";
 import plantIMG from "../assets/bg.png";
 import { useNavigate } from "react-router-dom";
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { userRegister } from "../Api";
-function Register() {
+
+const Register = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const email = useRef(undefined);
   let navigate = useNavigate();
-  async function Confirm() {
-    // const email = document.getElementById("email").value;
+
+  const confirm = async () => {
     try {
       const post1 = await userRegister({ email: email.current.value });
-      if (post1.status == 200) {
-        alert("您已註冊成功!請檢查您的電子郵件!");
+      if (post1.status === 200) {
+        alert("註冊成功！請檢查電子郵件！");
         navigate("/");
       }
     } catch (error) {
-      if (error.response.status == 404) {
-        console.log("狀態" + error.response.message);
-        setErrorMsg("您還不是Monospace的會員!");
-      } else if (error.response.status == 409) {
-        alert("您已是Monospace的會員!請登入帳號");
+      if (error.response.status === 404) {
+        setErrorMsg("您還不是 Monospace 的會員！");
+      } else if (error.response.status === 409) {
+        alert("您已經是本系統的會員！請登入！");
         navigate("/");
       }
-      console.log(error);
     }
-  }
+  };
 
   return (
     <div
@@ -34,7 +33,7 @@ function Register() {
     >
       <div class="w-[1200px] h-[540px] rounded-3xl bg-white flex flex-row">
         <div class="">
-          <img src={plantIMG} class="rounded-l-3xl"></img>
+          <img src={plantIMG} class="rounded-l-3xl" alt="plant"></img>
         </div>
         <div class="flex justify-center w-[560px]">
           <div class="flex flex-wrap flex-col pt-[32px]">
@@ -65,7 +64,7 @@ function Register() {
                 <label class="text-[#FF0000] ">{errorMsg}</label>
               </div>
               <button
-                onClick={Confirm}
+                onClick={confirm}
                 class="w-[386px] h-[42px] text-[20px] bg-[#519E75] text-white rounded-lg mr-12 "
               >
                 註冊
@@ -82,6 +81,6 @@ function Register() {
       </div>
     </div>
   );
-}
+};
 
 export default Register;

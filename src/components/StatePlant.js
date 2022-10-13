@@ -1,14 +1,10 @@
 import { Typography } from "@mui/material";
-import plant2 from "../assets/plant2.png";
 import lightImg from "../assets/light.png";
 import humid from "../assets/humid.png";
 import { useState, useEffect } from "react";
 import webSocket from "socket.io-client";
 
-function StatePlant(props) {
-  if (props.path != `${window.location.origin}/main`) {
-    registerDisconnectHandler();
-  }
+const StatePlant = (props) => {
   // websocket
   const [realtimeData, setRealtimeData] = useState({
     soilHumid: "--.--",
@@ -20,18 +16,20 @@ function StatePlant(props) {
     if (ws) {
       initWebSocket();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ws]);
+
   //soilHumid
   const initWebSocket = () => {
     ws.on("Plant/Data", (data) => {
       if (data.container === props.rent.container) {
         setRealtimeData(data);
-        // console.log(data);
       }
     });
 
     ws.emit("lastData", props.rent.container);
   };
+
   useEffect(() => {
     setWs(
       webSocket(
@@ -41,13 +39,18 @@ function StatePlant(props) {
         }
       )
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  function registerDisconnectHandler() {
-    console.log("即將斷線");
+
+  const registerDisconnectHandler = () => {
     ws.on("disconnect", () => {
       console.log("Disconnected");
       ws.close();
     });
+  };
+
+  if (props.path !== `${window.location.origin}/main`) {
+    registerDisconnectHandler();
   }
 
   const plantIMG = `${process.env.REACT_APP_BACKEND_HOST || ""}/${
@@ -59,7 +62,7 @@ function StatePlant(props) {
       <div class="flex justify-center w-[1560px] phone:flex-wrap gap-[120px] tablet:gap-[16px] px-20">
         <div class="pt-10 pb-10 flex flex-col  justify-center  tablet:pr-10 phone:py-4">
           <div class="flex flex-row">
-            <img src={humid} class="w-12 h-12 mr-4 mt-4"></img>
+            <img src={humid} class="w-12 h-12 mr-4 mt-4" alt="humid"></img>
             <div>
               <h2 class="font-bold text-[48px] tablet:text-[24px] phone:text-[20px]">
                 {realtimeData.soilHumid}%
@@ -70,7 +73,7 @@ function StatePlant(props) {
             </div>
           </div>
           <div class="flex flex-row">
-            <img src={lightImg} class="w-12 h-12 mr-4 mt-4"></img>
+            <img src={lightImg} class="w-12 h-12 mr-4 mt-4" alt="light"></img>
             <div>
               <h2 class="font-bold text-[48px] tablet:text-[24px] phone:text-[20px]">
                 {realtimeData.light} lx
@@ -85,6 +88,7 @@ function StatePlant(props) {
           <img
             src={plantIMG}
             class="w-[412px] h-[320px] tablet:w-[240px] tablet:h-[184.59px] tablet:mx-4 tablet:my-10 phone:w-[200px] phone:h-[153.82px] rounded-[24px]"
+            alt="plant"
           ></img>
         </div>
         <div class=" tablet:mt-[17.29px] tablet:pl-5">
@@ -103,6 +107,6 @@ function StatePlant(props) {
       </div>
     </div>
   );
-}
+};
 
 export default StatePlant;

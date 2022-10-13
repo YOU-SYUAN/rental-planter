@@ -1,12 +1,13 @@
-import { Typography } from "@mui/material";
 import plant from "../assets/plant.png";
-function Intro() {
+
+const Intro = () => {
   return (
     <div class=" flex flex-row justify-center phone:flex-wrap ">
       <div class="pr-[70px] mt-[60px] pt-[70px] tablet:px-10 tablet:py-[71px] tablet:mt-4 phone:pr-[10px] phone:mt-[46px] phone:mx-5 phone:pt-0">
         <img
           src={plant}
           class="h-[500.45px] w-[640px] pb-[70px] tablet:w-[280px] tablet:h-[218.95px] tablet:pb-5 phone:w-[240px] phone:h-[187.67px] phone:pb-[26.33px] phone:px-[47.5px]"
+          alt="plant"
         ></img>
       </div>
       <div class="mt-[60px] ml-[60px] pl-8 pt-[104px] tablet:mt-5 tablet:pt-[31px] tablet:ml-5 phone:p-0 phone:mt-0 phone:ml-0 phone:justify-center">
@@ -29,5 +30,6 @@ function Intro() {
       </div>
     </div>
   );
-}
+};
+
 export default Intro;
