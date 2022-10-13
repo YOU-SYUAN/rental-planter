@@ -99,11 +99,11 @@ const RentForm = () => {
                 >
                   <label
                     for="uploadIMG"
-                    class="flex flex-col justify-center items-center w-full h-full bg-gray-50 rounded-lg cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+                    class="flex flex-col justify-center items-center w-full h-full bg-gray-50 rounded-lg cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 overflow-hidden"
                   >
                     <img
                       id="tempIMG"
-                      class="w-full h-full hidden"
+                      class="w-full h-full object-cover hidden"
                       alt="preview"
                     ></img>
                     <span id="imgHint" class="text-center text-gray-500">

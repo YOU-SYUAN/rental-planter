@@ -89,7 +89,7 @@ const StatePlant = (props) => {
         <div class="flex justify-center phone:mt-0 grow">
           <img
             src={plantIMG}
-            class="w-[412px] h-[320px] tablet:w-[240px] tablet:h-[184.59px] tablet:mx-4 tablet:my-10 phone:w-[200px] phone:h-[153.82px] rounded-[24px]"
+            class="w-[412px] h-[320px] tablet:w-[240px] tablet:h-[184.59px] tablet:mx-4 tablet:my-10 phone:w-[200px] phone:h-[153.82px] rounded-[24px] object-cover"
             alt="plant"
           ></img>
         </div>
