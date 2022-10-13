@@ -54,7 +54,6 @@ const RentForm = () => {
       const formData = new FormData(form);
       modifyPlant(id, formData)
         .then((res) => {
-          console.log(res);
           if (res.status === 200) {
             alert("更新成功！");
             navigate("/main");
@@ -62,20 +61,27 @@ const RentForm = () => {
         })
         .catch((error) => {
           if (error.response.status === 400) {
-            console.log("狀態" + error.status);
-            setErrorMsg("表單 / 檔案無效");
+            console.log(error.response.data.message);
+            let message = '';
+            switch (error.response.data.message) {
+              case 'Unexpected field':
+                message = "僅接受 .jpeg 、.jpg 、 .png 格式的檔案";
+                break;
+              case 'File too large':
+                message = "檔案大小不得超過 10 MB";
+                break;
+              default:
+                message = "發生未預期的錯誤，請稍後重試";
+            }
+            setErrorMsg(message);
           } else if (error.response.status === 401) {
-            console.log("狀態" + error.status);
             alert("登入狀態已逾期，請重新登入");
             window.location.replace("/");
           } else if (error.response.status === 404) {
-            console.log("狀態" + error.status);
             setErrorMsg("找不到要求的租借資料");
           } else if (error.response.status === 409) {
-            console.log("狀態" + error.status);
             setErrorMsg("植物資料已存在");
           } else if (error.response.status === 500) {
-            console.log("狀態" + error.status);
             setErrorMsg("伺服器錯誤");
           }
         });
