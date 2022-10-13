@@ -198,7 +198,7 @@ const RentForm = () => {
                 </div>
 
                 <div class="relative z-0 mb-6 w-[660px] h-[156px] group tablet:w-[364px] tablet:h-[120px]">
-                  <input
+                  <textarea
                     type="text"
                     name="intro"
                     id="introduction"
@@ -219,7 +219,7 @@ const RentForm = () => {
                   <button
                     class="h-[54px] w-[140px] text-[20px] bg-[#707070] text-white rounded-lg mr-12 tablet:h-[41px] tablet:w-[120px]"
                     type="button"
-                    onClick={()=>navigate("/main")}
+                    onClick={() => navigate("/main")}
                   >
                     取消
                   </button>

@@ -185,7 +185,7 @@ const RentForm = () => {
                 </div>
 
                 <div class="relative z-0 mb-6 w-[660px] h-[156px] group tablet:w-[364px] tablet:h-[120px]">
-                  <input
+                  <textarea
                     type="text"
                     name="intro"
                     id="introduction"
