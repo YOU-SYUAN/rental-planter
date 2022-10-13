@@ -202,7 +202,11 @@ const RentForm = () => {
                 </div>
                 <label class="text-[#FF0000] ">{errorMsg}</label>
                 <div class="flex justify-end mt-2">
-                  <button class="h-[54px] w-[140px] text-[20px] bg-[#707070] text-white rounded-lg mr-12 tablet:h-[41px] tablet:w-[120px]">
+                  <button
+                    class="h-[54px] w-[140px] text-[20px] bg-[#707070] text-white rounded-lg mr-12 tablet:h-[41px] tablet:w-[120px]"
+                    type="button"
+                    onClick={() => navigate("/main")}
+                  >
                     取消
                   </button>
                   <input
