@@ -1,7 +1,7 @@
 import background from "../assets/formbg.png";
 import vector from "../assets/Vector.png";
 import { useEffect, useState } from "react";
-import { updatePlant, getUser } from "../Api";
+import { addPlant, getUser } from "../Api";
 import { useParams, useNavigate } from "react-router-dom";
 
 const RentForm = () => {
@@ -33,7 +33,7 @@ const RentForm = () => {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const formData = new FormData(form);
-      updatePlant(formData)
+      addPlant(formData)
         .then((res) => {
           console.log(res);
           if (res.status === 200) {

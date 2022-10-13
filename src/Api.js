@@ -28,6 +28,15 @@ const changePassword = (data) =>
     },
   });
 
+const getOtherPlant = () =>
+  request.get("/rent/list/others", {
+    headers: {
+      "Content-Type": "application/json",
+      "Auth-Method": "JWT",
+      Auth: localStorage.getItem("token"),
+    },
+  });
+
 // rent methods
 const registerRent = () =>
   request.post(
@@ -41,7 +50,7 @@ const registerRent = () =>
       },
     }
   );
-const updatePlant = (formData) =>
+const addPlant = (formData) =>
   request.post("/rent/plantInfo", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -50,10 +59,10 @@ const updatePlant = (formData) =>
     },
   });
 
-const getOtherPlant = () =>
-  request.get("/rent/list/others", {
+const modifyPlant = (id, formData) =>
+  request.put(`/rent/plantInfo/${id}`, formData, {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       "Auth-Method": "JWT",
       Auth: localStorage.getItem("token"),
     },
@@ -84,24 +93,103 @@ const getRentedAmount = () =>
       Auth: localStorage.getItem("token"),
     },
   });
+const setRentTaken = (id) =>
+  request.put(`/admin/rent/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      "Auth-Method": "JWT",
+      Auth: localStorage.getItem("token"),
+    },
+  });
+const deleteRented = (id) =>
+  request.delete(`/admin/rent/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      "Auth-Method": "JWT",
+      Auth: localStorage.getItem("token"),
+    },
+  });
+
+const getMemberList = () =>
+  request.get("/admin/members", {
+    headers: {
+      "Content-Type": "application/json",
+      "Auth-Method": "JWT",
+      Auth: localStorage.getItem("token"),
+    },
+  });
+
+const updateAPIMembers = () =>
+  request.put(
+    "/admin/admins",
+    {},
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Auth-Method": "JWT",
+        Auth: localStorage.getItem("token"),
+      },
+    }
+  );
+
+const updateMemberData = (id) =>
+  request.put(
+    `/admin/member/${id}`,
+    {},
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Auth-Method": "JWT",
+        Auth: localStorage.getItem("token"),
+      },
+    }
+  );
+
+const deleteMember = (id) =>
+  request.delete(`/admin/member/${id}`, {
+    headers: {
+      "Content-Type": "application/json",
+      "Auth-Method": "JWT",
+      Auth: localStorage.getItem("token"),
+    },
+  });
+
+const getAdminList = () =>
+  request.get("/admin/admin", {
+    headers: {
+      "Content-Type": "application/json",
+      "Auth-Method": "JWT",
+      Auth: localStorage.getItem("token"),
+    },
+  });
 const addAdmin = (data) =>
-  request.post("/admin/addAdmin", data, {
+  request.post("/admin/admin", data, {
     headers: {
       "Content-Type": "application/json",
       "Auth-Method": "JWT",
       Auth: localStorage.getItem("token"),
     },
   });
-const setRentTaken = (rentId) =>
-  request.put(`/admin/rent/${rentId}`, {
+const deleteAdmin = (id) =>
+  request.delete(`/admin/admin/${id}`, {
     headers: {
       "Content-Type": "application/json",
       "Auth-Method": "JWT",
       Auth: localStorage.getItem("token"),
     },
   });
-const deleteRented = (rentId) =>
-  request.delete(`/admin/rent/${rentId}`, {
+
+const getConfig = () =>
+  request.get("/admin/config", {
+    headers: {
+      "Content-Type": "application/json",
+      "Auth-Method": "JWT",
+      Auth: localStorage.getItem("token"),
+    },
+  });
+
+const updateConfig = (data) =>
+  request.put("/admin/config", data, {
     headers: {
       "Content-Type": "application/json",
       "Auth-Method": "JWT",
@@ -114,7 +202,8 @@ export {
   userRegister,
   addAdmin,
   getUser,
-  updatePlant,
+  addPlant,
+  modifyPlant,
   getRentedAmount,
   getWaitList,
   getRentedInfo,
@@ -124,4 +213,12 @@ export {
   forgetPassword,
   changePassword,
   getOtherPlant,
+  getMemberList,
+  updateAPIMembers,
+  updateMemberData,
+  deleteMember,
+  getAdminList,
+  deleteAdmin,
+  getConfig,
+  updateConfig,
 };
