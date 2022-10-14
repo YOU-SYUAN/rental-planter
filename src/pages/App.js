@@ -344,7 +344,7 @@ const App = () => {
           </div>
         </div>
       </div>
-      <div id="introduce">
+      <div id="introduce" class="w-full flex justify-center">
         <Intro></Intro>
       </div>
       <div id="state">
