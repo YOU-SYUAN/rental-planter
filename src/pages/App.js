@@ -128,7 +128,7 @@ const App = () => {
 
   return (
     <div class="flex flex-col items-center">
-      <nav class="w-full max-w-[1560px]">
+      <nav class="w-full desktop:max-w-[1560px] tablet:max-w-[768px]">
         <div class="desktop:px-[140px] tablet:px-9 px-4 my-6 flex flex-row flex-wrap justify-between items-center ">
           <img
             src={logo}
