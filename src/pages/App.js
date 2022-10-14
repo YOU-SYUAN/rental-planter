@@ -128,12 +128,12 @@ const App = () => {
   };
 
   return (
-    <div>
-      <nav class=" tablet:h-[69.71px] phone:h-[70px]">
-        <div class=" mx-[140px] my-6 flex flex-row flex-wrap justify-between items-center tablet:mx-9 phone:mx-4">
+    <div class="flex flex-col items-center">
+      <nav class="w-full max-w-[1560px]">
+        <div class="desktop:px-[140px] tablet:px-9 px-4 my-6 flex flex-row flex-wrap justify-between items-center ">
           <img
             src={logo}
-            class="mr-3 h-6 tablet:w-[74px] tablet:h-[45.71px] phone:w-12 phone:h-[34.29px]"
+            class="desktop:mr-3 desktop:h-6 tablet:w-[74px] tablet:h-[45.71px] w-12 h-[34.29px]"
             alt="Logo"
           />
           <button
@@ -141,7 +141,7 @@ const App = () => {
             onClick={show}
             data-collapse-toggle="navbar-default"
             type="button"
-            class="inline-flex items-center text-sm text-gray-500 rounded-lg tablet:hidden desktop:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 phone:justify-end"
+            class="inline-flex items-center text-sm text-gray-500 rounded-lg desktop:hidden tablet:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 justify-end"
             aria-controls="navbar-default"
             aria-expanded="false"
           >
@@ -253,7 +253,7 @@ const App = () => {
             </ul>
           </div>
 
-          <div class="flex items-center text-[20px] tablet:text-[16px] phone:hidden">
+          <div class="items-center text-[20px] tablet:text-[16px] hidden desktop:flex tablet:flex">
             <button onClick={() => scrollToAnchor("introduce")} class="mr-8  ">
               系統介紹
             </button>
@@ -266,7 +266,7 @@ const App = () => {
           </div>
           <button
             onClick={logout}
-            class="bg-[#8B8B8B] text-white w-[56px] h-10 rounded-lg phone:hidden"
+            class="bg-[#8B8B8B] text-white w-[56px] h-10 rounded-lg hidden desktop:block tablet:block"
           >
             登出
           </button>
