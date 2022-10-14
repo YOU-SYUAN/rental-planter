@@ -17,7 +17,7 @@ const Showplant = (props) => {
           <div class="text-[#6B7280] mt-4 text-[18px] tablet:text-[14px]">
             {props.data.plant.nickName}
           </div>
-          <div class="mt-6 text-left text-[16px] tablet:text-[14px]">
+          <div class="mt-6 text-left text-[16px] tablet:text-[14px] whitespace-pre-line">
             {props.data.plant.intro}
           </div>
         </div>

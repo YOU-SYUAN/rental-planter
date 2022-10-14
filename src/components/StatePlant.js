@@ -102,7 +102,7 @@ const StatePlant = (props) => {
               {props.rent.plant.nickname}
             </Typography>
           </div>
-          <Typography class="mt-8 w-[219px] text-[#6B7280]  text-[20px] tablet:text-[14px] tablet:w-[151px] tablet:mt-5 phone:w-[200px] phone:h-[84px] ">
+          <Typography class="mt-8 w-[219px] text-[#6B7280]  text-[20px] tablet:text-[14px] tablet:w-[151px] tablet:mt-5 phone:w-[200px] phone:h-[84px] whitespace-pre-line">
             {props.rent.plant.intro}
           </Typography>
           <button
