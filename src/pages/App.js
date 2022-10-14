@@ -3,7 +3,6 @@ import background from "../assets/work.png";
 import Intro from "../components/Intro";
 import State from "../components/State";
 import logo from "../assets/logo.png";
-import { Grid, Button } from "@mui/material";
 import Showplant from "../components/Showplant";
 import lamu from "../assets/img1.png";
 import checkIcon from "../assets/check.png";
@@ -324,37 +323,26 @@ const App = () => {
       </div>
       {/* 區塊2 */}
       <div
-        class="w-full 
-        h-[720px]
-        tablet:h-[432px]
-        phone:h-[360px]
-        "
+        class="w-full desktop:h-[720px] tablet:h-[432px] h-[360px] flex justify-center bg-cover bg-center"
         style={{ backgroundImage: `url(${background})` }}
       >
-        <Grid container direction="row" spacing={2}>
-          <Grid item xs={5}>
-            <div></div>
-          </Grid>
-          <Grid
-            item
-            xs={7}
-            style={{ textAlign: "left" }}
-            class="mt-[229px] tablet:mt-[124.29px] phone:mt-[128px]"
-          >
-            <div class="text-[100px] text-white tablet:text-[54px] phone:text-[32px] ">
+        <div class="grid desktop:grid-cols-12 tablet:grid-cols-12 grid-cols-3 gap-2 w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] ">
+          <div class="desktop:col-span-5 tablet:col-span-5 col-span-1"></div>
+          <div class="desktop:col-span-7 tablet:col-span-7 col-span-2 desktop:mt-[229px] tablet:mt-[124.29px] mt-[128px]">
+            <div class="desktop:text-[100px] tablet:text-[54px] text-[32px] text-white w-full">
               Rental Planter
             </div>
-            <div class="text-[20px] text-white tablet:text-[16px] phone:text-[12px]">
+            <div class="desktop:text-[20px] tablet:text-[16px] text-[12px] text-white w-full">
               用心愛護你的植物
             </div>
-            <Button
+            <button
               onClick={showModal}
-              class="bg-[#519E75] rounded-lg mt-4 w-[136px] h-[60px] tablet:w-[96px] tablet:h-[48px] text-white phone:w-[72px] phone:h-9 phone:text-[12px]"
+              class="bg-[#519E75] rounded-lg mt-4 desktop:w-[136px] desktop:h-[60px] tablet:w-[96px] tablet:h-[48px] w-[72px] h-9 desktop:text-[1.25em] tablet:text-[1em] text-[0.75em] text-white"
             >
               立即登記
-            </Button>
-          </Grid>
-        </Grid>
+            </button>
+          </div>
+        </div>
       </div>
       <div id="introduce">
         <Intro></Intro>
