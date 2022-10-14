@@ -3,8 +3,10 @@ import lightImg from "../assets/light.png";
 import humid from "../assets/humid.png";
 import { useState, useEffect } from "react";
 import webSocket from "socket.io-client";
+import { useNavigate } from "react-router-dom";
 
 const StatePlant = (props) => {
+  let navigate = useNavigate();
   // websocket
   const [realtimeData, setRealtimeData] = useState({
     soilHumid: "--.--",
@@ -87,11 +89,11 @@ const StatePlant = (props) => {
         <div class="flex justify-center phone:mt-0 grow">
           <img
             src={plantIMG}
-            class="w-[412px] h-[320px] tablet:w-[240px] tablet:h-[184.59px] tablet:mx-4 tablet:my-10 phone:w-[200px] phone:h-[153.82px] rounded-[24px]"
+            class="w-[412px] h-[320px] tablet:w-[240px] tablet:h-[184.59px] tablet:mx-4 tablet:my-10 phone:w-[200px] phone:h-[153.82px] rounded-[24px] object-cover"
             alt="plant"
           ></img>
         </div>
-        <div class=" tablet:mt-[17.29px] tablet:pl-5">
+        <div class=" tablet:mt-[17.29px] tablet:pl-5 relative">
           <div class="flex flex-row phone:justify-center">
             <Typography class="mt-10 font-bold text-[32px] tablet:text-[20px] phone:text-[16px]">
               {props.rent.plant.name}
@@ -100,9 +102,16 @@ const StatePlant = (props) => {
               {props.rent.plant.nickname}
             </Typography>
           </div>
-          <Typography class="mt-8 w-[219px] text-[#6B7280]  text-[20px] tablet:text-[14px] tablet:w-[151px] tablet:mt-5 phone:w-[200px] phone:h-[84px] ">
+          <Typography class="mt-8 w-[219px] text-[#6B7280]  text-[20px] tablet:text-[14px] tablet:w-[151px] tablet:mt-5 phone:w-[200px] phone:h-[84px] whitespace-pre-line">
             {props.rent.plant.intro}
           </Typography>
+          <button
+            type="button"
+            class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900 absolute right-0 bottom-0"
+            onClick={() => navigate(`/rent/edit/${props.rent.id}`)}
+          >
+            編輯
+          </button>
         </div>
       </div>
     </div>

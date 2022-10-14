@@ -1,12 +1,15 @@
 import background from "../assets/formbg.png";
 import vector from "../assets/Vector.png";
 import { useEffect, useState } from "react";
-import { addPlant, getUser } from "../Api";
+import { modifyPlant, getUser } from "../Api";
 import { useParams, useNavigate } from "react-router-dom";
 
 const RentForm = () => {
   let { id } = useParams();
   const [errorMsg, setErrorMsg] = useState("");
+  const [currentImg, setCurrentImg] = useState("");
+  const [plant, setPlant] = useState({});
+  const [minHumid, setMinHumid] = useState(0);
   let navigate = useNavigate();
 
   const checkRentForm = () => {
@@ -14,10 +17,26 @@ const RentForm = () => {
     getUser()
       .then((response) => {
         const rent = response.data.rents.find((x) => x.id === parseInt(id));
-        if (!rent || rent.plant) {
+        if (!rent) {
           alert("租借資料無效，將引導您回首頁");
           window.location.replace("/main");
         }
+
+        if (!rent.plant) {
+          window.location.replace(`/rentForm/${id}`);
+        }
+
+        setCurrentImg(
+          `${process.env.REACT_APP_BACKEND_HOST || ""}/${rent.plant.imgPath}`
+        );
+
+        setMinHumid(parseInt(rent.plant.minHumid  ));
+
+        setPlant({
+          name: rent.plant.name,
+          intro: rent.plant.intro,
+          nickname: rent.plant.nickname
+        });
       })
       .catch((error) => {
         if (error.response.status === 401) {
@@ -33,7 +52,7 @@ const RentForm = () => {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const formData = new FormData(form);
-      addPlant(formData)
+      modifyPlant(id, formData)
         .then((res) => {
           if (res.status === 200) {
             alert("更新成功！");
@@ -42,12 +61,13 @@ const RentForm = () => {
         })
         .catch((error) => {
           if (error.response.status === 400) {
-            let message = "";
+            console.log(error.response.data.message);
+            let message = '';
             switch (error.response.data.message) {
-              case "Unexpected field":
+              case 'Unexpected field':
                 message = "僅接受 .jpeg 、.jpg 、 .png 格式的檔案";
                 break;
-              case "File too large":
+              case 'File too large':
                 message = "檔案大小不得超過 10 MB";
                 break;
               default:
@@ -72,12 +92,9 @@ const RentForm = () => {
   const showIMG = () => {
     const imgURL = document.getElementById("uploadIMG");
     const temp = document.getElementById("tempIMG");
-    const imgHint = document.getElementById("imgHint");
     const [file] = imgURL.files;
     if (file) {
       temp.src = URL.createObjectURL(file);
-      temp.classList.remove("hidden");
-      imgHint.classList.add("hidden");
     }
   };
 
@@ -89,7 +106,6 @@ const RentForm = () => {
       <div class="flex flex-col items-center justify-center">
         <div class="w-[1280px] h-[720px] mt-[180px] tablet:w-[416px] tablet:h-[795px]">
           <form id="form">
-            <input type="hidden" name="rent" value={id} />
             <div class="flex flex-row  bg-white rounded-3xl">
               {/* 上傳圖片 */}
               <div class="w-[543px] h-[720px] bg-[#519E75] rounded-3xl">
@@ -103,16 +119,10 @@ const RentForm = () => {
                   >
                     <img
                       id="tempIMG"
-                      class="w-full h-full object-cover hidden"
+                      class="w-full h-full object-cover"
+                      src={currentImg}
                       alt="preview"
                     ></img>
-                    <span id="imgHint" class="text-center text-gray-500">
-                      點擊上傳圖片
-                      <br />
-                      需為 .png、.jpg、.jpeg 格式
-                      <br />
-                      檔案不得超過 10 MB
-                    </span>
                     <input
                       onChange={showIMG}
                       id="uploadIMG"
@@ -128,7 +138,7 @@ const RentForm = () => {
               {/* 植物資料 */}
               <div class="mt-[69px] ml-9 tablet:mt-6 tablet:ml-8 ">
                 <h1 class="text-left text-[32px]  font-semibold pt-12 tablet:pt-[20px] tablet:text-[20px]">
-                  租借表單
+                  編輯植物
                 </h1>
                 <div class="relative z-0 mb-6 mt-[69px] w-[660px] group tablet:w-[364px]">
                   <input
@@ -137,6 +147,7 @@ const RentForm = () => {
                     id="name"
                     class="block py-2.5 px-0 w-full text-[18px] text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-[#519E75] focus:outline-none focus:ring-0 focus:border-[#519E75] peer"
                     placeholder=" "
+                    defaultValue={plant.name}
                     required
                   />
                   <label
@@ -153,6 +164,7 @@ const RentForm = () => {
                     id="nickname"
                     class="block py-2.5 px-0 w-full text-[18px] text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-[#519E75] focus:outline-none focus:ring-0 focus:border-[#519E75] peer"
                     placeholder=" "
+                    defaultValue={plant.nickname}
                     required
                   />
                   <label
@@ -169,6 +181,8 @@ const RentForm = () => {
                     id="minHumid"
                     class="block py-2.5 px-0 w-full text-[18px] text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-[#519E75] focus:outline-none focus:ring-0 focus:border-[#519E75] peer"
                     placeholder=" "
+                    value={minHumid}
+                    onChange={(event) => setMinHumid(event.target.value)}
                     min="1"
                     max="100"
                     required
@@ -196,6 +210,7 @@ const RentForm = () => {
                     id="introduction"
                     class="block py-2.5 px-0 w-full h-[156px] text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-[#519E75] focus:outline-none focus:ring-0 focus:border-[#519E75] peer tablet:h-[120px]"
                     placeholder=" "
+                    defaultValue={plant.intro}
                     required
                   />
                   <label

@@ -5,7 +5,7 @@ const RentedCard = (props) => {
       style={{ backgroundColor: props.data.bgColor }}
     >
       <div class="mt-4 ml-6">
-        <img class="h-[88px] w-[88px]" src={props.data.img} alt="card icon"></img>
+        <img class="h-[88px] w-[88px] object-cover" src={props.data.img} alt="card icon"></img>
       </div>
       <div class="text-white ml-6 py-4 flex flex-col justify-center items-center">
         <span class="text-[20px]">{props.data.state}</span>
