@@ -1,4 +1,4 @@
-import StatePlant from "../components/StatePlant";
+import StatePlant from "./StatePlant";
 
 const State = (props) => {
   return (

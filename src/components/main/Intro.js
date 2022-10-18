@@ -1,4 +1,4 @@
-import plant from "../assets/plant.png";
+import plant from "../../assets/plant.png";
 
 const Intro = () => {
   return (

@@ -1,5 +1,5 @@
-import lightImg from "../assets/light.png";
-import humid from "../assets/humid.png";
+import lightImg from "../../assets/light.png";
+import humid from "../../assets/humid.png";
 import { useState, useEffect } from "react";
 import webSocket from "socket.io-client";
 import { useNavigate } from "react-router-dom";

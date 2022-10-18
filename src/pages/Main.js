@@ -1,15 +1,15 @@
 import "./App.css";
 import background from "../assets/work.png";
-import Intro from "../components/Intro";
-import State from "../components/State";
+import Intro from "../components/main/Intro";
+import State from "../components/main/State";
 import logo from "../assets/logo.png";
-import Showplant from "../components/Showplant";
+import Showplant from "../components/main/Showplant";
 import lamu from "../assets/img1.png";
 import checkIcon from "../assets/check.png";
 import { useState, useEffect } from "react";
 import { getUser, getOtherPlant, registerRent } from "../Api.js";
 
-const App = () => {
+const Main = () => {
   const [informMsg, setInformMsg] = useState("");
   const url = window.location.href;
   const [user, setUser] = useState({
@@ -387,4 +387,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Main;
