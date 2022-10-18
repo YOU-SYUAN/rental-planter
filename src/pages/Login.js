@@ -1,4 +1,3 @@
-import "./App.css";
 import Background from "../assets/homeIMG.png";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";

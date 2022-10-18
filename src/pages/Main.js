@@ -1,4 +1,3 @@
-import "./App.css";
 import background from "../assets/work.png";
 import Intro from "../components/main/Intro";
 import State from "../components/main/State";
