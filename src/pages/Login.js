@@ -1,67 +1,61 @@
 import "./App.css";
 import Background from "../assets/homeIMG.png";
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { userLogin, getUser } from "../Api.js";
-function LoginForm() {
+
+const Login = () => {
   let navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState("");
   const email = useRef(undefined);
   const password = useRef(undefined);
+
   useEffect(() => {
     //get user info
     getUser()
       .then((response) => {
-        if (response.data.user.role == 0) {
+        if (response.data.user.role === 0) {
           navigate("./main");
         } else {
           navigate("./admin");
         }
       })
       .catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function Login() {
-    console.log(email.current.value);
-
+  const login = () => {
     userLogin({ email: email.current.value, password: password.current.value })
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           setLocalToken(response.data.token);
-          // console.log(response.data.user.role);
-          if (response.data.user.isDefaultPassword == false) {
-            if (response.data.user.role == 0) {
+          if (!response.data.user.isDefaultPassword) {
+            if (response.data.user.role === 0) {
               navigate("./main");
             } else {
               navigate("./admin");
             }
           } else {
-            console.log(response.data.user.isDefaultPassword);
             navigate("/resetPwd");
           }
         }
       })
       .catch((error) => {
-        console.log(error.response);
-        console.log(email);
-        if (error.response.status == 401) {
-          console.log("狀態" + error.response);
+        if (error.response.status === 401) {
           setErrorMsg("帳號/密碼 錯誤，請再試一次");
-        } else if (error.response.status == 500) {
+        } else if (error.response.status === 500) {
           setErrorMsg("伺服器錯誤");
         }
-        // console.log(error);
       });
-  }
+  };
 
   //local storage 存token
   const setLocalToken = (token) => {
     localStorage.setItem("token", token);
-    // console.log(token);
   };
+
   return (
     <div className="App">
-      {/* style={{ backgroundImage: `url(${Background})` }} */}
       <div
         class="relative bg-cover bg-center"
         style={{ backgroundImage: `url(${Background})`, height: "100vh" }}
@@ -137,7 +131,7 @@ function LoginForm() {
                       </div>
                     </div>
                     <button
-                      onClick={Login}
+                      onClick={login}
                       type="button"
                       class="w-full mt-6 text-white bg-[#519E75] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-[20px] px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 phone:mt-6"
                     >
@@ -158,6 +152,6 @@ function LoginForm() {
       </div>
     </div>
   );
-}
+};
 
-export default LoginForm;
+export default Login;
