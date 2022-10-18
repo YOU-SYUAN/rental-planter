@@ -10,6 +10,7 @@ import RentForm from "./pages/RentForm";
 import Register from "./pages/Register";
 import ForgetPwd from "./pages/ForgetPwd";
 import ResetPwd from "./pages/ResetPwd";
+import EditRent from "./pages/EditRent";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
@@ -19,6 +20,7 @@ root.render(
       <Route path="/main" element={<App />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/rentForm/:id" element={<RentForm />} />
+      <Route path="/rent/edit/:id" element={<EditRent />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgetPwd" element={<ForgetPwd />} />
       <Route path="/resetPwd" element={<ResetPwd />} />
