@@ -1,4 +1,3 @@
-import { Typography } from "@mui/material";
 import lightImg from "../assets/light.png";
 import humid from "../assets/humid.png";
 import { useState, useEffect } from "react";
@@ -60,50 +59,50 @@ const StatePlant = (props) => {
   }`;
 
   return (
-    <div class=" w-full h-[307.64px] flex flex-row justify-between my-20 tablet:h-[264.59px] tablet:mt-0 tablet:mb-10 phone:mt-10 phone:h-full gap-[120px] tablet:gap-[16px] px-20">
-      <div class="pt-10 pb-10 flex flex-col justify-center tablet:pr-10 phone:py-4 grow flex-1">
-        <div class="flex flex-row">
-          <img src={humid} class="w-12 h-12 mr-4 mt-4" alt="humid"></img>
+    <div class="w-full desktop:gap-30 gap-4 desktop:px-20 desktop:my-20 tablet:px-10 px-16 my-10 grid desktop:grid-cols-4 tablet:grid-cols-3 grid-cols-1">
+      <div class="flex flex-col justify-center gap-8 desktop:p-0 tablet:p-0 px-8 col-span-1">
+        <div class="flex flex-row gap-4">
+          <img src={humid} class="desktop:w-[72px] desktop:h-[72px] w-12 h-12" alt="humid"></img>
           <div class="w-full">
-            <h2 class="font-bold text-[48px] tablet:text-[24px] phone:text-[20px]">
+            <h2 class="font-bold desktop:text-[48px] tablet:text-[24px] text-[20px]">
               {realtimeData.soilHumid}%
             </h2>
-            <h5 class="text-[20px] tablet:text-[14px] phone:text-[12px]">
+            <h5 class="desktop:text-[20px] tablet:text-[14px] text-[12px]">
               土壤濕度
             </h5>
           </div>
         </div>
-        <div class="flex flex-row">
-          <img src={lightImg} class="w-12 h-12 mr-4 mt-4" alt="light"></img>
+        <div class="flex flex-row gap-4">
+          <img src={lightImg} class="desktop:w-[72px] desktop:h-[72px] w-12 h-12" alt="light"></img>
           <div class="w-full">
-            <h2 class="font-bold text-[48px] tablet:text-[24px] phone:text-[20px]">
+            <h2 class="font-bold desktop:text-[48px] tablet:text-[24px] text-[20px]">
               {realtimeData.light} lx
             </h2>
-            <h5 class="text-[20px] tablet:text-[14px] phone:text-[12px]">
+            <h5 class="desktop:text-[20px] tablet:text-[14px] text-[12px]">
               光照強度
             </h5>
           </div>
         </div>
       </div>
-      <div class="flex justify-center phone:mt-0 grow flex-1">
+      <div class="flex justify-center items-center desktop:col-span-2 col-span-1">
         <img
           src={plantIMG}
-          class="w-[412px] h-[320px] tablet:w-[240px] tablet:h-[184.59px] tablet:mx-4 tablet:my-10 phone:w-[200px] phone:h-[153.82px] rounded-[24px] object-cover"
+          class="desktop:w-[412px] desktop:h-[320px] tablet:w-[240px] tablet:h-[184.59px] w-[200px] h-[153.82px] rounded-[24px] object-cover"
           alt="plant"
         ></img>
       </div>
-      <div class=" tablet:mt-[17.29px] tablet:pl-5 relative grow flex-1">
-        <div class="flex flex-row phone:justify-center">
-          <Typography class="mt-10 font-bold text-[32px] tablet:text-[20px] phone:text-[16px]">
+      <div class="flex flex-col justify-center desltop:gap-8 tablet:gap-2.5 gap-4 relative desktop:p-0 tablet:px-4 col-span-1">
+        <div class="grid grid-cols-2 desktop:gap-4 gap-2">
+          <div class="font-bold desktop:text-[32px] tablet:text-[20px] text-[16px] desktop:text-left tablet:text-left text-right">
             {props.rent.plant.name}
-          </Typography>
-          <Typography class="text-center mt-12 ml-20 text-[#6B7280] text-[24px] tablet:text-[14px] tablet:ml-10 phone:text-[14px] phone:ml-4">
+          </div>
+          <div class="text-[#6B7280] desktop:text-[24px] tablet:text-[14px] text-[14px]">
             {props.rent.plant.nickname}
-          </Typography>
+          </div>
         </div>
-        <Typography class="mt-8 w-[219px] text-[#6B7280]  text-[20px] tablet:text-[14px] tablet:w-[151px] tablet:mt-5 phone:w-[200px] phone:h-[84px] whitespace-pre-line">
+        <div class="h-full w-full text-[#6B7280] desktop:text-[20px] text-[14px] truncate whitespace-pre-line">
           {props.rent.plant.intro}
-        </Typography>
+        </div>
         <button
           type="button"
           class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900 absolute right-0 bottom-0"

@@ -347,7 +347,7 @@ const App = () => {
       <div id="introduce" class="w-full flex justify-center">
         <Intro></Intro>
       </div>
-      <div id="state">
+      <div id="state" class="w-full flex justify-center">
         <State rents={user.rents} containerId={1} path={url}></State>
       </div>
       <h1
