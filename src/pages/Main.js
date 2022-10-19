@@ -124,7 +124,7 @@ const Main = () => {
   };
 
   return (
-    <div id='top' class="flex flex-col items-center">
+    <div id="top" class="flex flex-col items-center">
       <nav class="w-full desktop:max-w-[1560px] tablet:max-w-[768px]">
         <div class="desktop:px-[140px] tablet:px-9 px-4 my-6 flex flex-row flex-wrap justify-between items-center ">
           <img
@@ -303,7 +303,12 @@ const Main = () => {
       </div>
       {/* 區塊2 */}
       <div id="mainArea" class="p-0 m-0 w-full relative">
-        <Toast show={showToast} onClose={() => setShowToast(false)} type="success" text={toastMsg} />
+        <Toast
+          show={showToast}
+          onClose={() => setShowToast(false)}
+          type="success"
+          text={toastMsg}
+        />
         <div
           class="w-full desktop:h-[720px] tablet:h-[432px] h-[360px] flex justify-center bg-cover bg-center"
           style={{ backgroundImage: `url(${background})` }}
