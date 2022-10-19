@@ -8,8 +8,10 @@ import { useState, useEffect } from "react";
 import { getUser, getOtherPlant, registerRent } from "../Api.js";
 import { Button } from "../components/Button";
 import { Toast } from "../components/modal/Toast";
+import { PopUpModal } from "../components/modal/PopUpModal";
 
 const Main = () => {
+  const [showPopUpModal, setShowPopUpModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMsg, setToastMsg] = useState("");
   const url = window.location.href;
@@ -70,16 +72,6 @@ const Main = () => {
     const sidebar = document.getElementById("sidebar");
     sidebar.style.display = sidebar.style.display === "none" ? "block" : "none";
   };
-  const popupModal = document.getElementById("popupModal");
-
-  const showModal = () => {
-    console.log("popupModal");
-    if (popupModal.classList.contains("hidden")) {
-      popupModal.classList.remove("hidden");
-    } else {
-      popupModal.classList.add("hidden");
-    }
-  };
 
   const successModal = () => {
     registerRent()
@@ -92,9 +84,7 @@ const Main = () => {
             setToastMsg("目前已無空盆器，已將您排至候補!");
           }
           setShowToast(true);
-
-          popupModal.classList.add("hidden");
-
+          setShowPopUpModal(false);
         }
       })
       .catch((error) => {
@@ -269,38 +259,14 @@ const Main = () => {
         </div>
       </nav>
       {/* 登記表單 */}
-      <div
-        id="popupModal"
-        tabindex="-1"
-        class="bg-black bg-opacity-50 hidden overflow-y-auto overflow-x-hidden fixed top-0 m-auto right-0 left-0 z-50 md:inset-0 h-modal md:h-full"
-      >
-        <div class="relative flex flex-col justify-center p-4 w-full max-w-md m-auto h-full md:h-auto">
-          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <div class="p-6 text-center">
-              <img src={lamu} class=" mx-auto mb-4 w-14 h-14 " alt=""></img>
-              <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                是否要登記盆栽?
-              </h3>
-              <button
-                onClick={successModal}
-                data-modal-toggle="popup-modal"
-                type="button"
-                class="text-white bg-[#519E75] hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
-              >
-                確定
-              </button>
-              <button
-                onClick={showModal}
-                data-modal-toggle="popup-modal"
-                type="button"
-                class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
-              >
-                取消
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <PopUpModal
+        text="是否要登記盆栽？"
+        color="green"
+        show={showPopUpModal}
+        img={lamu}
+        onConfirm={successModal}
+        onCancel={() => setShowPopUpModal(false)}
+      />
       {/* 區塊2 */}
       <div id="mainArea" class="p-0 m-0 w-full relative">
         <Toast
@@ -322,7 +288,7 @@ const Main = () => {
               <div class="desktop:text-[20px] tablet:text-[16px] text-[12px] text-white w-full">
                 用心愛護你的植物
               </div>
-              <Button onClick={showModal} color="green" text="立即登記" />
+              <Button onClick={() => setShowPopUpModal(true)} color="green" text="立即登記" />
             </div>
           </div>
         </div>
@@ -399,7 +365,11 @@ const Main = () => {
               用心愛護你的植物
             </div>
             <div class="flex justify-center">
-              <Button onClick={showModal} color="green" text="立即登記" />
+              <Button
+                onClick={() => setShowPopUpModal(true)}
+                color="green"
+                text="立即登記"
+              />
             </div>
           </div>
         </div>

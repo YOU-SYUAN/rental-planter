@@ -6,9 +6,10 @@ import plant1 from "../assets/card1.png";
 import { useState, useEffect } from "react";
 import webSocket from "socket.io-client";
 import { deleteRented } from "../Api";
+import { PopUpModal } from "./modal/PopUpModal";
 
 const Rented = (props) => {
-  const [id, changeId] = useState(props.rentedInfo.id);
+  const [showPopUpModal, setShowPopUpModal] = useState(false);
 
   const deleteInfo = (rentId) => {
     //delete user info
@@ -26,16 +27,6 @@ const Rented = (props) => {
           window.location.replace("/");
         }
       });
-  };
-
-  const showDelete = (rentId) => {
-    changeId(rentId);
-    const popupModal = document.getElementById(`${props.rentedInfo.id}`);
-    if (popupModal.classList.contains("hidden")) {
-      popupModal.classList.remove("hidden");
-    } else {
-      popupModal.classList.add("hidden");
-    }
   };
 
   // websocket
@@ -108,9 +99,7 @@ const Rented = (props) => {
 
         {/* 刪除按鈕 */}
         <button
-          onClick={() => {
-            showDelete(props.rentedInfo.id);
-          }}
+          onClick={() => setShowPopUpModal(true)}
           id="dropdownMenuIconButton"
           data-dropdown-toggle="dropdownDots"
           class="inline-flex items-center  text-sm h-6 mt-[15px] mx-4 font-medium text-center text-gray-900 bg-transparent rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -118,44 +107,15 @@ const Rented = (props) => {
         >
           <img src={deleteIMG} class="h-6 w-6" alt="delete"></img>
         </button>
-        <div
-          id={props.rentedInfo.id}
-          tabindex="-1"
-          class="bg-black bg-opacity-50 hidden overflow-y-auto overflow-x-hidden fixed top-0 m-auto right-0 left-0 z-50 md:inset-0 h-modal md:h-full"
-        >
-          <div class="relative flex flex-col justify-center p-4 w-full max-w-md m-auto h-full md:h-auto">
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-              <div class="p-6 text-center">
-                <img
-                  src={deleteIMG}
-                  class=" mx-auto mb-4 w-14 h-14 "
-                  alt=""
-                ></img>
-                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                  確定要刪除盆栽資訊嗎?
-                </h3>
-                <button
-                  onClick={() => {
-                    deleteInfo(id);
-                  }}
-                  data-modal-toggle="popup-modal"
-                  type="button"
-                  class="text-white bg-[#519E75] hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2"
-                >
-                  確定
-                </button>
-                <button
-                  onClick={showDelete}
-                  data-modal-toggle="popup-modal"
-                  type="button"
-                  class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
-                >
-                  取消
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+
+        <PopUpModal
+          text={`是否刪除 ${props.rentedInfo.name} 的租借資料「${props.rentedInfo.plantName}」？`}
+          color="red"
+          show={showPopUpModal}
+          img={deleteIMG}
+          onConfirm={() => deleteInfo(props.rentedInfo.id)}
+          onCancel={() => setShowPopUpModal(false)}
+        />
       </div>
       <div class="ml-10 mt-[26px] flex flex-row">
         <label class="text-[20px]">{props.rentedInfo.plantName}</label>
