@@ -61,7 +61,7 @@ const Toast = (props) => {
     return (
       <div
         id={`toast-${type}`}
-        tabindex="-1"
+        tabIndex="-1"
         class={`absolute top-5 right-5 flex items-center p-4 mb-4 w-full max-w-xs ${properties[type].textClass} ${properties[type].bgClass} rounded-lg shadow`}
         role="alert"
       >
