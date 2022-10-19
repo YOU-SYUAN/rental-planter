@@ -3,6 +3,7 @@ import humid from "../../assets/humid.png";
 import { useState, useEffect } from "react";
 import webSocket from "socket.io-client";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../Button";
 
 const StatePlant = (props) => {
   let navigate = useNavigate();
@@ -103,13 +104,7 @@ const StatePlant = (props) => {
         <div class="h-full w-full text-[#6B7280] desktop:text-[20px] text-[14px] truncate whitespace-pre-line">
           {props.rent.plant.intro}
         </div>
-        <button
-          type="button"
-          class="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:focus:ring-yellow-900 absolute right-0 bottom-0"
-          onClick={() => navigate(`/rent/edit/${props.rent.id}`)}
-        >
-          編輯
-        </button>
+        <Button onClick={() => navigate(`/rent/edit/${props.rent.id}`)} color="yellow" text="編輯" class="absolute right-0 bottom-0" />
       </div>
     </div>
   );

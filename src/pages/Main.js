@@ -7,6 +7,7 @@ import lamu from "../assets/img1.png";
 import checkIcon from "../assets/check.png";
 import { useState, useEffect } from "react";
 import { getUser, getOtherPlant, registerRent } from "../Api.js";
+import { Button } from "../components/Button";
 
 const Main = () => {
   const [informMsg, setInformMsg] = useState("");
@@ -327,19 +328,14 @@ const Main = () => {
       >
         <div class="grid desktop:grid-cols-12 tablet:grid-cols-12 grid-cols-3 gap-2 w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] ">
           <div class="desktop:col-span-5 tablet:col-span-5 col-span-1"></div>
-          <div class="desktop:col-span-7 tablet:col-span-7 col-span-2 desktop:mt-[229px] tablet:mt-[124.29px] mt-[128px]">
+          <div class="desktop:col-span-7 tablet:col-span-7 col-span-2 desktop:mt-[229px] tablet:mt-[124.29px] mt-[128px] flex flex-col items-start gap-4">
             <div class="desktop:text-[100px] tablet:text-[54px] text-[32px] text-white w-full">
               Rental Planter
             </div>
             <div class="desktop:text-[20px] tablet:text-[16px] text-[12px] text-white w-full">
               用心愛護你的植物
             </div>
-            <button
-              onClick={showModal}
-              class="bg-[#519E75] rounded-lg mt-4 desktop:w-[136px] desktop:h-[60px] tablet:w-[96px] tablet:h-[48px] w-[72px] h-9 desktop:text-[1.25em] tablet:text-[1em] text-[0.75em] text-white"
-            >
-              立即登記
-            </button>
+            <Button onClick={showModal} color='green' text="立即登記" />
           </div>
         </div>
       </div>
@@ -416,12 +412,7 @@ const Main = () => {
             用心愛護你的植物
           </div>
           <div class="flex justify-center">
-            <button
-              onClick={showModal}
-              class="bg-[#519E75] text-white rounded-lg desktop:text-[16px] tablet:text-[16px] text-[12px] px-5 py-3"
-            >
-              立即登記
-            </button>
+            <Button onClick={showModal} color='green' text="立即登記" />
           </div>
         </div>
       </div>
