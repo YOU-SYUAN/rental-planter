@@ -4,13 +4,14 @@ import StatePlant from "../components/main/StatePlant";
 import logo from "../assets/logo.png";
 import ShowPlant from "../components/main/Showplant";
 import lamu from "../assets/img1.png";
-import checkIcon from "../assets/check.png";
 import { useState, useEffect } from "react";
 import { getUser, getOtherPlant, registerRent } from "../Api.js";
 import { Button } from "../components/Button";
+import { Toast } from "../components/modal/Toast";
 
 const Main = () => {
-  const [informMsg, setInformMsg] = useState("");
+  const [showToast, setShowToast] = useState(false);
+  const [toastMsg, setToastMsg] = useState("");
   const url = window.location.href;
   const [user, setUser] = useState({
     user: {
@@ -70,7 +71,6 @@ const Main = () => {
     sidebar.style.display = sidebar.style.display === "none" ? "block" : "none";
   };
   const popupModal = document.getElementById("popupModal");
-  const success = document.getElementById("successModal");
 
   const showModal = () => {
     console.log("popupModal");
@@ -85,29 +85,26 @@ const Main = () => {
     registerRent()
       .then((response) => {
         if (response.status === 200) {
+          scrollToAnchor("top");
           if (!response.data.waiting) {
-            setInformMsg("恭喜您登記成功!請至信箱查看信件!");
+            setToastMsg("恭喜您登記成功!請至信箱查看信件!");
           } else {
-            setInformMsg("目前已無空盆器，已將您排至候補!");
+            setToastMsg("目前已無空盆器，已將您排至候補!");
           }
+          setShowToast(true);
+
           popupModal.classList.add("hidden");
-          if (success.classList.contains("hidden")) {
-            success.classList.remove("hidden");
-          } else {
-            success.classList.add("hidden");
-          }
+
         }
       })
       .catch((error) => {
-        if (error.response.status === 401) {
+        if (error.response && error.response.status === 401) {
           alert("登入狀態已逾期，請重新登入");
           window.location.replace("/");
+        } else {
+          console.error(error);
         }
       });
-  };
-
-  const closeModal = () => {
-    success.classList.add("hidden");
   };
 
   //錨點設定
@@ -127,7 +124,7 @@ const Main = () => {
   };
 
   return (
-    <div class="flex flex-col items-center">
+    <div id='top' class="flex flex-col items-center">
       <nav class="w-full desktop:max-w-[1560px] tablet:max-w-[768px]">
         <div class="desktop:px-[140px] tablet:px-9 px-4 my-6 flex flex-row flex-wrap justify-between items-center ">
           <img
@@ -304,115 +301,101 @@ const Main = () => {
           </div>
         </div>
       </div>
-      {/* 登記成功modal */}
-      <div
-        onClick={closeModal}
-        id="successModal"
-        tabindex="-1"
-        aria-hidden="true"
-        class="hidden overflow-y-auto overflow-x-hidden fixed top-20 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full"
-      >
-        <div class="relative flex p-4 w-full max-w-md ml-auto h-full md:h-auto">
-          <div class="flex flex-row justify-center items-center bg-green-200 rounded-[6px] w-[491px] h-16">
-            <img src={checkIcon} class="w-6 h-6 mr-[10px]" alt=""></img>
-            <h3 class="text-[24px] font-semibold text-green-800 dark:text-white">
-              {informMsg}
-            </h3>
+      {/* 區塊2 */}
+      <div id="mainArea" class="p-0 m-0 w-full relative">
+        <Toast show={showToast} onClose={() => setShowToast(false)} type="success" text={toastMsg} />
+        <div
+          class="w-full desktop:h-[720px] tablet:h-[432px] h-[360px] flex justify-center bg-cover bg-center"
+          style={{ backgroundImage: `url(${background})` }}
+        >
+          <div class="grid desktop:grid-cols-12 tablet:grid-cols-12 grid-cols-3 gap-2 w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] ">
+            <div class="desktop:col-span-5 tablet:col-span-5 col-span-1"></div>
+            <div class="desktop:col-span-7 tablet:col-span-7 col-span-2 desktop:mt-[229px] tablet:mt-[124.29px] mt-[128px] flex flex-col items-start gap-4">
+              <div class="desktop:text-[100px] tablet:text-[54px] text-[32px] text-white w-full">
+                Rental Planter
+              </div>
+              <div class="desktop:text-[20px] tablet:text-[16px] text-[12px] text-white w-full">
+                用心愛護你的植物
+              </div>
+              <Button onClick={showModal} color="green" text="立即登記" />
+            </div>
           </div>
         </div>
-      </div>
-      {/* 區塊2 */}
-      <div
-        class="w-full desktop:h-[720px] tablet:h-[432px] h-[360px] flex justify-center bg-cover bg-center"
-        style={{ backgroundImage: `url(${background})` }}
-      >
-        <div class="grid desktop:grid-cols-12 tablet:grid-cols-12 grid-cols-3 gap-2 w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] ">
-          <div class="desktop:col-span-5 tablet:col-span-5 col-span-1"></div>
-          <div class="desktop:col-span-7 tablet:col-span-7 col-span-2 desktop:mt-[229px] tablet:mt-[124.29px] mt-[128px] flex flex-col items-start gap-4">
-            <div class="desktop:text-[100px] tablet:text-[54px] text-[32px] text-white w-full">
-              Rental Planter
+        {/* Intro */}
+        <div id="introduce" class="w-full flex justify-center">
+          <div class="grid grid-cols-2 w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] desktop:p-20 p-4 desktop:gap-20 gap-10">
+            <div class="desktop:col-span-1 tablet:col-span-1 col-span-2 flex justify-center items-center">
+              <img
+                src={plant}
+                class="desktop:h-[500.45px] desktop:w-[640px] tablet:w-[280px] tablet:h-[218.95px] w-[240px] h-[187.67px]"
+                alt="plant"
+              ></img>
             </div>
-            <div class="desktop:text-[20px] tablet:text-[16px] text-[12px] text-white w-full">
+            <div class="desktop:col-span-1 tablet:col-span-1 col-span-2 flex flex-col justify-center desktop:items-start tablet:items-start items-center desktop:px-5 tablet:px-5 px-10">
+              <div class="Nova Flat w-full desktop:text-[28px] tablet:text-[12px] text-[12px] desktop:text-left tablet:text-left text-center">
+                Monospace
+              </div>
+              <div class="font-extrabold w-full desktop:text-[44px] tablet:text-[20px] text-[18px] desktop:text-left tablet:text-left text-center">
+                盆器租借系統
+              </div>
+              <div class="mt-6 w-full text-[#9D9D9D] desktop:text-[20px] tablet:text-[14px] text-[14px]">
+                打造自動化系統，隨時檢測植物生長環境，讓你的植物安心生長。
+              </div>
+              <ul class="list-disc mt-6 pl-6  desktop:leading-10 text-gray-500  desktop:text-[20px] tablet:text-[14px] tablet:leading-7 text-[14px] leading-5">
+                <li>土壤溼度感測</li>
+                <li>光照強度感測</li>
+                <li>光照開關控制</li>
+                <li>預約盆器租借</li>
+                <li>租借盆器遞補通知</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        {/* State */}
+        <div id="state" class="w-full flex justify-center">
+          <div class="desktop:mt-[60px] tablet:mt-5 mt-4 w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px]">
+            <h1 class="text-center font-extrabold text-[44px] tablet:text-[20px] phone:text-[18px]">
+              盆栽狀態
+            </h1>
+            {user.rents
+              .filter((x) => x.plant !== null)
+              .map((x) => (
+                <StatePlant key={x.id} rent={x} path={url}></StatePlant>
+              ))}
+          </div>
+        </div>
+        {/* Other Plant */}
+        <div id="showPlant" class="w-full flex justify-center">
+          <div class="desktop:mt-[60px] tablet:mt-5 mt-4 w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px]">
+            <h1 class="text-center font-extrabold text-[44px] tablet:text-[20px] phone:text-[18px]">
+              會員植物
+            </h1>
+            <div class="flex justify-center desktop:px-20 desktop:my-20 tablet:px-10 my-10 ">
+              <div class="flex justify-center flex-wrap desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] text-center gap-10">
+                {otherPlant.data
+                  .filter((item) => item.plant !== null)
+                  .map((item) => (
+                    <ShowPlant key={item.container} data={item}></ShowPlant>
+                  ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Footer */}
+        <div
+          id="footer"
+          class="w-full flex justify-center bg-[#F9FAFB] desktop:py-24 py-12"
+        >
+          <div class="flex flex-col items-center gap-6">
+            <h1 class="font-extrabold desktop:text-[36px] tablet:text-[24px] text-[20px] tracking-widest">
+              現在就租借你的盆器
+            </h1>
+            <div class="text-[#6B7280] desktop:text-[20px] tablet:text-[16px] text-[14px]">
               用心愛護你的植物
             </div>
-            <Button onClick={showModal} color='green' text="立即登記" />
-          </div>
-        </div>
-      </div>
-      {/* Intro */}
-      <div id="introduce" class="w-full flex justify-center">
-        <div class="grid grid-cols-2 w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] desktop:p-20 p-4 desktop:gap-20 gap-10">
-          <div class="desktop:col-span-1 tablet:col-span-1 col-span-2 flex justify-center items-center">
-            <img
-              src={plant}
-              class="desktop:h-[500.45px] desktop:w-[640px] tablet:w-[280px] tablet:h-[218.95px] w-[240px] h-[187.67px]"
-              alt="plant"
-            ></img>
-          </div>
-          <div class="desktop:col-span-1 tablet:col-span-1 col-span-2 flex flex-col justify-center desktop:items-start tablet:items-start items-center desktop:px-5 tablet:px-5 px-10">
-            <div class="Nova Flat w-full desktop:text-[28px] tablet:text-[12px] text-[12px] desktop:text-left tablet:text-left text-center">
-              Monospace
+            <div class="flex justify-center">
+              <Button onClick={showModal} color="green" text="立即登記" />
             </div>
-            <div class="font-extrabold w-full desktop:text-[44px] tablet:text-[20px] text-[18px] desktop:text-left tablet:text-left text-center">
-              盆器租借系統
-            </div>
-            <div class="mt-6 w-full text-[#9D9D9D] desktop:text-[20px] tablet:text-[14px] text-[14px]">
-              打造自動化系統，隨時檢測植物生長環境，讓你的植物安心生長。
-            </div>
-            <ul class="list-disc mt-6 pl-6  desktop:leading-10 text-gray-500  desktop:text-[20px] tablet:text-[14px] tablet:leading-7 text-[14px] leading-5">
-              <li>土壤溼度感測</li>
-              <li>光照強度感測</li>
-              <li>光照開關控制</li>
-              <li>預約盆器租借</li>
-              <li>租借盆器遞補通知</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      {/* State */}
-      <div id="state" class="w-full flex justify-center">
-        <div class="desktop:mt-[60px] tablet:mt-5 mt-4 w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px]">
-          <h1 class="text-center font-extrabold text-[44px] tablet:text-[20px] phone:text-[18px]">
-            盆栽狀態
-          </h1>
-          {user.rents
-            .filter((x) => x.plant !== null)
-            .map((x) => (
-              <StatePlant key={x.id} rent={x} path={url}></StatePlant>
-            ))}
-        </div>
-      </div>
-      {/* Other Plant */}
-      <div id="showPlant" class="w-full flex justify-center">
-        <div class="desktop:mt-[60px] tablet:mt-5 mt-4 w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px]">
-          <h1 class="text-center font-extrabold text-[44px] tablet:text-[20px] phone:text-[18px]">
-            會員植物
-          </h1>
-          <div class="flex justify-center desktop:px-20 desktop:my-20 tablet:px-10 my-10 ">
-            <div class="flex justify-center flex-wrap desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] text-center gap-10">
-              {otherPlant.data
-                .filter((item) => item.plant !== null)
-                .map((item) => (
-                  <ShowPlant key={item.container} data={item}></ShowPlant>
-                ))}
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Footer */}
-      <div
-        id="footer"
-        class="w-full flex justify-center bg-[#F9FAFB] desktop:py-24 py-12"
-      >
-        <div class="flex flex-col items-center gap-6">
-          <h1 class="font-extrabold desktop:text-[36px] tablet:text-[24px] text-[20px] tracking-widest">
-            現在就租借你的盆器
-          </h1>
-          <div class="text-[#6B7280] desktop:text-[20px] tablet:text-[16px] text-[14px]">
-            用心愛護你的植物
-          </div>
-          <div class="flex justify-center">
-            <Button onClick={showModal} color='green' text="立即登記" />
           </div>
         </div>
       </div>

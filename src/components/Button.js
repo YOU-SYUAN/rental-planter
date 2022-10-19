@@ -7,7 +7,7 @@ const colors = {
 
 const Button = (props) => (
   <button
-    onClick={props.click}
+    onClick={props.onClick}
     class={`rounded-lg desktop:text-[18px] tablet:text-[16px] text-[12px] desktop:px-5 desktop:py-3 tablet:px-4 tablet:py-2 px-3 py-1.5 ${colors[props.color]} ${props.class}`}
   >
     {props.text}
