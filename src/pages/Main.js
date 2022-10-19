@@ -2,7 +2,7 @@ import background from "../assets/work.png";
 import plant from "../assets/plant.png";
 import StatePlant from "../components/main/StatePlant";
 import logo from "../assets/logo.png";
-import Showplant from "../components/main/Showplant";
+import ShowPlant from "../components/main/Showplant";
 import lamu from "../assets/img1.png";
 import checkIcon from "../assets/check.png";
 import { useState, useEffect } from "react";
@@ -376,7 +376,7 @@ const Main = () => {
       {/* State */}
       <div id="state" class="w-full flex justify-center">
         <div class="desktop:mt-[60px] tablet:mt-5 mt-4 w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px]">
-          <h1 class=" text-center font-extrabold text-[44px] tablet:text-[20px] phone:text-[18px]">
+          <h1 class="text-center font-extrabold text-[44px] tablet:text-[20px] phone:text-[18px]">
             盆栽狀態
           </h1>
           {user.rents
@@ -387,20 +387,17 @@ const Main = () => {
         </div>
       </div>
       {/* Other Plant */}
-      <div id="other" class="w-full flex justify-center">
+      <div id="showPlant" class="w-full flex justify-center">
         <div class="desktop:mt-[60px] tablet:mt-5 mt-4 w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px]">
-          <h1
-            id="showPlant"
-            class=" text-center pt-20 font-extrabold text-[44px] tablet:text-[20px] phone:text-[18px] tablet:pt-0 phone:pt-10"
-          >
+          <h1 class="text-center font-extrabold text-[44px] tablet:text-[20px] phone:text-[18px]">
             會員植物
           </h1>
-          <div class="flex justify-center">
-            <div class="flex flex-row overflow-x-scroll overflow-y-hidden items-center w-full max-w-[1560px] h-[803px] mb-20 tablet:mb-10 text-center phone:mb-10">
+          <div class="flex justify-center desktop:px-20 desktop:my-20 tablet:px-10 my-10 ">
+            <div class="flex justify-center flex-wrap desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] text-center gap-10">
               {otherPlant.data
                 .filter((item) => item.plant !== null)
                 .map((item) => (
-                  <Showplant key={item.container} data={item}></Showplant>
+                  <ShowPlant key={item.container} data={item}></ShowPlant>
                 ))}
             </div>
           </div>
