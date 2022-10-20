@@ -9,6 +9,8 @@ import { getUser, getOtherPlant, registerRent } from "../Api.js";
 import { Button } from "../components/Button";
 import { Toast } from "../components/modal/Toast";
 import { PopUpModal } from "../components/modal/PopUpModal";
+import { StateEmpty } from "../components/main/StateEmpty";
+import { EmptyPlant } from "../components/main/EmptyPlant";
 
 const Main = () => {
   const [showPopUpModal, setShowPopUpModal] = useState(false);
@@ -288,7 +290,11 @@ const Main = () => {
               <div class="desktop:text-[20px] tablet:text-[16px] text-[12px] text-white w-full">
                 用心愛護你的植物
               </div>
-              <Button onClick={() => setShowPopUpModal(true)} color="green" text="立即登記" />
+              <Button
+                onClick={() => setShowPopUpModal(true)}
+                color="green"
+                text="立即登記"
+              />
             </div>
           </div>
         </div>
@@ -328,11 +334,15 @@ const Main = () => {
             <h1 class="text-center font-extrabold text-[44px] tablet:text-[20px] phone:text-[18px]">
               盆栽狀態
             </h1>
-            {user.rents
-              .filter((x) => x.plant !== null)
-              .map((x) => (
-                <StatePlant key={x.id} rent={x} path={url}></StatePlant>
-              ))}
+            {user.rents.filter((x) => x.plant !== null).length === 0 ? (
+              <StateEmpty />
+            ) : (
+              user.rents
+                .filter((x) => x.plant !== null)
+                .map((x) => (
+                  <StatePlant key={x.id} rent={x} path={url}></StatePlant>
+                ))
+            )}
           </div>
         </div>
         {/* Other Plant */}
@@ -341,13 +351,30 @@ const Main = () => {
             <h1 class="text-center font-extrabold text-[44px] tablet:text-[20px] phone:text-[18px]">
               會員植物
             </h1>
-            <div class="flex justify-center desktop:px-20 desktop:my-20 tablet:px-10 my-10 ">
+            <div class="flex justify-center desktop:px-20 desktop:my-20 tablet:px-10 my-10 relative">
+              {otherPlant.data.filter((item) => item.plant !== null).length ===
+              0 ? (
+                <div class="absolute m-0 left-0 top-0 w-full h-full bg-white bg-opacity-80 flex flex-col justify-center items-center gap-6">
+                  <img src={lamu} alt="" />
+                  <h1 class="font-semibold desktop:text-[36px] tablet:text-[24px] text-[20px] tracking-widest">
+                    目前還沒有其他會員的植物
+                  </h1>
+                </div>
+              ) : undefined}
               <div class="flex justify-center flex-wrap desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] text-center gap-10">
-                {otherPlant.data
-                  .filter((item) => item.plant !== null)
-                  .map((item) => (
-                    <ShowPlant key={item.container} data={item}></ShowPlant>
-                  ))}
+                {otherPlant.data.filter((item) => item.plant !== null)
+                  .length === 0
+                  ? [
+                      "flex",
+                      "desktop:flex tablet:flex hidden",
+                      "desktop:flex hidden",
+                      "desktop:flex hidden",
+                    ].map((item) => <EmptyPlant key={item} display={item} />)
+                  : otherPlant.data
+                      .filter((item) => item.plant !== null)
+                      .map((item) => (
+                        <ShowPlant key={item.container} data={item} />
+                      ))}
               </div>
             </div>
           </div>
