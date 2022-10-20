@@ -262,7 +262,7 @@ const Main = () => {
       </nav>
       {/* 登記表單 */}
       <PopUpModal
-        text="是否要登記盆栽？"
+        text="是否要登記盆器？"
         color="green"
         show={showPopUpModal}
         img={lamu}
