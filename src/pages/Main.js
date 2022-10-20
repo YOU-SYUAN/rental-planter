@@ -2,7 +2,7 @@ import background from "../assets/work.png";
 import plant from "../assets/plant.png";
 import StatePlant from "../components/main/StatePlant";
 import logo from "../assets/logo.png";
-import ShowPlant from "../components/main/Showplant";
+import ShowPlant from "../components/main/ShowPlant";
 import lamu from "../assets/img1.png";
 import { useState, useEffect } from "react";
 import { getUser, getOtherPlant, registerRent } from "../Api.js";
