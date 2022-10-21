@@ -1,7 +1,6 @@
 import background from "../assets/work.png";
 import plant from "../assets/plant.png";
 import StatePlant from "../components/main/StatePlant";
-import logo from "../assets/logo.png";
 import ShowPlant from "../components/main/ShowPlant";
 import lamu from "../assets/img1.png";
 import { useState, useEffect } from "react";
@@ -11,6 +10,8 @@ import { Toast } from "../components/modal/Toast";
 import { PopUpModal } from "../components/modal/PopUpModal";
 import { StateEmpty } from "../components/main/StateEmpty";
 import { EmptyPlant } from "../components/main/EmptyPlant";
+import { NavBar } from "../components/NavBar";
+import "flowbite";
 
 const Main = () => {
   const [showPopUpModal, setShowPopUpModal] = useState(false);
@@ -69,12 +70,6 @@ const Main = () => {
       });
   };
 
-  // 顯示sidebar
-  const show = () => {
-    const sidebar = document.getElementById("sidebar");
-    sidebar.style.display = sidebar.style.display === "none" ? "block" : "none";
-  };
-
   const successModal = () => {
     registerRent()
       .then((response) => {
@@ -108,158 +103,70 @@ const Main = () => {
       }
     }
   };
-
-  const logout = () => {
-    localStorage.clear();
-    console.log("logout");
-    window.location.replace("/");
-  };
+  const navBarItems = [
+    {
+      title: "系統介紹",
+      onClick: () => scrollToAnchor("introduce"),
+      icon: (
+        <svg
+          aria-hidden="true"
+          className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
+          <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
+        </svg>
+      ),
+    },
+    {
+      title: "盆栽狀態",
+      onClick: () => scrollToAnchor("state"),
+      icon: (
+        <svg
+          aria-hidden="true"
+          className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      ),
+    },
+    {
+      title: "會員植物",
+      onClick: () => scrollToAnchor("showPlant"),
+      icon: (
+        <svg
+          aria-hidden="true"
+          className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+      ),
+    },
+  ];
 
   return (
     <div id="top" className="flex flex-col items-center">
-      <nav className="w-full desktop:max-w-[1560px] tablet:max-w-[768px]">
-        <div className="desktop:px-[140px] tablet:px-9 px-4 my-6 flex flex-row flex-wrap justify-between items-center ">
-          <img
-            src={logo}
-            className="desktop:mr-3 desktop:h-6 tablet:w-[74px] tablet:h-[45.71px] w-12 h-[34.29px]"
-            alt="Logo"
-          />
-          <button
-            id="hambar"
-            onClick={show}
-            data-collapse-toggle="navbar-default"
-            type="button"
-            className="inline-flex items-center text-sm text-gray-500 rounded-lg desktop:hidden tablet:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 justify-end"
-            aria-controls="navbar-default"
-            aria-expanded="false"
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="w-6 h-6"
-              aria-hidden="true"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                data-name="立即租借"
-                fill-rule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </button>
-          <div
-            id="sidebar"
-            className="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800 desktop:hidden tablet:hidden absolute right-0 top-12"
-            style={{ display: "none" }}
-          >
-            <ul className="space-y-2">
-              <li>
-                <button
-                  onClick={() => scrollToAnchor("introduce")}
-                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                    <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-                  </svg>
-                  <span className="ml-3">系統介紹</span>
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToAnchor("state")}
-                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
-                  <span className="flex-1 ml-3 whitespace-nowrap">盆栽狀態</span>
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => scrollToAnchor("showPlant")}
-                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 "
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
-                  <span className="flex-1 ml-3 whitespace-nowrap ">會員植物</span>
-                </button>
-              </li>
-              <li>
-                <button
-                  href="#"
-                  className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                  <svg
-                    aria-hidden="true"
-                    className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
-                      clip-rule="evenodd"
-                    ></path>
-                  </svg>
-                  <span onClick={logout} className="flex-1 ml-3 whitespace-nowrap">
-                    登出
-                  </span>
-                </button>
-              </li>
-            </ul>
-          </div>
+      <NavBar
+        onLogoClick={() => scrollToAnchor("top")}
+        navItems={navBarItems}
+      />
 
-          <div className="items-center text-[20px] tablet:text-[16px] hidden desktop:flex tablet:flex">
-            <button onClick={() => scrollToAnchor("introduce")} className="mr-8  ">
-              系統介紹
-            </button>
-            <button onClick={() => scrollToAnchor("state")} className="mr-8">
-              盆栽狀態
-            </button>
-            <button onClick={() => scrollToAnchor("showPlant")} className="">
-              會員植物
-            </button>
-          </div>
-          <button
-            onClick={logout}
-            className="bg-[#8B8B8B] text-white w-[56px] h-10 rounded-lg hidden desktop:block tablet:block"
-          >
-            登出
-          </button>
-        </div>
-      </nav>
       {/* 登記表單 */}
       <PopUpModal
         text="是否要登記盆器？"
@@ -270,7 +177,10 @@ const Main = () => {
         onCancel={() => setShowPopUpModal(false)}
       />
       {/* 區塊2 */}
-      <div id="mainArea" className="p-0 m-0 w-full relative">
+      <div
+        id="mainArea"
+        className="p-0 desktop:mt-24 tablet:mt-20 mt-16 m-0 w-full relative"
+      >
         <Toast
           show={showToast}
           onClose={() => setShowToast(false)}
@@ -299,7 +209,10 @@ const Main = () => {
           </div>
         </div>
         {/* Intro */}
-        <div id="introduce" className="w-full flex justify-center">
+        <div
+          id="introduce"
+          className="w-full flex justify-center desktop:scroll-mt-24 tablet:scroll-mt-20 scroll-mt-16"
+        >
           <div className="grid grid-cols-2 w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] desktop:p-20 p-4 desktop:gap-20 gap-10">
             <div className="desktop:col-span-1 tablet:col-span-1 col-span-2 flex justify-center items-center">
               <img
@@ -329,7 +242,10 @@ const Main = () => {
           </div>
         </div>
         {/* State */}
-        <div id="state" className="w-full flex justify-center">
+        <div
+          id="state"
+          className="w-full flex justify-center desktop:scroll-mt-24 tablet:scroll-mt-20 scroll-mt-16"
+        >
           <div className="desktop:mt-[60px] tablet:mt-5 mt-4 w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px]">
             <h1 className="text-center font-extrabold text-[44px] tablet:text-[20px] phone:text-[18px]">
               盆栽狀態
@@ -346,7 +262,10 @@ const Main = () => {
           </div>
         </div>
         {/* Other Plant */}
-        <div id="showPlant" className="w-full flex justify-center">
+        <div
+          id="showPlant"
+          className="w-full flex justify-center desktop:scroll-mt-24 tablet:scroll-mt-20 scroll-mt-16"
+        >
           <div className="desktop:mt-[60px] tablet:mt-5 mt-4 w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px]">
             <h1 className="text-center font-extrabold text-[44px] tablet:text-[20px] phone:text-[18px]">
               會員植物
@@ -369,7 +288,9 @@ const Main = () => {
                       "desktop:flex tablet:flex hidden",
                       "desktop:flex hidden",
                       "desktop:flex hidden",
-                    ].map((item, index) => <EmptyPlant key={index} display={item} />)
+                    ].map((item, index) => (
+                      <EmptyPlant key={index} display={item} />
+                    ))
                   : otherPlant.data
                       .filter((item) => item.plant !== null)
                       .map((item) => (
