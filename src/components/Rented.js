@@ -80,21 +80,21 @@ const Rented = (props) => {
     ? `${process.env.REACT_APP_BACKEND_HOST || ""}/${props.rentedInfo.plantIMG}`
     : plant1;
   return (
-    <div class="w-[440px] h-[180px] border border-[#D7D7D7] rounded-3xl ml-10 mt-10">
-      <div class="flex flex-row">
+    <div className="w-[440px] h-[180px] border border-[#D7D7D7] rounded-3xl ml-10 mt-10">
+      <div className="flex flex-row">
         <img
           src={plantIMG}
-          class="w-20 h-20 rounded-full ml-[30px] mt-[27px]"
+          className="w-20 h-20 rounded-full ml-[30px] mt-[27px]"
           alt="plant"
         ></img>
-        <div class="flex flex-wrap flex-col ml-6 mt-[52px] w-[220px]">
-          <label class="text-[24px]">{props.rentedInfo.name}</label>
+        <div className="flex flex-wrap flex-col ml-6 mt-[52px] w-[220px]">
+          <label className="text-[24px]">{props.rentedInfo.name}</label>
         </div>
         <button
-          class="inline-flex items-center  text-sm h-6 mt-[15px] ml-4 font-medium text-center text-gray-900 bg-transparent rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          className="inline-flex items-center  text-sm h-6 mt-[15px] ml-4 font-medium text-center text-gray-900 bg-transparent rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           onClick={() => (window.location = `mailto:${props.rentedInfo.email}`)}
         >
-          <img src={emailIcon} class="w-6 h-6  " alt="email"></img>
+          <img src={emailIcon} className="w-6 h-6  " alt="email"></img>
         </button>
 
         {/* 刪除按鈕 */}
@@ -102,10 +102,10 @@ const Rented = (props) => {
           onClick={() => setShowPopUpModal(true)}
           id="dropdownMenuIconButton"
           data-dropdown-toggle="dropdownDots"
-          class="inline-flex items-center  text-sm h-6 mt-[15px] mx-4 font-medium text-center text-gray-900 bg-transparent rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          className="inline-flex items-center  text-sm h-6 mt-[15px] mx-4 font-medium text-center text-gray-900 bg-transparent rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
           type="button"
         >
-          <img src={deleteIMG} class="h-6 w-6" alt="delete"></img>
+          <img src={deleteIMG} className="h-6 w-6" alt="delete"></img>
         </button>
 
         <PopUpModal
@@ -117,15 +117,15 @@ const Rented = (props) => {
           onCancel={() => setShowPopUpModal(false)}
         />
       </div>
-      <div class="ml-10 mt-[26px] flex flex-row">
-        <label class="text-[20px]">{props.rentedInfo.plantName}</label>
-        <div class="flex flex-row ml-[34px]">
-          <img src={humidIMG} class="h-[28px] w-[28px] mr-1" alt="humid"></img>
-          <label class="text-[20px]">{realtimeData.soilHumid}%</label>
+      <div className="ml-10 mt-[26px] flex flex-row">
+        <label className="text-[20px]">{props.rentedInfo.plantName}</label>
+        <div className="flex flex-row ml-[34px]">
+          <img src={humidIMG} className="h-[28px] w-[28px] mr-1" alt="humid"></img>
+          <label className="text-[20px]">{realtimeData.soilHumid}%</label>
         </div>
-        <div class="flex flex-row ml-[19px]">
-          <img src={lightIMG} class="h-[28px] w-[28px] mr-1" alt="light"></img>
-          <label class="text-[20px]">{realtimeData.light} lx</label>
+        <div className="flex flex-row ml-[19px]">
+          <img src={lightIMG} className="h-[28px] w-[28px] mr-1" alt="light"></img>
+          <label className="text-[20px]">{realtimeData.light} lx</label>
         </div>
       </div>
     </div>

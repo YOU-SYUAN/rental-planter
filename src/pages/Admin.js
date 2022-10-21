@@ -156,25 +156,25 @@ const Admin = () => {
   return (
     //navbar
     <div style={{ height: "100vh" }} id="Bg">
-      <div class="">
-        <nav class=" h-24 tablet:h-[69.71px] phone:h-[70px] py-6 shadow-lg">
-          <div class=" mx-[140px] flex flex-row flex-wrap justify-between items-center tablet:mx-9 phone:mx-4 ">
+      <div className="">
+        <nav className=" h-24 tablet:h-[69.71px] phone:h-[70px] py-6 shadow-lg">
+          <div className=" mx-[140px] flex flex-row flex-wrap justify-between items-center tablet:mx-9 phone:mx-4 ">
             <img
               src={logo}
-              class="mr-3 h-6 tablet:w-[74px] tablet:h-[45.71px] phone:w-12 phone:h-[34.29px]"
+              className="mr-3 h-6 tablet:w-[74px] tablet:h-[45.71px] phone:w-12 phone:h-[34.29px]"
               alt="Logo"
             />
             <button
               id="hambar"
               data-collapse-toggle="navbar-default"
               type="button"
-              class="inline-flex items-center text-sm text-gray-500 rounded-lg tablet:hidden desktop:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 phone:justify-end"
+              className="inline-flex items-center text-sm text-gray-500 rounded-lg tablet:hidden desktop:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 phone:justify-end"
               aria-controls="navbar-default"
               aria-expanded="false"
             >
-              <span class="sr-only">Open main menu</span>
+              <span className="sr-only">Open main menu</span>
               <svg
-                class="w-6 h-6"
+                className="w-6 h-6"
                 aria-hidden="true"
                 fill="currentColor"
                 viewBox="0 0 20 20"
@@ -190,15 +190,15 @@ const Admin = () => {
             </button>
             <div
               id="sidebar"
-              class="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800 desktop:hidden tablet:hidden absolute right-0 top-12"
+              className="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800 desktop:hidden tablet:hidden absolute right-0 top-12"
               style={{ display: "none" }}
             >
-              <ul class="space-y-2">
+              <ul className="space-y-2">
                 <li>
-                  <button class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                  <button className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <svg
                       aria-hidden="true"
-                      class="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                      className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
@@ -206,14 +206,14 @@ const Admin = () => {
                       <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
                       <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
                     </svg>
-                    <span class="ml-3">盆栽管理</span>
+                    <span className="ml-3">盆栽管理</span>
                   </button>
                 </li>
                 <li>
-                  <button class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                  <button className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <svg
                       aria-hidden="true"
-                      class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                      className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
@@ -224,7 +224,7 @@ const Admin = () => {
                         clip-rule="evenodd"
                       ></path>
                     </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">
+                    <span className="flex-1 ml-3 whitespace-nowrap">
                       新增管理員
                     </span>
                   </button>
@@ -233,11 +233,11 @@ const Admin = () => {
                 <li>
                   <button
                     href="#"
-                    class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                    className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <svg
                       aria-hidden="true"
-                      class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                      className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
@@ -250,7 +250,7 @@ const Admin = () => {
                     </svg>
                     <span
                       onClick={logout}
-                      class="flex-1 ml-3 whitespace-nowrap"
+                      className="flex-1 ml-3 whitespace-nowrap"
                     >
                       登出
                     </span>
@@ -259,10 +259,10 @@ const Admin = () => {
               </ul>
             </div>
 
-            <div class="flex items-center text-[20px] tablet:text-[16px] phone:hidden">
-              <button class="mr-8  ">盆栽管理</button>
+            <div className="flex items-center text-[20px] tablet:text-[16px] phone:hidden">
+              <button className="mr-8  ">盆栽管理</button>
               <button
-                class="mr-8"
+                className="mr-8"
                 data-modal-toggle="authentication-modal"
                 onClick={show}
               >
@@ -273,7 +273,7 @@ const Admin = () => {
             {/* rounded-lg -> 8px */}
             <button
               onClick={logout}
-              class="bg-[#8B8B8B] text-white w-[56px] h-10 rounded-lg phone:hidden"
+              className="bg-[#8B8B8B] text-white w-[56px] h-10 rounded-lg phone:hidden"
             >
               登出
             </button>
@@ -289,19 +289,19 @@ const Admin = () => {
         style={{
           display: "none",
         }}
-        class="bg-black bg-opacity-80 hidden  fixed top-0 left-0 right-0 z-10 m-auto w-full md:inset-0 h-modal md:h-full"
+        className="bg-black bg-opacity-80 hidden  fixed top-0 left-0 right-0 z-10 m-auto w-full md:inset-0 h-modal md:h-full"
       >
-        <div class="flex flex-col justify-center p-4 m-auto w-full max-w-md h-full md:h-auto">
-          <div class="relative bg-white bg-opacity-100 rounded-lg shadow dark:bg-gray-700 z-50">
-            <div class="py-6 px-6 lg:px-8">
-              <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">
+        <div className="flex flex-col justify-center p-4 m-auto w-full max-w-md h-full md:h-auto">
+          <div className="relative bg-white bg-opacity-100 rounded-lg shadow dark:bg-gray-700 z-50">
+            <div className="py-6 px-6 lg:px-8">
+              <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">
                 新增管理員
               </h3>
-              <div class="space-y-6" action="#">
+              <div className="space-y-6" action="#">
                 <div>
                   <label
                     for="name"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                   >
                     姓名
                   </label>
@@ -310,7 +310,7 @@ const Admin = () => {
                     name="name"
                     id="name"
                     ref={name}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="管理員名字"
                     required
                   />
@@ -318,7 +318,7 @@ const Admin = () => {
                 <div>
                   <label
                     for="email"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                   >
                     電子郵件
                   </label>
@@ -328,21 +328,21 @@ const Admin = () => {
                     id="email"
                     ref={email}
                     placeholder="管理員電子郵件"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required
                   />
                 </div>
-                <label class="text-[#FF0000] ">{errorMsgAdmin}</label>
+                <label className="text-[#FF0000] ">{errorMsgAdmin}</label>
                 <button
                   onClick={add}
                   type="button"
-                  class="w-full text-white bg-[#519E75] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  className="w-full text-white bg-[#519E75] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   新增
                 </button>
                 <button
                   onClick={show}
-                  class="w-full text-white bg-[#929292] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  className="w-full text-white bg-[#929292] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   取消
                 </button>
@@ -352,21 +352,21 @@ const Admin = () => {
         </div>
       </div>
 
-      <div class="mt-[90px] ">
-        <div class="grid grid-col-12 grid-flow-col flex-wrap">
+      <div className="mt-[90px] ">
+        <div className="grid grid-col-12 grid-flow-col flex-wrap">
           {/* 左半邊 */}
-          <div class="grid col-end-5 mr-[120px]">
+          <div className="grid col-end-5 mr-[120px]">
             <div>
-              <h1 class="text-[28px] text-center ml-24">租借數量</h1>
-              <div class="flex flex-row ml-[137px] mt-6">
+              <h1 className="text-[28px] text-center ml-24">租借數量</h1>
+              <div className="flex flex-row ml-[137px] mt-6">
                 {data.map((item) => (
                   <RentedCard key={item.state} data={item}></RentedCard>
                 ))}
               </div>
             </div>
-            <div class="mt-[86px]">
-              <h1 class="text-[28px] text-center  ml-24">候補名單</h1>
-              <div class=" w-[552px] h-[520px] overflow-y-scroll overflow-x-hidden ml-[124px] mt-6 bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md ">
+            <div className="mt-[86px]">
+              <h1 className="text-[28px] text-center  ml-24">候補名單</h1>
+              <div className=" w-[552px] h-[520px] overflow-y-scroll overflow-x-hidden ml-[124px] mt-6 bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md ">
                 {info.map((item) => (
                   <Waitline key={item.index} data={item}></Waitline>
                 ))}
@@ -375,10 +375,10 @@ const Admin = () => {
             </div>
           </div>
           {/* 右半邊 */}
-          <div class="grid col-start-6 col-span-7 flex-wrap mb-[53px]">
-            <h1 class="text-[28px] text-center">已租資訊</h1>
-            <div class="mt-6">
-              <div class="w-[1000px] h-[841px] flex flex-wrap content-start flex-start overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md ">
+          <div className="grid col-start-6 col-span-7 flex-wrap mb-[53px]">
+            <h1 className="text-[28px] text-center">已租資訊</h1>
+            <div className="mt-6">
+              <div className="w-[1000px] h-[841px] flex flex-wrap content-start flex-start overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md ">
                 {rentedInfo.map((item) => (
                   <Rented key={item.id} rentedInfo={item} path={url}></Rented>
                 ))}

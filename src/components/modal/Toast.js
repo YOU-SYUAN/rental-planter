@@ -42,14 +42,14 @@ const icon = (type) => {
   if (properties[type].icon) {
     return (
       <div
-        class={`inline-flex flex-shrink-0 justify-center items-center w-8 h-8 rounded-full ${properties[type].icon.class}`}
+        className={`inline-flex flex-shrink-0 justify-center items-center w-8 h-8 rounded-full ${properties[type].icon.class}`}
       >
         <img
-          class="w-5 h-5"
+          className="w-5 h-5"
           src={properties[type].icon.src}
           alt={`${type}-icon`}
         />
-        <span class="sr-only">{properties[type].icon.sr}</span>
+        <span className="sr-only">{properties[type].icon.sr}</span>
       </div>
     );
   }
@@ -62,20 +62,20 @@ const Toast = (props) => {
       <div
         id={`toast-${type}`}
         tabIndex="-1"
-        class={`absolute top-5 right-5 flex items-center p-4 mb-4 w-full max-w-xs ${properties[type].textClass} ${properties[type].bgClass} rounded-lg shadow`}
+        className={`absolute top-5 right-5 flex items-center p-4 mb-4 w-full max-w-xs ${properties[type].textClass} ${properties[type].bgClass} rounded-lg shadow`}
         role="alert"
       >
         {icon(type)}
-        <div class="ml-3 text-sm font-normal">{props.text}</div>
+        <div className="ml-3 text-sm font-normal">{props.text}</div>
         <button
           type="button"
-          class={`ml-auto -mx-1.5 -my-1.5 ${properties[type].bgClass} text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 inline-flex h-8 w-8`}
+          className={`ml-auto -mx-1.5 -my-1.5 ${properties[type].bgClass} text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 inline-flex h-8 w-8`}
           data-dismiss-target={`#toast-${type}`}
           aria-label="Close"
           onClick={props.onClose}
         >
           <img src={closeIcon} alt="close-icon" />
-          <span class="sr-only">Close</span>
+          <span className="sr-only">Close</span>
         </button>
       </div>
     );
