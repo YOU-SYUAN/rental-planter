@@ -369,7 +369,7 @@ const Main = () => {
                       "desktop:flex tablet:flex hidden",
                       "desktop:flex hidden",
                       "desktop:flex hidden",
-                    ].map((item) => <EmptyPlant key={item} display={item} />)
+                    ].map((item, index) => <EmptyPlant key={index} display={item} />)
                   : otherPlant.data
                       .filter((item) => item.plant !== null)
                       .map((item) => (
