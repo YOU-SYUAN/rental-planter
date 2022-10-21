@@ -1,4 +1,4 @@
-import exclamation from '../../assets/modalIcon/exclamation.svg';
+import { ExclamationIcon } from "../icons/PopUpModalIcons";
 
 const confirmColor = {
   green:
@@ -17,11 +17,16 @@ const PopUpModal = (props) => {
         <div className="relative flex flex-col justify-center p-4 w-full max-w-md m-auto h-full md:h-auto">
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <div className="p-6 text-center">
-              <img
-                src={props.img || exclamation}
-                className=" mx-auto mb-4 w-14 h-14 "
-                alt=""
-              ></img>
+              {props.img ? (
+                <img
+                  src={props.img}
+                  className="mx-auto mb-4 w-14 h-14"
+                  alt=""
+                ></img>
+              ) : (
+                <ExclamationIcon className="mx-auto mb-4 w-14 h-14" />
+              )}
+
               <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                 {props.text}
               </h3>

@@ -1,7 +1,4 @@
-import checkIcon from "../../assets/modalIcon/check.svg";
-import warnIcon from "../../assets/modalIcon/warn.svg";
-import errorIcon from "../../assets/modalIcon/error.svg";
-import closeIcon from "../../assets/modalIcon/close.svg";
+import { CheckIcon, CrossIcon, WarningIcon } from "../icons/ToastIcons";
 import "flowbite";
 
 const properties = {
@@ -11,7 +8,7 @@ const properties = {
     icon: {
       class: "text-green-600 bg-green-300",
       sr: "Check icon",
-      src: checkIcon,
+      src: <CheckIcon className="w-5 h-5" />,
     },
   },
   warn: {
@@ -20,7 +17,7 @@ const properties = {
     icon: {
       class: "text-orange-600 bg-orange-300",
       sr: "Warning icon",
-      src: warnIcon,
+      src: <WarningIcon className="w-5 h-5" />,
     },
   },
   error: {
@@ -29,7 +26,7 @@ const properties = {
     icon: {
       class: "text-red-600 bg-red-300",
       sr: "Error icon",
-      src: errorIcon,
+      src: <CrossIcon className="w-5 h-5" />,
     },
   },
   default: {
@@ -44,11 +41,7 @@ const icon = (type) => {
       <div
         className={`inline-flex flex-shrink-0 justify-center items-center w-8 h-8 rounded-full ${properties[type].icon.class}`}
       >
-        <img
-          className="w-5 h-5"
-          src={properties[type].icon.src}
-          alt={`${type}-icon`}
-        />
+        {properties[type].icon.src}
         <span className="sr-only">{properties[type].icon.sr}</span>
       </div>
     );
@@ -74,7 +67,7 @@ const Toast = (props) => {
           aria-label="Close"
           onClick={props.onClose}
         >
-          <img src={closeIcon} alt="close-icon" />
+          <CrossIcon className="w-5 h-5" />
           <span className="sr-only">Close</span>
         </button>
       </div>
