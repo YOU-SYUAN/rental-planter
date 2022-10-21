@@ -89,7 +89,7 @@ const StateEmpty = () => {
           color="yellow"
           text="編輯"
           class="absolute right-0 bottom-0 "
-          disabled="true"
+          disabled={true}
         />
       </div>
       <div class="absolute m-0 left-0 top-0 w-full h-full bg-white bg-opacity-80 flex flex-col justify-center items-center gap-6">
