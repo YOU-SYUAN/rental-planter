@@ -3,7 +3,6 @@ import img2 from "../assets/img2.png";
 import RentedCard from "../components/RentedCard";
 import Waitline from "../components/Waitline";
 import Rented from "../components/Rented";
-import logo from "../assets/logo.png";
 import { useState, useEffect, useRef } from "react";
 import {
   addAdmin,
@@ -12,6 +11,7 @@ import {
   getWaitList,
   getRentedInfo,
 } from "../Api.js";
+import { NavBar } from "../components/NavBar";
 
 const Admin = () => {
   const url = window.location.href;
@@ -147,247 +147,145 @@ const Admin = () => {
       addmodal.style.display === "none" ? "block" : "none";
   };
 
-  const logout = () => {
-    localStorage.clear();
-    console.log("logout");
-    window.location.replace("/");
-  };
+  const navBarItems = [
+    {
+      title: "盆栽管理",
+      onClick: () => { },
+      isCurrent: true,
+    },
+    {
+      title: "新增管理員",
+      onClick: () => show(),
+    },
+  ];
 
   return (
-    //navbar
-    <div style={{ height: "100vh" }} id="Bg">
-      <div className="">
-        <nav className=" h-24 tablet:h-[69.71px] phone:h-[70px] py-6 shadow-lg">
-          <div className=" mx-[140px] flex flex-row flex-wrap justify-between items-center tablet:mx-9 phone:mx-4 ">
-            <img
-              src={logo}
-              className="mr-3 h-6 tablet:w-[74px] tablet:h-[45.71px] phone:w-12 phone:h-[34.29px]"
-              alt="Logo"
-            />
-            <button
-              id="hambar"
-              data-collapse-toggle="navbar-default"
-              type="button"
-              className="inline-flex items-center text-sm text-gray-500 rounded-lg tablet:hidden desktop:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600 phone:justify-end"
-              aria-controls="navbar-default"
-              aria-expanded="false"
-            >
-              <span className="sr-only">Open main menu</span>
-              <svg
-                className="w-6 h-6"
-                aria-hidden="true"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  data-name="立即租借"
-                  fill-rule="evenodd"
-                  d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </button>
-            <div
-              id="sidebar"
-              className="overflow-y-auto py-4 px-3 bg-gray-50 rounded dark:bg-gray-800 desktop:hidden tablet:hidden absolute right-0 top-12"
-              style={{ display: "none" }}
-            >
-              <ul className="space-y-2">
-                <li>
-                  <button className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <svg
-                      aria-hidden="true"
-                      className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                      <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-                    </svg>
-                    <span className="ml-3">盆栽管理</span>
-                  </button>
-                </li>
-                <li>
-                  <button className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                    <svg
-                      aria-hidden="true"
-                      className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                    <span className="flex-1 ml-3 whitespace-nowrap">
-                      新增管理員
-                    </span>
-                  </button>
-                </li>
-
-                <li>
-                  <button
-                    href="#"
-                    className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    <svg
-                      aria-hidden="true"
-                      className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                    <span
-                      onClick={logout}
-                      className="flex-1 ml-3 whitespace-nowrap"
-                    >
-                      登出
-                    </span>
-                  </button>
-                </li>
-              </ul>
-            </div>
-
-            <div className="flex items-center text-[20px] tablet:text-[16px] phone:hidden">
-              <button className="mr-8  ">盆栽管理</button>
-              <button
-                className="mr-8"
-                data-modal-toggle="authentication-modal"
-                onClick={show}
-              >
-                新增管理員
-              </button>
-            </div>
-
-            {/* rounded-lg -> 8px */}
-            <button
-              onClick={logout}
-              className="bg-[#8B8B8B] text-white w-[56px] h-10 rounded-lg phone:hidden"
-            >
-              登出
-            </button>
+      //navbar
+      <div id="Bg" className="flex flex-col items-center">
+          <NavBar onLogoClick={() => {}} navItems={navBarItems} />
+          {/* 新增管理員成功通知 */}
+          {/* 第二層 */}
+          {/* 新增管理員modal */}
+          <div
+              id="authentication-modal"
+              style={{
+                  display: "none",
+              }}
+              className="bg-black bg-opacity-80 hidden  fixed top-0 left-0 right-0 z-10 m-auto w-full md:inset-0 h-modal md:h-full"
+          >
+              <div className="flex flex-col justify-center p-4 m-auto w-full max-w-md h-full md:h-auto">
+                  <div className="relative bg-white bg-opacity-100 rounded-lg shadow dark:bg-gray-700 z-50">
+                      <div className="py-6 px-6 lg:px-8">
+                          <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">
+                              新增管理員
+                          </h3>
+                          <div className="space-y-6" action="#">
+                              <div>
+                                  <label
+                                      for="name"
+                                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                  >
+                                      姓名
+                                  </label>
+                                  <input
+                                      type="name"
+                                      name="name"
+                                      id="name"
+                                      ref={name}
+                                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                      placeholder="管理員名字"
+                                      required
+                                  />
+                              </div>
+                              <div>
+                                  <label
+                                      for="email"
+                                      className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                  >
+                                      電子郵件
+                                  </label>
+                                  <input
+                                      type="email"
+                                      name="email"
+                                      id="email"
+                                      ref={email}
+                                      placeholder="管理員電子郵件"
+                                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                      required
+                                  />
+                              </div>
+                              <label className="text-[#FF0000] ">
+                                  {errorMsgAdmin}
+                              </label>
+                              <button
+                                  onClick={add}
+                                  type="button"
+                                  className="w-full text-white bg-[#519E75] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                              >
+                                  新增
+                              </button>
+                              <button
+                                  onClick={show}
+                                  className="w-full text-white bg-[#929292] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                              >
+                                  取消
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
           </div>
-        </nav>
+
+          <div id="content" className="desktop:mt-24 tablet:mt-20 mt-16">
+              <div className="grid grid-col-12 grid-flow-col">
+                  {/* 左半邊 */}
+                  <div className="grid col-end-5 mr-[120px]">
+                      <div>
+                          <h1 className="text-[28px] text-center ml-24">
+                              租借數量
+                          </h1>
+                          <div className="flex flex-row ml-[137px] mt-6">
+                              {data.map((item) => (
+                                  <RentedCard
+                                      key={item.state}
+                                      data={item}
+                                  ></RentedCard>
+                              ))}
+                          </div>
+                      </div>
+                      <div className="mt-[86px]">
+                          <h1 className="text-[28px] text-center  ml-24">
+                              候補名單
+                          </h1>
+                          <div className=" w-[552px] h-[520px] overflow-y-scroll overflow-x-hidden ml-[124px] mt-6 bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md ">
+                              {info.map((item) => (
+                                  <Waitline
+                                      key={item.index}
+                                      data={item}
+                                  ></Waitline>
+                              ))}
+                          </div>
+                          {/* <Waitline></Waitline> */}
+                      </div>
+                  </div>
+                  {/* 右半邊 */}
+                  <div className="grid col-start-6 col-span-7 flex-wrap mb-[53px]">
+                      <h1 className="text-[28px] text-center">已租資訊</h1>
+                      <div className="mt-6">
+                          <div className="w-[1000px] h-[841px] flex flex-wrap content-start flex-start overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md ">
+                              {rentedInfo.map((item) => (
+                                  <Rented
+                                      key={item.id}
+                                      rentedInfo={item}
+                                      path={url}
+                                  ></Rented>
+                              ))}
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
       </div>
-      {/* 新增管理員成功通知 */}
-      <div></div>
-      {/* 第二層 */}
-      {/* 新增管理員modal */}
-      <div
-        id="authentication-modal"
-        style={{
-          display: "none",
-        }}
-        className="bg-black bg-opacity-80 hidden  fixed top-0 left-0 right-0 z-10 m-auto w-full md:inset-0 h-modal md:h-full"
-      >
-        <div className="flex flex-col justify-center p-4 m-auto w-full max-w-md h-full md:h-auto">
-          <div className="relative bg-white bg-opacity-100 rounded-lg shadow dark:bg-gray-700 z-50">
-            <div className="py-6 px-6 lg:px-8">
-              <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">
-                新增管理員
-              </h3>
-              <div className="space-y-6" action="#">
-                <div>
-                  <label
-                    for="name"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    姓名
-                  </label>
-                  <input
-                    type="name"
-                    name="name"
-                    id="name"
-                    ref={name}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="管理員名字"
-                    required
-                  />
-                </div>
-                <div>
-                  <label
-                    for="email"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    電子郵件
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    ref={email}
-                    placeholder="管理員電子郵件"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    required
-                  />
-                </div>
-                <label className="text-[#FF0000] ">{errorMsgAdmin}</label>
-                <button
-                  onClick={add}
-                  type="button"
-                  className="w-full text-white bg-[#519E75] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                  新增
-                </button>
-                <button
-                  onClick={show}
-                  className="w-full text-white bg-[#929292] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                  取消
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-[90px] ">
-        <div className="grid grid-col-12 grid-flow-col flex-wrap">
-          {/* 左半邊 */}
-          <div className="grid col-end-5 mr-[120px]">
-            <div>
-              <h1 className="text-[28px] text-center ml-24">租借數量</h1>
-              <div className="flex flex-row ml-[137px] mt-6">
-                {data.map((item) => (
-                  <RentedCard key={item.state} data={item}></RentedCard>
-                ))}
-              </div>
-            </div>
-            <div className="mt-[86px]">
-              <h1 className="text-[28px] text-center  ml-24">候補名單</h1>
-              <div className=" w-[552px] h-[520px] overflow-y-scroll overflow-x-hidden ml-[124px] mt-6 bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md ">
-                {info.map((item) => (
-                  <Waitline key={item.index} data={item}></Waitline>
-                ))}
-              </div>
-              {/* <Waitline></Waitline> */}
-            </div>
-          </div>
-          {/* 右半邊 */}
-          <div className="grid col-start-6 col-span-7 flex-wrap mb-[53px]">
-            <h1 className="text-[28px] text-center">已租資訊</h1>
-            <div className="mt-6">
-              <div className="w-[1000px] h-[841px] flex flex-wrap content-start flex-start overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md ">
-                {rentedInfo.map((item) => (
-                  <Rented key={item.id} rentedInfo={item} path={url}></Rented>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   );
 };
 
