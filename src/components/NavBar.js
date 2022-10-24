@@ -14,22 +14,7 @@ const NavBar = (props) => {
     const items = [...navItems];
     items.push({
       title: "登出",
-      onClick: logout,
-      icon: (
-        <svg
-          aria-hidden="true"
-          className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fillRule="evenodd"
-            d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
-            clipRule="evenodd"
-          ></path>
-        </svg>
-      ),
+      onClick: logout
     });
     return items.map((x) => ({
       title: x.title,
@@ -85,7 +70,6 @@ const NavBar = (props) => {
                 onClick={item.onClick}
                 className="w-full flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100"
               >
-                {item.icon}
                 <span className="ml-3">{item.title}</span>
               </button>
             </li>
