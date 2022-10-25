@@ -12,28 +12,16 @@ import { StateEmpty } from "../components/main/StateEmpty";
 import { EmptyPlant } from "../components/main/EmptyPlant";
 import { NavBar } from "../components/NavBar";
 import "flowbite";
+import { EmptyStateCover } from "../components/EmptyStateCover";
 
 const Main = () => {
+  const [loading, setLoading] = useState(true);
   const [showPopUpModal, setShowPopUpModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMsg, setToastMsg] = useState("");
   const url = window.location.href;
-  const [user, setUser] = useState({
-    user: {
-      id: "",
-      name: "",
-      email: "",
-    },
-    rents: [],
-  });
-  const [otherPlant, setOtherPlant] = useState({
-    data: [
-      {
-        plant: { name: "", intro: "", imgPath: "", nickName: "", minHumid: 0 },
-        container: null,
-      },
-    ],
-  });
+  const [user, setUser] = useState({ user: {}, rents: [] });
+  const [otherPlant, setOtherPlant] = useState({ data: [] });
 
   useEffect(() => {
     //get user info
@@ -58,8 +46,8 @@ const Main = () => {
     getOtherPlant()
       .then((response) => {
         if (response.status === 200) {
-          console.log(response.data);
           setOtherPlant(response.data);
+          setLoading(false);
         }
       })
       .catch((error) => {
@@ -209,7 +197,7 @@ const Main = () => {
               盆栽狀態
             </h1>
             {user.rents.filter((x) => x.plant !== null).length === 0 ? (
-              <StateEmpty />
+              <StateEmpty loading={loading} />
             ) : (
               user.rents
                 .filter((x) => x.plant !== null)
@@ -230,30 +218,25 @@ const Main = () => {
             </h1>
             <div className="flex justify-center desktop:px-20 desktop:my-20 tablet:px-10 my-10 relative">
               {otherPlant.data.filter((item) => item.plant !== null).length ===
-              0 ? (
-                <div className="absolute m-0 left-0 top-0 w-full h-full bg-white bg-opacity-80 flex flex-col justify-center items-center gap-6 z-10">
-                  <img src={lamu} alt="" />
-                  <h1 className="font-semibold desktop:text-[36px] tablet:text-[24px] text-[20px] tracking-widest">
-                    目前還沒有其他會員的植物
-                  </h1>
-                </div>
+                0 ? (
+                <EmptyStateCover loading={loading} title="目前還沒有其他會員的植物" />
               ) : undefined}
               <div className="flex justify-center flex-wrap desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] text-center gap-10">
                 {otherPlant.data.filter((item) => item.plant !== null)
                   .length === 0
                   ? [
-                      "flex",
-                      "desktop:flex tablet:flex hidden",
-                      "desktop:flex hidden",
-                      "desktop:flex hidden",
-                    ].map((item, index) => (
-                      <EmptyPlant key={index} display={item} />
-                    ))
+                    "flex",
+                    "desktop:flex tablet:flex hidden",
+                    "desktop:flex hidden",
+                    "desktop:flex hidden",
+                  ].map((item, index) => (
+                    <EmptyPlant key={index} display={item} />
+                  ))
                   : otherPlant.data
-                      .filter((item) => item.plant !== null)
-                      .map((item) => (
-                        <ShowPlant key={item.container} data={item} />
-                      ))}
+                    .filter((item) => item.plant !== null)
+                    .map((item) => (
+                      <ShowPlant key={item.container} data={item} />
+                    ))}
               </div>
             </div>
           </div>

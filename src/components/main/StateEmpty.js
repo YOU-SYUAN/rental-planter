@@ -1,9 +1,9 @@
 import lightImg from "../../assets/light.png";
 import humid from "../../assets/humid.png";
-import lamu from "../../assets/img1.png";
 import { Button } from "../Button";
+import { EmptyStateCover } from "../EmptyStateCover";
 
-const StateEmpty = () => {
+const StateEmpty = (props) => {
   return (
     <div className="w-full desktop:gap-30 gap-4 desktop:px-20 desktop:my-20 tablet:px-10 px-16 my-10 grid desktop:grid-cols-4 tablet:grid-cols-3 grid-cols-1 relative">
       {/* States skeletons */}
@@ -92,15 +92,11 @@ const StateEmpty = () => {
           disabled={true}
         />
       </div>
-      <div className="absolute m-0 left-0 top-0 w-full h-full bg-white bg-opacity-80 flex flex-col justify-center items-center gap-6 z-10">
-        <img src={lamu} alt="" />
-        <h1 className="font-semibold desktop:text-[36px] tablet:text-[24px] text-[20px] tracking-widest">
-          您目前還沒有使用中的盆器
-        </h1>
-        <div className="text-[#6B7280] desktop:text-[20px] tablet:text-[16px] text-[14px]">
-          現在就租借你的盆器！
-        </div>
-      </div>
+      <EmptyStateCover
+        loading={props.loading}
+        title="您目前還沒有使用中的盆器"
+        subtitle="現在就租借你的盆器！"
+      />
     </div>
   );
 };

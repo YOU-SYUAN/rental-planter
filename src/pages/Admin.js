@@ -15,13 +15,16 @@ import {
   getRentedInfo,
 } from "../Api.js";
 import { NavBar } from "../components/NavBar";
+import { EmptyStateCover } from "../components/EmptyStateCover";
 
 const Admin = () => {
+  const [waitListLoading, setWaitListLoading] = useState(true);
+  const [rentedLoading, setRentedLoading] = useState(true);
   const [showAddAdminModal, setShowAddAdminModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMsg, setToastMsg] = useState("");
   const url = window.location.href;
-  const [amount, setAmount] = useState({ data: { remain: 0, rented: 0 } });
+  const [amount, setAmount] = useState({ data: { remain: '--', rented: '--' } });
   const [waitList, setWaitList] = useState({ data: [] });
   const [rentInfo, setRentInfo] = useState({ data: [] });
 
@@ -62,6 +65,7 @@ const Admin = () => {
       .then((response) => {
         if (response.status === 200) {
           setWaitList(response.data);
+          setWaitListLoading(false);
         }
       })
       .catch((error) => {
@@ -75,6 +79,7 @@ const Admin = () => {
       .then((response) => {
         if (response.status === 200) {
           setRentInfo(response.data);
+          setRentedLoading(false);
         }
       })
       .catch((error) => {
@@ -134,6 +139,8 @@ const Admin = () => {
   const onDeleteRent = () => {
     setToastMsg("刪除成功！");
     setShowToast(true);
+    setWaitListLoading(true);
+    setRentedLoading(true);
     getData();
   }
 
@@ -182,12 +189,7 @@ const Admin = () => {
                   } overflow-x-hidden p-4 flex flex-col gap-1 desktop:h-0 min-h-[45vh] desktop:flex-auto relative`}
               >
                 {info.length === 0 ? (
-                  <div className="absolute m-0 left-0 top-0 w-full h-full bg-white bg-opacity-80 flex flex-col justify-center items-center gap-6 z-10">
-                    <img src={lamu} alt="" />
-                    <h1 className="font-semibold desktop:text-[36px] tablet:text-[24px] text-[20px] tracking-widest">
-                      候補名單為空
-                    </h1>
-                  </div>
+                  <EmptyStateCover loading={waitListLoading} title="候補名單為空" />
                 ) : undefined}
                 {info.length === 0
                   ? [
@@ -221,12 +223,7 @@ const Admin = () => {
                 } overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md grid desktop:grid-cols-2 grid-cols-1 auto-rows-min desktop:flex-auto desktop:h-0 desktop:gap-10 desktop:p-10 gap-4 p-4 relative`}
             >
               {rentedInfo.length === 0 ? (
-                <div className="absolute m-0 left-0 top-0 w-full h-full bg-white bg-opacity-80 flex flex-col justify-center items-center gap-6 z-10">
-                  <img src={lamu} alt="" />
-                  <h1 className="font-semibold desktop:text-[36px] tablet:text-[24px] text-[20px] tracking-widest">
-                    還沒有人租借盆器
-                  </h1>
-                </div>
+                <EmptyStateCover loading={rentedLoading} title="還沒有人租借盆器" />
               ) : undefined}
               {rentedInfo.length === 0
                 ? [
