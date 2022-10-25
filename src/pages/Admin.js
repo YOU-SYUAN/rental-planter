@@ -20,7 +20,7 @@ const Admin = () => {
   const [toastMsg, setToastMsg] = useState("");
   const url = window.location.href;
   const [amount, setAmount] = useState({ data: { remain: 0, rented: 0 } });
-  const [waitlist, setWaitlist] = useState({ data: [] });
+  const [waitList, setWaitList] = useState({ data: [] });
   const [rentInfo, setRentInfo] = useState({
     data: [
       { id: 0, owner: { name: "", email: "" }, plant: null, container: null },
@@ -63,7 +63,7 @@ const Admin = () => {
     getWaitList()
       .then((response) => {
         if (response.status === 200) {
-          setWaitlist(response.data);
+          setWaitList(response.data);
         }
       })
       .catch((error) => {
@@ -102,7 +102,7 @@ const Admin = () => {
       state: "已租",
     },
   ];
-  const info = waitlist.data;
+  const info = waitList.data;
 
   const rentedInfo = rentInfo.data.map((x) => {
     return {
@@ -151,7 +151,10 @@ const Admin = () => {
         onCancel={() => setShowAddAdminModal(false)}
       />
 
-      <div id="content" className="w-full flex justify-center desktop:flex-auto relative">
+      <div
+        id="content"
+        className="w-full flex justify-center desktop:flex-auto relative"
+      >
         <Toast
           show={showToast}
           onClose={() => setShowToast(false)}
