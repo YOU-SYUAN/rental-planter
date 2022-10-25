@@ -16,9 +16,7 @@ const Rented = (props) => {
     deleteRented(rentId)
       .then((res) => {
         if (res.status === 200) {
-          alert("刪除成功！");
-          //重新整理頁面
-          window.location.reload();
+          props.onDeleteRent();
         }
       })
       .catch((error) => {

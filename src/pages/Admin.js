@@ -133,6 +133,12 @@ const Admin = () => {
     setShowToast(true);
   };
 
+  const onDeleteRent = () => {
+    setToastMsg("刪除成功！");
+    setShowToast(true);
+    getData();
+  }
+
   return (
     //navbar
     <div id="Bg" className="flex flex-col items-center desktop:h-screen">
@@ -145,56 +151,56 @@ const Admin = () => {
         onCancel={() => setShowAddAdminModal(false)}
       />
 
-      <div
-        id="content"
-        className="w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] grid grid-cols-12 gap-4 desktop:flex-auto relative"
-      >
+      <div id="content" className="w-full flex justify-center desktop:flex-auto relative">
         <Toast
           show={showToast}
           onClose={() => setShowToast(false)}
           type="success"
           text={toastMsg}
         />
-        {/* 左半邊 */}
-        <div className="desktop:col-span-5 col-span-12 flex flex-col">
-          <div className="flex flex-col items-center justify-center gap-4 p-8 flex-none">
-            <h1 className="text-[28px] text-center">租借數量</h1>
-            <div className="flex desktop:flex-row tablet:flex-row flex-col w-full items-center justify-center gap-12">
-              {data.map((item) => (
-                <RentedCard
-                  key={item.state}
-                  data={item}
-                ></RentedCard>
-              ))}
+        <div className="w-full h-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] grid grid-cols-12 gap-4">
+          {/* 左半邊 */}
+          <div className="desktop:col-span-5 col-span-12 flex flex-col">
+            <div className="flex flex-col items-center justify-center gap-4 p-8 flex-none">
+              <h1 className="text-[28px] text-center">租借數量</h1>
+              <div className="flex desktop:flex-row tablet:flex-row flex-col w-full items-center justify-center gap-12">
+                {data.map((item) => (
+                  <RentedCard
+                    key={item.state}
+                    data={item}
+                  ></RentedCard>
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 p-8 flex-auto">
+              <h1 className="text-[28px] text-center flex-none">
+                候補名單
+              </h1>
+              <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md overflow-y-scroll overflow-x-hidden p-4 flex flex-col gap-1 desktop:h-0 min-h-[45vh] desktop:flex-auto">
+                {info.map((item) => (
+                  <WaitLine
+                    key={item.index}
+                    data={item}
+                  ></WaitLine>
+                ))}
+              </div>
             </div>
           </div>
-          <div className="flex flex-col gap-4 p-8 flex-auto">
+          {/* 右半邊 */}
+          <div className="flex flex-col desktop:col-span-7 col-span-12 h-full gap-4 p-8">
             <h1 className="text-[28px] text-center flex-none">
-              候補名單
+              已租資訊
             </h1>
-            <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md overflow-y-scroll overflow-x-hidden p-4 flex flex-col gap-1 desktop:h-0 min-h-[45vh] desktop:flex-auto">
-              {info.map((item) => (
-                <WaitLine
-                  key={item.index}
-                  data={item}
-                ></WaitLine>
+            <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md grid desktop:grid-cols-2 grid-cols-1 auto-rows-min desktop:flex-auto desktop:h-0 desktop:gap-10 desktop:p-10 gap-4 p-4">
+              {rentedInfo.map((item) => (
+                <Rented
+                  key={item.id}
+                  rentedInfo={item}
+                  path={url}
+                  onDeleteRent={onDeleteRent}
+                ></Rented>
               ))}
             </div>
-          </div>
-        </div>
-        {/* 右半邊 */}
-        <div className="flex flex-col desktop:col-span-7 col-span-12 h-full gap-4 p-8">
-          <h1 className="text-[28px] text-center flex-none">
-            已租資訊
-          </h1>
-          <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md grid desktop:grid-cols-2 grid-cols-1 auto-rows-min desktop:flex-auto desktop:h-0 desktop:gap-10 desktop:p-10 gap-4 p-4">
-            {rentedInfo.map((item) => (
-              <Rented
-                key={item.id}
-                rentedInfo={item}
-                path={url}
-              ></Rented>
-            ))}
           </div>
         </div>
       </div>
