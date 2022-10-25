@@ -1,7 +1,8 @@
-import img1 from "../assets/img1.png";
+import lamu from "../assets/img1.png";
 import img2 from "../assets/img2.png";
 import { RentedCard } from "../components/admin/RentedCard";
 import { WaitLine } from "../components/admin/WaitLine";
+import { WaitEmpty } from "../components/admin/WaitEmpty";
 import { Rented } from "../components/admin/Rented";
 import { useState, useEffect } from "react";
 import { Toast } from "../components/modal/Toast";
@@ -96,7 +97,7 @@ const Admin = () => {
       state: "未租",
     },
     {
-      img: img1,
+      img: lamu,
       amount: amount.data.rented,
       bgColor: "#519E75",
       state: "已租",
@@ -179,13 +180,35 @@ const Admin = () => {
               <h1 className="text-[28px] text-center flex-none">
                 候補名單
               </h1>
-              <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md overflow-y-scroll overflow-x-hidden p-4 flex flex-col gap-1 desktop:h-0 min-h-[45vh] desktop:flex-auto">
-                {info.map((item) => (
-                  <WaitLine
-                    key={item.index}
-                    data={item}
-                  ></WaitLine>
-                ))}
+              <div
+                className={`scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md overflow-y-${info.length === 0 ? 'hidden' : 'scroll'} overflow-x-hidden p-4 flex flex-col gap-1 desktop:h-0 min-h-[45vh] desktop:flex-auto relative`}
+              >
+                {info.length === 0 ? (
+                  <div className="absolute m-0 left-0 top-0 w-full h-full bg-white bg-opacity-80 flex flex-col justify-center items-center gap-6">
+                    <img src={lamu} alt="" />
+                    <h1 className="font-semibold desktop:text-[36px] tablet:text-[24px] text-[20px] tracking-widest">
+                      候補名單為空
+                    </h1>
+                  </div>) : undefined}
+                {info.length === 0
+                  ? [
+                    "flex",
+                    "flex",
+                    "flex",
+                    "flex",
+                    "flex",
+                    "desktop:flex tablet:flex hidden",
+                    "desktop:flex tablet:flex hidden",
+                    "desktop:flex hidden",
+                  ].map((item, index) => (
+                    <WaitEmpty key={index} display={item} />
+                  ))
+                  : info.map((item) => (
+                    <WaitLine
+                      key={item.index}
+                      data={item}
+                    ></WaitLine>
+                  ))}
               </div>
             </div>
           </div>
