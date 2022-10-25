@@ -82,7 +82,7 @@ const Rented = (props) => {
           <div className="flex gap-4">
               <img
                   src={plantIMG}
-                  className="desktop:w-20 desktop:h-20 tablet:w-[72px] tablet:h-[72px] w-16 h-16 rounded-full flex-none"
+                  className="desktop:w-20 desktop:h-20 tablet:w-[72px] tablet:h-[72px] w-16 h-16 rounded-full flex-none object-cover"
                   alt="plant"
               ></img>
               <div className="flex flex-col items-start justify-center flex-auto">
