@@ -172,7 +172,7 @@ const Admin = () => {
             <h1 className="text-[28px] text-center flex-none">
               候補名單
             </h1>
-            <div className="bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md overflow-y-scroll overflow-x-hidden p-4 flex flex-col gap-1 desktop:h-0 min-h-[45vh] desktop:flex-auto">
+            <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md overflow-y-scroll overflow-x-hidden p-4 flex flex-col gap-1 desktop:h-0 min-h-[45vh] desktop:flex-auto">
               {info.map((item) => (
                 <WaitLine
                   key={item.index}
@@ -187,7 +187,7 @@ const Admin = () => {
           <h1 className="text-[28px] text-center flex-none">
             已租資訊
           </h1>
-          <div className=" overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md grid desktop:grid-cols-2 grid-cols-1 auto-rows-min desktop:flex-auto desktop:h-0 desktop:gap-10 desktop:p-10 gap-4 p-4">
+          <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md grid desktop:grid-cols-2 grid-cols-1 auto-rows-min desktop:flex-auto desktop:h-0 desktop:gap-10 desktop:p-10 gap-4 p-4">
             {rentedInfo.map((item) => (
               <Rented
                 key={item.id}
