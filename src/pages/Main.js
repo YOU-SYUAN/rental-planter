@@ -231,7 +231,7 @@ const Main = () => {
             <div className="flex justify-center desktop:px-20 desktop:my-20 tablet:px-10 my-10 relative">
               {otherPlant.data.filter((item) => item.plant !== null).length ===
               0 ? (
-                <div className="absolute m-0 left-0 top-0 w-full h-full bg-white bg-opacity-80 flex flex-col justify-center items-center gap-6">
+                <div className="absolute m-0 left-0 top-0 w-full h-full bg-white bg-opacity-80 flex flex-col justify-center items-center gap-6 z-10">
                   <img src={lamu} alt="" />
                   <h1 className="font-semibold desktop:text-[36px] tablet:text-[24px] text-[20px] tracking-widest">
                     目前還沒有其他會員的植物

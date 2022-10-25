@@ -181,15 +181,17 @@ const Admin = () => {
                 候補名單
               </h1>
               <div
-                className={`scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md overflow-y-${info.length === 0 ? 'hidden' : 'scroll'} overflow-x-hidden p-4 flex flex-col gap-1 desktop:h-0 min-h-[45vh] desktop:flex-auto relative`}
+                className={`scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md overflow-y-${info.length === 0 ? "hidden" : "scroll"
+                  } overflow-x-hidden p-4 flex flex-col gap-1 desktop:h-0 min-h-[45vh] desktop:flex-auto relative`}
               >
                 {info.length === 0 ? (
-                  <div className="absolute m-0 left-0 top-0 w-full h-full bg-white bg-opacity-80 flex flex-col justify-center items-center gap-6">
+                  <div className="absolute m-0 left-0 top-0 w-full h-full bg-white bg-opacity-80 flex flex-col justify-center items-center gap-6 z-10">
                     <img src={lamu} alt="" />
                     <h1 className="font-semibold desktop:text-[36px] tablet:text-[24px] text-[20px] tracking-widest">
                       候補名單為空
                     </h1>
-                  </div>) : undefined}
+                  </div>
+                ) : undefined}
                 {info.length === 0
                   ? [
                     "flex",
