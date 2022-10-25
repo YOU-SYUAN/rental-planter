@@ -129,7 +129,7 @@ const Rented = (props) => {
               {/* 刪除按鈕 */}
 
               <PopUpModal
-                  text={`是否刪除 ${props.rentedInfo.name} 的租借資料「${props.rentedInfo.plantName}」？`}
+                  text={`是否刪除 ${props.rentedInfo.name} 的租借資料「${props.rentedInfo.plantName || '尚未填寫'}」？`}
                   color="red"
                   show={showPopUpModal}
                   img={deleteIMG}
