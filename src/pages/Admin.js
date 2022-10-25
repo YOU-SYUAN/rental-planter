@@ -1,7 +1,7 @@
 import img1 from "../assets/img1.png";
 import img2 from "../assets/img2.png";
-import RentedCard from "../components/RentedCard";
-import Waitline from "../components/Waitline";
+import { RentedCard } from "../components/RentedCard";
+import { WaitLine } from "../components/WaitLine";
 import Rented from "../components/Rented";
 import { useState, useEffect, useRef } from "react";
 import {
@@ -161,8 +161,9 @@ const Admin = () => {
 
   return (
       //navbar
-      <div id="Bg" className="flex flex-col items-center">
+      <div id="Bg" className="flex flex-col items-center desktop:h-screen">
           <NavBar onLogoClick={() => {}} navItems={navBarItems} />
+          <div className="desktop:h-24 tablet:h-20 h-16 flex-none" />
           {/* 新增管理員成功通知 */}
           {/* 第二層 */}
           {/* 新增管理員modal */}
@@ -235,44 +236,42 @@ const Admin = () => {
                   </div>
               </div>
           </div>
-
-          <div id="content" className="desktop:mt-24 tablet:mt-20 mt-16">
-              <div className="grid grid-col-12 grid-flow-col">
-                  {/* 左半邊 */}
-                  <div className="grid col-end-5 mr-[120px]">
-                      <div>
-                          <h1 className="text-[28px] text-center ml-24">
-                              租借數量
-                          </h1>
-                          <div className="flex flex-row ml-[137px] mt-6">
-                              {data.map((item) => (
-                                  <RentedCard
-                                      key={item.state}
-                                      data={item}
-                                  ></RentedCard>
-                              ))}
-                          </div>
-                      </div>
-                      <div className="mt-[86px]">
-                          <h1 className="text-[28px] text-center  ml-24">
-                              候補名單
-                          </h1>
-                          <div className=" w-[552px] h-[520px] overflow-y-scroll overflow-x-hidden ml-[124px] mt-6 bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md ">
-                              {info.map((item) => (
-                                  <Waitline
-                                      key={item.index}
-                                      data={item}
-                                  ></Waitline>
-                              ))}
-                          </div>
-                          {/* <Waitline></Waitline> */}
+          <div
+              id="content"
+              className="w-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] grid grid-cols-12 gap-4 desktop:flex-auto"
+          >
+              {/* 左半邊 */}
+              <div className="desktop:col-span-5 col-span-12 flex flex-col">
+                  <div className="flex flex-col items-center justify-center gap-4 p-8 flex-none">
+                      <h1 className="text-[28px] text-center">租借數量</h1>
+                      <div className="flex desktop:flex-row tablet:flex-row flex-col w-full items-center justify-center gap-12">
+                          {data.map((item) => (
+                              <RentedCard
+                                  key={item.state}
+                                  data={item}
+                              ></RentedCard>
+                          ))}
                       </div>
                   </div>
-                  {/* 右半邊 */}
-                  <div className="grid col-start-6 col-span-7 flex-wrap mb-[53px]">
+                  <div className="p-8 flex flex-col gap-4 flex-auto">
+                      <h1 className="text-[28px] text-center flex-none">
+                          候補名單
+                      </h1>
+                      <div className="bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md overflow-y-scroll overflow-x-hidden p-4 flex flex-col gap-1 desktop:h-0 min-h-[45vh] desktop:flex-auto">
+                              {info.map((item) => (
+                                  <WaitLine
+                                      key={item.index}
+                                      data={item}
+                                  ></WaitLine>
+                              ))}
+                      </div>
+                  </div>
+              </div>
+              {/* 右半邊 */}
+              <div className="grid col-span-7 flex-wrap h-full">
                       <h1 className="text-[28px] text-center">已租資訊</h1>
-                      <div className="mt-6">
-                          <div className="w-[1000px] h-[841px] flex flex-wrap content-start flex-start overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md ">
+                      <div className="h-full">
+                          <div className="flex flex-wrap content-start flex-start overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md ">
                               {rentedInfo.map((item) => (
                                   <Rented
                                       key={item.id}
@@ -283,7 +282,6 @@ const Admin = () => {
                           </div>
                       </div>
                   </div>
-              </div>
           </div>
       </div>
   );
