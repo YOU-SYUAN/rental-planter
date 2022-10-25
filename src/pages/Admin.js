@@ -1,8 +1,8 @@
 import img1 from "../assets/img1.png";
 import img2 from "../assets/img2.png";
-import { RentedCard } from "../components/RentedCard";
-import { WaitLine } from "../components/WaitLine";
-import { Rented } from "../components/Rented";
+import { RentedCard } from "../components/admin/RentedCard";
+import { WaitLine } from "../components/admin/WaitLine";
+import { Rented } from "../components/admin/Rented";
 import { useState, useEffect, useRef } from "react";
 import {
   addAdmin,

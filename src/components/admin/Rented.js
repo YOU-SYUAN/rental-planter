@@ -1,12 +1,12 @@
-import emailIcon from "../assets/img3.png";
-import humidIMG from "../assets/humid.png";
-import lightIMG from "../assets/light.png";
-import deleteIMG from "../assets/deleteIcon.png";
-import plant1 from "../assets/card1.png";
+import emailIcon from "../../assets/img3.png";
+import humidIMG from "../../assets/humid.png";
+import lightIMG from "../../assets/light.png";
+import deleteIMG from "../../assets/deleteIcon.png";
+import plant1 from "../../assets/card1.png";
 import { useState, useEffect } from "react";
 import webSocket from "socket.io-client";
-import { deleteRented } from "../Api";
-import { PopUpModal } from "./modal/PopUpModal";
+import { deleteRented } from "../../Api";
+import { PopUpModal } from "../modal/PopUpModal";
 
 const Rented = (props) => {
   const [showPopUpModal, setShowPopUpModal] = useState(false);

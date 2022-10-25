@@ -1,4 +1,4 @@
-import emailIcon from "../assets/img3.png";
+import emailIcon from "../../assets/img3.png";
 
 const WaitLine = (props) => {
   return (
