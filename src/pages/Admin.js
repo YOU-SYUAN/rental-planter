@@ -4,6 +4,7 @@ import { RentedCard } from "../components/admin/RentedCard";
 import { WaitLine } from "../components/admin/WaitLine";
 import { WaitEmpty } from "../components/admin/WaitEmpty";
 import { Rented } from "../components/admin/Rented";
+import { RentedEmpty } from "../components/admin/RentedEmpty";
 import { useState, useEffect } from "react";
 import { Toast } from "../components/modal/Toast";
 import { AddAdminModal } from "../components/modal/AddAdminModal";
@@ -22,11 +23,7 @@ const Admin = () => {
   const url = window.location.href;
   const [amount, setAmount] = useState({ data: { remain: 0, rented: 0 } });
   const [waitList, setWaitList] = useState({ data: [] });
-  const [rentInfo, setRentInfo] = useState({
-    data: [
-      { id: 0, owner: { name: "", email: "" }, plant: null, container: null },
-    ],
-  });
+  const [rentInfo, setRentInfo] = useState({ data: [] });
 
   // 接收api資料
   useEffect(() => {
@@ -219,15 +216,39 @@ const Admin = () => {
             <h1 className="text-[28px] text-center flex-none">
               已租資訊
             </h1>
-            <div className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md grid desktop:grid-cols-2 grid-cols-1 auto-rows-min desktop:flex-auto desktop:h-0 desktop:gap-10 desktop:p-10 gap-4 p-4">
-              {rentedInfo.map((item) => (
-                <Rented
-                  key={item.id}
-                  rentedInfo={item}
-                  path={url}
-                  onDeleteRent={onDeleteRent}
-                ></Rented>
-              ))}
+            <div
+              className={`scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg overflow-y-${rentedInfo.length === 0 ? "hidden" : "scroll"
+                } overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md grid desktop:grid-cols-2 grid-cols-1 auto-rows-min desktop:flex-auto desktop:h-0 desktop:gap-10 desktop:p-10 gap-4 p-4 relative`}
+            >
+              {rentedInfo.length === 0 ? (
+                <div className="absolute m-0 left-0 top-0 w-full h-full bg-white bg-opacity-80 flex flex-col justify-center items-center gap-6 z-10">
+                  <img src={lamu} alt="" />
+                  <h1 className="font-semibold desktop:text-[36px] tablet:text-[24px] text-[20px] tracking-widest">
+                    還沒有人租借盆器
+                  </h1>
+                </div>
+              ) : undefined}
+              {rentedInfo.length === 0
+                ? [
+                  "flex",
+                  "flex",
+                  "flex",
+                  "desktop:flex hidden",
+                  "desktop:flex hidden",
+                  "desktop:flex hidden",
+                  "desktop:flex hidden",
+                  "desktop:flex hidden",
+                ].map((item, index) => (
+                  <RentedEmpty key={index} display={item} />
+                ))
+                : rentedInfo.map((item) => (
+                  <Rented
+                    key={item.id}
+                    rentedInfo={item}
+                    path={url}
+                    onDeleteRent={onDeleteRent}
+                  ></Rented>
+                ))}
             </div>
           </div>
         </div>
