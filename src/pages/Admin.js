@@ -2,7 +2,7 @@ import img1 from "../assets/img1.png";
 import img2 from "../assets/img2.png";
 import { RentedCard } from "../components/RentedCard";
 import { WaitLine } from "../components/WaitLine";
-import Rented from "../components/Rented";
+import { Rented } from "../components/Rented";
 import { useState, useEffect, useRef } from "react";
 import {
   addAdmin,
@@ -106,8 +106,8 @@ const Admin = () => {
       id: x.id,
       name: x.owner.name,
       email: x.owner.email,
-      plantName: x.plant !== null ? x.plant.name : "尚未填寫",
-      plantIMG: x.plant !== null ? x.plant.imgPath : undefined,
+      plantName: x.plant?.name,
+      plantIMG: x.plant?.imgPath,
       container: x.container,
     };
   });
@@ -253,35 +253,32 @@ const Admin = () => {
                           ))}
                       </div>
                   </div>
-                  <div className="p-8 flex flex-col gap-4 flex-auto">
+                  <div className="flex flex-col gap-4 p-8 flex-auto">
                       <h1 className="text-[28px] text-center flex-none">
                           候補名單
                       </h1>
                       <div className="bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md overflow-y-scroll overflow-x-hidden p-4 flex flex-col gap-1 desktop:h-0 min-h-[45vh] desktop:flex-auto">
-                              {info.map((item) => (
-                                  <WaitLine
-                                      key={item.index}
-                                      data={item}
-                                  ></WaitLine>
-                              ))}
+                          {info.map((item) => (
+                              <WaitLine key={item.index} data={item}></WaitLine>
+                          ))}
                       </div>
                   </div>
               </div>
               {/* 右半邊 */}
-              <div className="grid col-span-7 flex-wrap h-full">
-                      <h1 className="text-[28px] text-center">已租資訊</h1>
-                      <div className="h-full">
-                          <div className="flex flex-wrap content-start flex-start overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md ">
-                              {rentedInfo.map((item) => (
-                                  <Rented
-                                      key={item.id}
-                                      rentedInfo={item}
-                                      path={url}
-                                  ></Rented>
-                              ))}
-                          </div>
-                      </div>
+              <div className="flex flex-col desktop:col-span-7 col-span-12 h-full gap-4 p-8">
+                  <h1 className="text-[28px] text-center flex-none">
+                      已租資訊
+                  </h1>
+                  <div className=" overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md grid desktop:grid-cols-2 grid-cols-1 auto-rows-min desktop:flex-auto desktop:h-0 desktop:gap-10 desktop:p-10 gap-4 p-4">
+                      {rentedInfo.map((item) => (
+                          <Rented
+                              key={item.id}
+                              rentedInfo={item}
+                              path={url}
+                          ></Rented>
+                      ))}
                   </div>
+              </div>
           </div>
       </div>
   );

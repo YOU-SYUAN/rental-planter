@@ -80,56 +80,85 @@ const Rented = (props) => {
     ? `${process.env.REACT_APP_BACKEND_HOST || ""}/${props.rentedInfo.plantIMG}`
     : plant1;
   return (
-    <div className="w-[440px] h-[180px] border border-[#D7D7D7] rounded-3xl ml-10 mt-10">
-      <div className="flex flex-row">
-        <img
-          src={plantIMG}
-          className="w-20 h-20 rounded-full ml-[30px] mt-[27px]"
-          alt="plant"
-        ></img>
-        <div className="flex flex-wrap flex-col ml-6 mt-[52px] w-[220px]">
-          <label className="text-[24px]">{props.rentedInfo.name}</label>
-        </div>
-        <button
-          className="inline-flex items-center  text-sm h-6 mt-[15px] ml-4 font-medium text-center text-gray-900 bg-transparent rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-          onClick={() => (window.location = `mailto:${props.rentedInfo.email}`)}
-        >
-          <img src={emailIcon} className="w-6 h-6  " alt="email"></img>
-        </button>
+      <div className="border border-[#D7D7D7] bg-white shadow-lg rounded-3xl flex flex-col desktop:gap-4 tablet:gap-4 gap-2 relative desktop:px-8 tablet:px-8 px-4 py-4">
+          <div className="flex gap-4">
+              <img
+                  src={plantIMG}
+                  className="desktop:w-20 desktop:h-20 tablet:w-[72px] tablet:h-[72px] w-16 h-16 rounded-full flex-none"
+                  alt="plant"
+              ></img>
+              <div className="flex flex-col items-start justify-center flex-auto">
+                  <label className="desktop:text-[24px] tablet:text-[24px] text-[16px] w-full truncate">
+                      {props.rentedInfo.name}
+                  </label>
+                  <label
+                      className={`desktop:text-[20px] tablet:text-[20px] text-[14px] w-full truncate ${
+                          props.rentedInfo.plantName ? "" : "text-yellow-500"
+                      }`}
+                  >
+                      {props.rentedInfo.plantName || "尚未填寫"}
+                  </label>
+              </div>
+              <div className="inline-flex justify-center items-center bg-transparent flex-none">
+                  <button
+                      className=""
+                      onClick={() =>
+                          (window.location = `mailto:${props.rentedInfo.email}`)
+                      }
+                  >
+                      <img
+                          src={emailIcon}
+                          className="w-6 h-6"
+                          alt="email"
+                      ></img>
+                  </button>
+              </div>
+              <div className="inline-flex justify-center items-center bg-transparent flex-none">
+                  <button
+                      onClick={() => setShowPopUpModal(true)}
+                      className="inline-flex justify-center items-center bg-transparent flex-none hover:bg-gray-300 rounded-full"
+                  >
+                      <img
+                          src={deleteIMG}
+                          className="h-6 w-6"
+                          alt="delete"
+                      ></img>
+                  </button>
+              </div>
 
-        {/* 刪除按鈕 */}
-        <button
-          onClick={() => setShowPopUpModal(true)}
-          id="dropdownMenuIconButton"
-          data-dropdown-toggle="dropdownDots"
-          className="inline-flex items-center  text-sm h-6 mt-[15px] mx-4 font-medium text-center text-gray-900 bg-transparent rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-          type="button"
-        >
-          <img src={deleteIMG} className="h-6 w-6" alt="delete"></img>
-        </button>
+              {/* 刪除按鈕 */}
 
-        <PopUpModal
-          text={`是否刪除 ${props.rentedInfo.name} 的租借資料「${props.rentedInfo.plantName}」？`}
-          color="red"
-          show={showPopUpModal}
-          img={deleteIMG}
-          onConfirm={() => deleteInfo(props.rentedInfo.id)}
-          onCancel={() => setShowPopUpModal(false)}
-        />
+              <PopUpModal
+                  text={`是否刪除 ${props.rentedInfo.name} 的租借資料「${props.rentedInfo.plantName}」？`}
+                  color="red"
+                  show={showPopUpModal}
+                  img={deleteIMG}
+                  onConfirm={() => deleteInfo(props.rentedInfo.id)}
+                  onCancel={() => setShowPopUpModal(false)}
+              />
+          </div>
+          <div className="flex px-2 justify-center">
+              <div className="flex flex-none">
+                  <img
+                      src={humidIMG}
+                      className="h-[28px] w-[28px] mr-1"
+                      alt="humid"
+                  ></img>
+                  <label className="desktop:text-[20px] tablet:text-[20px] text-[16px]">
+                      {realtimeData.soilHumid}%
+                  </label>
+              </div>
+              <div className="flex flex-none">
+                  <img
+                      src={lightIMG}
+                      className="h-[28px] w-[28px] mr-1"
+                      alt="light"
+                  ></img>
+                  <label className="desktop:text-[20px] tablet:text-[20px] text-[16px]">{realtimeData.light} lx</label>
+              </div>
+          </div>
       </div>
-      <div className="ml-10 mt-[26px] flex flex-row">
-        <label className="text-[20px]">{props.rentedInfo.plantName}</label>
-        <div className="flex flex-row ml-[34px]">
-          <img src={humidIMG} className="h-[28px] w-[28px] mr-1" alt="humid"></img>
-          <label className="text-[20px]">{realtimeData.soilHumid}%</label>
-        </div>
-        <div className="flex flex-row ml-[19px]">
-          <img src={lightIMG} className="h-[28px] w-[28px] mr-1" alt="light"></img>
-          <label className="text-[20px]">{realtimeData.light} lx</label>
-        </div>
-      </div>
-    </div>
   );
 };
 
-export default Rented;
+export { Rented };
