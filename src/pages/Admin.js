@@ -13,7 +13,7 @@ import {
   getRentedInfo,
 } from "../Api.js";
 
-function Admin() {
+const Admin = () => {
   const url = window.location.href;
   const [errorMsgAdmin, setErrorMsgAdmin] = useState("");
   const [amount, setAmount] = useState({ data: { remain: 0, rented: 0 } });
@@ -23,6 +23,7 @@ function Admin() {
       { id: 0, owner: { name: "", email: "" }, plant: null, container: null },
     ],
   });
+
   // 接收api資料
   useEffect(() => {
     //get user info
@@ -30,61 +31,58 @@ function Admin() {
       .then((response) => {
         if (response.data.user.role !== 1) {
           window.location.replace("/");
-          return;
         }
+        getData();
       })
       .catch((error) => {
-        if (error.response.status == 401) {
-          console.log("狀態" + error.response.status);
+        if (error.response.status === 401) {
+          alert("登入狀態已逾期，請重新登入");
           window.location.replace("/");
         }
-        console.log(error);
       });
+  }, []);
 
+  const getData = () => {
     getRentedAmount()
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           setAmount(response.data);
-          console.log(response.data);
         }
       })
       .catch((error) => {
-        if (error.response.status == 401) {
-          console.log("狀態" + error.response.status);
+        if (error.response.status === 401) {
+          alert("登入狀態已逾期，請重新登入");
+          window.location.replace("/");
         }
-        console.log(error);
       });
 
     // 候補清單
     getWaitList()
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           setWaitlist(response.data);
-          console.log(response.data);
         }
       })
       .catch((error) => {
-        if (error.response.status == 401) {
-          console.log("狀態" + error.response.status);
-        } else if (error.response.status == 400) {
-          console.log("invalid header");
+        if (error.response.status === 401) {
+          alert("登入狀態已逾期，請重新登入");
+          window.location.replace("/");
         }
-        console.log(error);
       });
+
     getRentedInfo()
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           setRentInfo(response.data);
-          console.log(response.data);
         }
       })
       .catch((error) => {
-        if (error.response.status == 401) {
-          console.log("狀態" + error.response.status);
+        if (error.response.status === 401) {
+          alert("登入狀態已逾期，請重新登入");
+          window.location.replace("/");
         }
-        console.log(error);
       });
-  }, []);
+  };
 
   // 已租借清單
   const data = [
@@ -116,37 +114,37 @@ function Admin() {
   const addmodal = document.getElementById("authentication-modal");
   const name = useRef(undefined);
   const email = useRef(undefined);
-  async function add() {
+
+  const add = async () => {
     addAdmin({ name: name.current.value, email: email.current.value })
       .then((response) => {
         if (response.status === 200) {
           alert("新增成功");
-          setErrorMsgAdmin('');
+          setErrorMsgAdmin("");
           addmodal.style.display = "none";
+          name.clear();
+          email.clear();
         }
       })
       .catch((error) => {
         if (error.response.status === 400) {
-          console.log("狀態" + error.status);
           setErrorMsgAdmin("表單格式錯誤");
         } else if (error.response.status === 401) {
-          console.log("狀態" + error.status);
           alert("登入狀態已逾期，請重新登入");
           window.location.replace("/");
         } else if (error.response.status === 409) {
-          console.log("狀態" + error.status);
           setErrorMsgAdmin("使用者已存在");
         } else if (error.response.status === 500) {
-          console.log("狀態" + error.status);
           setErrorMsgAdmin("伺服器錯誤");
         }
       });
-  }
+  };
+
   const show = () => {
     console.log("show");
 
     addmodal.style.display =
-      addmodal.style.display == "none" ? "block" : "none";
+      addmodal.style.display === "none" ? "block" : "none";
   };
 
   const logout = () => {
@@ -154,6 +152,7 @@ function Admin() {
     console.log("logout");
     window.location.replace("/");
   };
+
   return (
     //navbar
     <div style={{ height: "100vh" }} id="Bg">
@@ -211,7 +210,7 @@ function Admin() {
                   </button>
                 </li>
                 <li>
-                  <a class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                  <button class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <svg
                       aria-hidden="true"
                       class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -228,7 +227,7 @@ function Admin() {
                     <span class="flex-1 ml-3 whitespace-nowrap">
                       新增管理員
                     </span>
-                  </a>
+                  </button>
                 </li>
 
                 <li>
@@ -390,6 +389,6 @@ function Admin() {
       </div>
     </div>
   );
-}
+};
 
 export default Admin;
