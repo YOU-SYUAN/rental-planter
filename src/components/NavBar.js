@@ -22,7 +22,7 @@ const NavBar = (props) => {
         x.onClick();
         setMobileMenuOpen(!mobileMenuOpen);
       },
-      icon: x.icon
+      isCurrent: x.isCurrent
     }));
   };
 
@@ -44,7 +44,7 @@ const NavBar = (props) => {
 
         <div className="hidden desktop:flex tablet:flex justify-center items-center  desktop:text-[20px] tablet:text-[16px] gap-8">
           {props.navItems.map((item) => (
-            <button onClick={item.onClick} key={item.title}>
+            <button className={item.isCurrent ? "text-blue-700 border-b-2 border-blue-700 box-content cursor-default" : ""} onClick={item.isCurrent ? ()=>{} : item.onClick} key={item.title}>
               {item.title}
             </button>
           ))}
@@ -67,8 +67,8 @@ const NavBar = (props) => {
           {navAddLogout(props.navItems).map((item) => (
             <li key={item.title}>
               <button
-                onClick={item.onClick}
-                className="w-full flex items-center p-2 text-base font-normal text-gray-900 rounded-lg hover:bg-gray-100"
+                onClick={item.isCurrent ? ()=>{} : item.onClick}
+                className={`w-full flex items-center p-2 text-base font-normal rounded-lg  ${item.isCurrent ? "text-white bg-blue-700 cursor-default" : "text-gray-900 hover:bg-gray-100"}`}
               >
                 <span className="ml-3">{item.title}</span>
               </button>
