@@ -65,8 +65,7 @@ const Rented = (props) => {
   useEffect(() => {
     setWs(
       webSocket(
-        process.env.REACT_APP_BACKEND_HOST ||
-          `http://${window.location.hostname}/`,
+        process.env.REACT_APP_BACKEND_HOST || `${window.location.origin}/`,
         {
           transports: ["websocket"],
         }
