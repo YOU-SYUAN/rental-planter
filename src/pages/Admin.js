@@ -146,7 +146,7 @@ const Admin = () => {
 
   return (
     //navbar
-    <div id="Bg" className="flex flex-col items-center desktop:h-screen">
+    <div id="admin" className="flex flex-col items-center desktop:h-screen">
       <NavBar onLogoClick={() => { }} navItems={navBarItems} />
       <div className="desktop:h-24 tablet:h-20 h-16 flex-none" />
       {/* 新增管理員modal */}
