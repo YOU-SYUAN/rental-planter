@@ -30,13 +30,13 @@ const App = () => {
     ],
   });
 
+
   useEffect(() => {
     //get user info
     getUser()
-      .then((response) => {
+      .then((response) => {        
         if (response.data.user.role !== 0) {
-          window.location.replace("/");
-          return;
+          
         }
         setUser(response.data);
         getOthers();
@@ -254,7 +254,7 @@ const App = () => {
           </div>
 
           <div class="flex items-center text-[20px] tablet:text-[16px] phone:hidden">
-            <button onClick={() => scrollToAnchor("introduce")} class="mr-8  ">
+            <button onClick={() => scrollToAnchor("introduce")} class="mr-8">
               系統介紹
             </button>
             <button onClick={() => scrollToAnchor("state")} class="mr-8">

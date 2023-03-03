@@ -55,7 +55,7 @@ const StatePlant = (props) => {
     registerDisconnectHandler();
   }
 
-  const plantIMG = `${process.env.REACT_APP_BACKEND_HOST || ""}/${
+  const plantIMG = `${
     props.rent.plant.imgPath
   }`;
 

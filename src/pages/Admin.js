@@ -260,6 +260,7 @@ const Admin = () => {
             </div>
 
             <div class="flex items-center text-[20px] tablet:text-[16px] phone:hidden">
+              <button class="mr-8  "><a href="./main">使用者畫面</a></button>
               <button class="mr-8  ">盆栽管理</button>
               <button
                 class="mr-8"
