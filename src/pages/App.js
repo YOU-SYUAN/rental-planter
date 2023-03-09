@@ -254,6 +254,9 @@ const App = () => {
           </div>
 
           <div class="flex items-center text-[20px] tablet:text-[16px] phone:hidden">
+            <button class="mr-8"><a href="./admin">
+              管理員視角
+            </a></button>
             <button onClick={() => scrollToAnchor("introduce")} class="mr-8">
               系統介紹
             </button>
