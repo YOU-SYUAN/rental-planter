@@ -1,5 +1,5 @@
 const ShowPlant = (props) => {
-  const plantIMG = `${
+  const plantIMG = `${process.env.REACT_APP_BACKEND_HOST || ""}/${
     props.data.plant.imgPath
   }`;
   //${process.env.REACT_APP_BACKEND_HOST || ""}/

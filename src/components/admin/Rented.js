@@ -74,7 +74,7 @@ const Rented = (props) => {
   }, []);
 
   const plantIMG = props.rentedInfo.plantIMG
-    ? `${props.rentedInfo.plantIMG}`
+    ? `${process.env.REACT_APP_BACKEND_HOST || ""}/${props.rentedInfo.plantIMG}`
     : plant1;
     //${process.env.REACT_APP_BACKEND_HOST || ""}/
   return (
