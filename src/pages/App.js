@@ -12,6 +12,7 @@ import { getUser, getOtherPlant, registerRent } from "../Api.js";
 
 const App = () => {
   const [informMsg, setInformMsg] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const url = window.location.href;
   const [user, setUser] = useState({
     user: {
@@ -34,9 +35,9 @@ const App = () => {
   useEffect(() => {
     //get user info
     getUser()
-      .then((response) => {        
+      .then((response) => {
         if (response.data.user.role !== 0) {
-          
+          setIsAdmin(true);
         }
         setUser(response.data);
         getOthers();
@@ -254,9 +255,7 @@ const App = () => {
           </div>
 
           <div class="flex items-center text-[20px] tablet:text-[16px] phone:hidden">
-            <button class="mr-8"><a href="./admin">
-              管理員視角
-            </a></button>
+            
             <button onClick={() => scrollToAnchor("introduce")} class="mr-8">
               系統介紹
             </button>
@@ -266,6 +265,15 @@ const App = () => {
             <button onClick={() => scrollToAnchor("showPlant")} class="">
               會員植物
             </button>
+            {
+              (isAdmin) ?
+                <button class="ml-8">
+                  <a href="./admin">
+                    後臺管理
+                  </a>
+                </button>
+                : null
+            }
           </div>
           <button
             onClick={logout}

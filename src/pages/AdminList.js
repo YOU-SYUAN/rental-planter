@@ -1,6 +1,6 @@
 import img1 from "../assets/img1.png";
 import img2 from "../assets/img2.png";
-import RentedCard from "../components/RentedCard";
+import AdminCard from "../components/AdminCard";
 import Waitline from "../components/Waitline";
 import Rented from "../components/Rented";
 import logo from "../assets/logo.png";
@@ -11,9 +11,10 @@ import {
   getRentedAmount,
   getWaitList,
   getRentedInfo,
+  getAdminList,
 } from "../Api.js";
 
-const Admin = () => {
+const AdminList = () => {
   const url = window.location.href;
   const [errorMsgAdmin, setErrorMsgAdmin] = useState("");
   const [amount, setAmount] = useState({ data: { remain: 0, rented: 0 } });
@@ -280,10 +281,10 @@ const Admin = () => {
             </div>
 
             <div class="flex items-center text-[20px] tablet:text-[16px] phone:hidden">
-              <button class="mr-8">盆栽管理</button>
               <button class="mr-8">
-                <a href="./admin/adminList">管理員列表</a>
+                <a href="/admin">盆栽管理</a>
               </button>
+              <button class="mr-8">管理員列表</button>
               <button class="mr-8">
                 <a href="/admin/userList">使用者列表</a>
               </button>
@@ -381,44 +382,54 @@ const Admin = () => {
           </div>
         </div>
       </div>
-
-      <div class="mt-[90px] ">
-        <div class="grid grid-col-12 grid-flow-col flex-wrap">
+      <div class="mt-[70px] ">
+        <div class="flex flex-col items-center">
           {/* 左半邊 */}
-          <div class="grid col-end-5 mr-[120px]">
-            <div>
-              <h1 class="text-[28px] text-center ml-24">租借數量</h1>
-              <div class="flex flex-row ml-[137px] mt-6">
-                {data.map((item) => (
-                  <RentedCard key={item.state} data={item}></RentedCard>
-                ))}
+          <h1 class="text-[28px] text-center">管理員列表</h1>
+          <div class=" w-[55vw] h-[540px] overflow-y-scroll overflow-x-hidden mt-6 bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md ">
+            <div class="max-w-3xl mt-8 mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+              <div class="flex flex-row p-8 px-10 justify-between">
+                {/* <div class=" flex flex-row justify-between"> */}
+                <img
+                  src={img1}
+                  class="w-32 rounded-xl shadow-md"
+                  alt="Admin"
+                />
+                <div class="w-96 flex flex-col">
+                  <div class="tracking-wide text-2xl text-black font-medium">
+                    管理員
+                  </div>
+                  <div class="h-20 mt-2 ml-2 flex flex-col text-gray-600 justify-between">
+                    <div>Email：zoe2636@kimo.com</div>
+                    <div>加入日期：2022-02-12</div>
+                    <div>上次登入時間：2002-02-12 12:12:00</div>
+                  </div>
+
+                </div>
+                {/* </div> */}
+                <div class="flex flex-col justify-end">
+                  <button class="py-1 px-2 bg-red-400 text-red-50 rounded-lg">刪除管理員</button>
+                </div>
               </div>
             </div>
-            <div class="mt-[86px]">
-              <h1 class="text-[28px] text-center  ml-24">候補名單</h1>
-              <div class=" w-[552px] h-[520px] overflow-y-scroll overflow-x-hidden ml-[124px] mt-6 bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md ">
-                {info.map((item) => (
-                  <Waitline key={item.index} data={item}></Waitline>
-                ))}
-              </div>
-              {/* <Waitline></Waitline> */}
-            </div>
+            
           </div>
+          {/* <Waitline></Waitline> */}
           {/* 右半邊 */}
-          <div class="grid col-start-6 col-span-7 flex-wrap mb-[53px]">
-            <h1 class="text-[28px] text-center">已租資訊</h1>
-            <div class="mt-6">
-              <div class="w-[1000px] h-[841px] flex flex-wrap content-start flex-start overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md ">
-                {rentedInfo.map((item) => (
-                  <Rented key={item.id} rentedInfo={item} path={url}></Rented>
-                ))}
-              </div>
-            </div>
-          </div>
+          {/* <div class="grid col-start-6 col-span-7 flex-wrap mb-[53px]">
+                        <h1 class="text-[28px] text-center">已租資訊</h1>
+                        <div class="mt-6">
+                            <div class="w-[1000px] h-[841px] flex flex-wrap content-start flex-start overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md ">
+                                {rentedInfo.map((item) => (
+                                    <Rented key={item.id} rentedInfo={item} path={url}></Rented>
+                                ))}
+                            </div>
+                        </div>
+                    </div> */}
         </div>
       </div>
     </div>
   );
 };
 
-export default Admin;
+export default AdminList;
