@@ -1,10 +1,14 @@
 import img1 from "../assets/img1.png";
 import img2 from "../assets/img2.png";
-import RentedCard from "../components/RentedCard";
-import Waitline from "../components/Waitline";
-import Rented from "../components/Rented";
 import logo from "../assets/logo.png";
+import { RentedCard } from "../components/admin/RentedCard";
+import { WaitLine } from "../components/admin/WaitLine";
+import { WaitEmpty } from "../components/admin/WaitEmpty";
+import { Rented } from "../components/admin/Rented";
+import { RentedEmpty } from "../components/admin/RentedEmpty";
 import { useState, useEffect, useRef } from "react";
+import { Toast } from "../components/modal/Toast";
+import { AddAdminModal } from "../components/modal/AddAdminModal";
 import {
   addAdmin,
   getUser,
@@ -12,17 +16,25 @@ import {
   getWaitList,
   getRentedInfo,
 } from "../Api.js";
+import { NavBar } from "../components/NavBar";
+import { EmptyStateCover } from "../components/EmptyStateCover";
 
 const Admin = () => {
+  const [waitListLoading, setWaitListLoading] = useState(true);
+  const [rentedLoading, setRentedLoading] = useState(true);
   const url = window.location.href;
   const [errorMsgAdmin, setErrorMsgAdmin] = useState("");
   const [amount, setAmount] = useState({ data: { remain: 0, rented: 0 } });
   const [waitlist, setWaitlist] = useState({ data: [] });
+  const [toastMsg, setToastMsg] = useState("");
+  const [showToast, setShowToast] = useState(false);
   const [rentInfo, setRentInfo] = useState({
     data: [
       { id: 0, owner: { name: "", email: "" }, plant: null, container: null },
     ],
   });
+
+
 
   // 接收api資料
   useEffect(() => {
@@ -61,6 +73,7 @@ const Admin = () => {
       .then((response) => {
         if (response.status === 200) {
           setWaitlist(response.data);
+          setWaitListLoading(false);
         }
       })
       .catch((error) => {
@@ -139,6 +152,14 @@ const Admin = () => {
         }
       });
   };
+
+  const onDeleteRent = () => {
+    setToastMsg("刪除成功！");
+    setShowToast(true);
+    setWaitListLoading(true);
+    setRentedLoading(true);
+    getData();
+  }
 
   const show = () => {
     console.log("show");
@@ -382,37 +403,96 @@ const Admin = () => {
         </div>
       </div>
 
-      <div class="mt-[90px] ">
-        <div class="grid grid-col-12 grid-flow-col flex-wrap">
+      <div
+        id="content"
+        className="w-full flex justify-center desktop:flex-auto relative"
+      >
+        <Toast
+          show={showToast}
+          onClose={() => setShowToast(false)}
+          type="success"
+          text={toastMsg}
+        />
+        <div className="w-full h-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] grid grid-cols-12 gap-4">
           {/* 左半邊 */}
-          <div class="grid col-end-5 mr-[120px]">
-            <div>
-              <h1 class="text-[28px] text-center ml-24">租借數量</h1>
-              <div class="flex flex-row ml-[137px] mt-6">
+          <div className="desktop:col-span-5 col-span-12 flex flex-col">
+            <div className="flex flex-col items-center justify-center gap-4 p-8 flex-none">
+              <h1 className="text-[28px] text-center">租借數量</h1>
+              <div className="flex desktop:flex-row tablet:flex-row flex-col w-full items-center justify-center gap-12">
                 {data.map((item) => (
-                  <RentedCard key={item.state} data={item}></RentedCard>
+                  <RentedCard
+                    key={item.state}
+                    data={item}
+                  ></RentedCard>
                 ))}
               </div>
             </div>
-            <div class="mt-[86px]">
-              <h1 class="text-[28px] text-center  ml-24">候補名單</h1>
-              <div class=" w-[552px] h-[520px] overflow-y-scroll overflow-x-hidden ml-[124px] mt-6 bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md ">
-                {info.map((item) => (
-                  <Waitline key={item.index} data={item}></Waitline>
-                ))}
+            <div className="flex flex-col gap-4 p-8 flex-auto">
+              <h1 className="text-[28px] text-center flex-none">
+                候補名單
+              </h1>
+              <div
+                className={`scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md overflow-y-${info.length === 0 ? "hidden" : "scroll"
+                  } overflow-x-hidden p-4 flex flex-col gap-1 desktop:h-0 min-h-[45vh] desktop:flex-auto relative`}
+              >
+                {info.length === 0 ? (
+                  <EmptyStateCover loading={waitListLoading} title="候補名單為空" />
+                ) : undefined}
+                {info.length === 0
+                  ? [
+                    "flex",
+                    "flex",
+                    "flex",
+                    "flex",
+                    "flex",
+                    "desktop:flex tablet:flex hidden",
+                    "desktop:flex tablet:flex hidden",
+                    "desktop:flex hidden",
+                  ].map((item, index) => (
+                    <WaitEmpty key={index} display={item} />
+                  ))
+                  : info.map((item) => (
+                    <WaitLine
+                      key={item.index}
+                      data={item}
+                    ></WaitLine>
+                  ))}
               </div>
-              {/* <Waitline></Waitline> */}
             </div>
           </div>
           {/* 右半邊 */}
-          <div class="grid col-start-6 col-span-7 flex-wrap mb-[53px]">
-            <h1 class="text-[28px] text-center">已租資訊</h1>
-            <div class="mt-6">
-              <div class="w-[1000px] h-[841px] flex flex-wrap content-start flex-start overflow-y-scroll overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md ">
-                {rentedInfo.map((item) => (
-                  <Rented key={item.id} rentedInfo={item} path={url}></Rented>
+          <div className="flex flex-col desktop:col-span-7 col-span-12 h-full gap-4 p-8">
+            <h1 className="text-[28px] text-center flex-none">
+              已租資訊
+            </h1>
+            <div
+              className={`scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg overflow-y-${rentedInfo.length === 0 ? "hidden" : "scroll"
+                } overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md grid desktop:grid-cols-2 grid-cols-1 auto-rows-min desktop:flex-auto desktop:h-0 desktop:gap-10 desktop:p-10 gap-4 p-4 relative`}
+            >
+              {rentedInfo.length === 0 ? (
+                <EmptyStateCover loading={rentedLoading} title="還沒有人租借盆器" />
+              ) : undefined}
+              {rentedInfo.length === 0
+                ? [
+                  "flex",
+                  "flex",
+                  "flex",
+                  "desktop:flex hidden",
+                  "desktop:flex hidden",
+                  "desktop:flex hidden",
+                  "desktop:flex hidden",
+                  "desktop:flex hidden",
+                ].map((item, index) => (
+                  <RentedEmpty key={index} display={item} />
+                ))
+                : rentedInfo.map((item) => (
+                  <Rented
+                    key={item.id}
+                    rentedInfo={item}
+                    path={url}
+                    onDeleteRent={onDeleteRent}
+                  ></Rented>
                 ))}
-              </div>
             </div>
           </div>
         </div>
