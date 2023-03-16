@@ -35,8 +35,8 @@ const Main = () => {
     getUser()
       .then((response) => {
         if (response.data.user.role !== 0) {
-          window.location.replace("/");
-          return;
+          // window.location.replace("/");
+          // return;
         }
         setUser(response.data);
         getOthers();

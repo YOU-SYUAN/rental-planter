@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import Main from "./pages/Main.js";
 import Admin from "./pages/Admin";
+import AdminList from "./pages/AdminList";
+import UserList from "./pages/UserList";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login.js";
@@ -19,6 +21,8 @@ root.render(
       <Route path="/" element={<Login />} />
       <Route path="/main" element={<Main />} />
       <Route path="/admin" element={<Admin />} />
+      <Route path="/admin/adminList" element={<AdminList />} />
+      <Route path="/admin/userList" element={<UserList />} />
       <Route path="/rentForm/:id" element={<RentForm />} />
       <Route path="/rent/edit/:id" element={<EditRent />} />
       <Route path="/register" element={<Register />} />
