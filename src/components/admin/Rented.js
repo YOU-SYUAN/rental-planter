@@ -76,6 +76,7 @@ const Rented = (props) => {
   const plantIMG = props.rentedInfo.plantIMG
     ? `${process.env.REACT_APP_BACKEND_HOST || ""}/${props.rentedInfo.plantIMG}`
     : plant1;
+    //${process.env.REACT_APP_BACKEND_HOST || ""}/
   return (
       <div className="border border-[#D7D7D7] bg-white shadow-lg rounded-3xl flex flex-col desktop:gap-4 tablet:gap-4 gap-2 relative desktop:px-8 tablet:px-8 px-4 py-4">
           <div className="flex gap-4">

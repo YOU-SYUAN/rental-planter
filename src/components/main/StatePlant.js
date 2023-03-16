@@ -58,7 +58,7 @@ const StatePlant = (props) => {
   const plantIMG = `${process.env.REACT_APP_BACKEND_HOST || ""}/${
     props.rent.plant.imgPath
   }`;
-
+// ${process.env.REACT_APP_BACKEND_HOST || ""}/
   return (
     <div className="w-full desktop:gap-30 gap-4 desktop:px-20 desktop:my-20 tablet:px-10 px-16 my-10 grid desktop:grid-cols-4 tablet:grid-cols-3 grid-cols-1">
       <div className="flex flex-col justify-center gap-8 desktop:p-0 tablet:p-0 px-8 col-span-1">

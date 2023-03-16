@@ -26,10 +26,10 @@ const RentForm = () => {
           window.location.replace(`/rentForm/${id}`);
         }
 
-        setCurrentImg(
-          `${process.env.REACT_APP_BACKEND_HOST || ""}/${rent.plant.imgPath}`
+        setCurrentImg(`${process.env.REACT_APP_BACKEND_HOST || ""}/${rent.plant.imgPath}`
         );
 
+          // ${process.env.REACT_APP_BACKEND_HOST || ""}/
         setMinHumid(parseInt(rent.plant.minHumid  ));
 
         setPlant({
