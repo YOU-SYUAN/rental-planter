@@ -8,6 +8,7 @@ import { RentedEmpty } from "../components/admin/RentedEmpty";
 import { useState, useEffect } from "react";
 import { Toast } from "../components/modal/Toast";
 import { AddAdminModal } from "../components/modal/AddAdminModal";
+import { useNavigate } from "react-router-dom";
 import {
   getUser,
   getRentedAmount,
@@ -27,6 +28,7 @@ const Admin = () => {
   const [amount, setAmount] = useState({ data: { remain: '--', rented: '--' } });
   const [waitList, setWaitList] = useState({ data: [] });
   const [rentInfo, setRentInfo] = useState({ data: [] });
+  let navigate = useNavigate();
 
   // 接收api資料
   useEffect(() => {
@@ -127,6 +129,18 @@ const Admin = () => {
     {
       title: "新增管理員",
       onClick: () => setShowAddAdminModal(true),
+    },
+    {
+      title: "管理員列表",
+      onClick: () => navigate("/admin/adminList"),
+    },
+    {
+      title: "使用者列表",
+      onClick: () => navigate("/admin/userList"),
+    },
+    {
+      title: "查看前臺",
+      onClick: () => navigate("/main"),
     },
   ];
 

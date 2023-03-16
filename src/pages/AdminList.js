@@ -289,7 +289,7 @@ const AdminList = () => {
                 <a href="/admin/userList">使用者列表</a>
               </button>
               <button class="mr-8">
-                <a href="./main">查看前臺</a>
+                <a href="/main">查看前臺</a>
               </button>
             </div>
             <div>

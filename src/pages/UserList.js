@@ -284,7 +284,7 @@ const UserList = () => {
                             <button class="mr-8"><a href="/admin">盆栽管理</a></button>
                             <button class="mr-8"><a href="/admin/adminList">管理員列表</a></button>
                             <button class="mr-8">使用者列表</button>
-                            <button class="mr-8"><a href="./main">查看前臺</a></button>
+                            <button class="mr-8"><a href="/main">查看前臺</a></button>
                         </div>
                         <div>
                             <button
