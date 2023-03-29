@@ -3,6 +3,7 @@ import plant from "../assets/plant.png";
 import StatePlant from "../components/main/StatePlant";
 import ShowPlant from "../components/main/ShowPlant";
 import lamu from "../assets/img1.png";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect, Fragment, useRef, } from "react";
 import { getUser, getOtherPlant, registerRent } from "../Api.js";
 import { Button } from "../components/Button";
@@ -26,15 +27,17 @@ const Main = () => {
   const url = window.location.href;
   const [user, setUser] = useState({ user: {}, rents: [] });
   const [otherPlant, setOtherPlant] = useState({ data: [] });
-
+  const [isAdmin, setIsAdmin] = useState(false);
   const [open, setOpen] = useState(true)
   const cancelButtonRef = useRef(null)
+  let navigate = useNavigate();
 
   useEffect(() => {
     //get user info
     getUser()
       .then((response) => {
         if (response.data.user.role !== 0) {
+          setIsAdmin(true);
           // window.location.replace("/");
           // return;
         }
@@ -111,6 +114,11 @@ const Main = () => {
       title: "會員植物",
       onClick: () => scrollToAnchor("showPlant")
     },
+    (isAdmin) ?
+      {
+        title: "後臺管理",
+        onClick: () => navigate("/admin"),
+      } : ""
   ];
 
   return (
@@ -140,7 +148,7 @@ const Main = () => {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg justify-end">
                   <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div className="sm:flex sm:items-start">
                       <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-yellow-100 sm:mx-0 sm:h-10 sm:w-10">
