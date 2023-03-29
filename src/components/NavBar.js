@@ -51,7 +51,7 @@ const NavBar = (props) => {
         </div>
         <button
           onClick={logout}
-          className="bg-[#8B8B8B] text-white w-[56px] h-10 rounded-lg hidden desktop:block tablet:block"
+          className="bg-[#8B8B8B] text-white w-[112px] h-[51px] rounded-xl hidden desktop:block tablet:block"
         >
           登出
         </button>

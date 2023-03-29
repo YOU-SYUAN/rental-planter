@@ -14,7 +14,7 @@ const colors = {
 const Button = (props) => (
   <button
     onClick={props.onClick}
-    className={`rounded-lg desktop:text-[18px] tablet:text-[16px] text-[12px] desktop:px-5 desktop:py-3 tablet:px-4 tablet:py-2 px-3 py-1.5 ${colors[props.color][props.disabled ? 'disabled': 'normal']} ${props.className}`}
+    className={`rounded-xl desktop:text-[18px] tablet:text-[16px] text-[12px] desktop:px-5 desktop:py-3 tablet:px-4 tablet:py-2 px-3 py-1.5 ${colors[props.color][props.disabled ? 'disabled': 'normal']} ${props.className}`}
     disabled={props.disabled}
   >
     {props.text}

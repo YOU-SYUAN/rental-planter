@@ -5,7 +5,7 @@ const ShowPlant = (props) => {
   //${process.env.REACT_APP_BACKEND_HOST || ""}/
   return (
     <div className="flex justify-center mx-auto">
-      <div className="rounded-2xl border border-[#E5E7EB] flex flex-col justify-start h-full items-center gap-6 p-8">
+      <div className="rounded-2xl w-96 border border-[#E5E7EB] flex flex-col justify-start h-full items-center gap-6 p-8">
         <img
           src={plantIMG}
           className="h-[240px] w-[240px] object-cover rounded-lg"
