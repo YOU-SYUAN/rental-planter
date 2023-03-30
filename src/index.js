@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./pages/App.js";
+import Main from "./pages/Main.js";
 import Admin from "./pages/Admin";
 import AdminList from "./pages/AdminList";
 import UserList from "./pages/UserList";
@@ -19,7 +19,7 @@ root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Login />} />
-      <Route path="/main" element={<App />} />
+      <Route path="/main" element={<Main />} />
       <Route path="/admin" element={<Admin />} />
       <Route path="/admin/adminList" element={<AdminList />} />
       <Route path="/admin/userList" element={<UserList />} />
