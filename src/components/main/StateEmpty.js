@@ -88,7 +88,7 @@ const StateEmpty = (props) => {
         <Button
           color="yellow"
           text="編輯"
-          className="absolute right-0 bottom-0 "
+          className="absolute right-0 bottom-0 w-[112px] h-[51px]"
           disabled={true}
         />
       </div>

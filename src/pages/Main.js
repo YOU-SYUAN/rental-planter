@@ -3,6 +3,7 @@ import plant from "../assets/plant.png";
 import StatePlant from "../components/main/StatePlant";
 import ShowPlant from "../components/main/ShowPlant";
 import lamu from "../assets/img1.png";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect, Fragment, useRef, } from "react";
 import { getUser, getOtherPlant, registerRent } from "../Api.js";
 import { Button } from "../components/Button";
@@ -26,15 +27,17 @@ const Main = () => {
   const url = window.location.href;
   const [user, setUser] = useState({ user: {}, rents: [] });
   const [otherPlant, setOtherPlant] = useState({ data: [] });
-
+  const [isAdmin, setIsAdmin] = useState(false);
   const [open, setOpen] = useState(true)
   const cancelButtonRef = useRef(null)
+  let navigate = useNavigate();
 
   useEffect(() => {
     //get user info
     getUser()
       .then((response) => {
         if (response.data.user.role !== 0) {
+          setIsAdmin(true);
           // window.location.replace("/");
           // return;
         }
@@ -111,6 +114,11 @@ const Main = () => {
       title: "會員植物",
       onClick: () => scrollToAnchor("showPlant")
     },
+    (isAdmin) ?
+      {
+        title: "後臺管理",
+        onClick: () => navigate("/admin"),
+      } : ""
   ];
 
   return (
