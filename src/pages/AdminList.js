@@ -1,10 +1,5 @@
 import lamu from "../assets/img1.png";
 import img2 from "../assets/img2.png";
-import { RentedCard } from "../components/admin/RentedCard";
-import { WaitLine } from "../components/admin/WaitLine";
-import { WaitEmpty } from "../components/admin/WaitEmpty";
-import { Rented } from "../components/admin/Rented";
-import { RentedEmpty } from "../components/admin/RentedEmpty";
 import { useState, useEffect } from "react";
 import { Toast } from "../components/modal/Toast";
 import { AddAdminModal } from "../components/modal/AddAdminModal";
@@ -16,9 +11,8 @@ import {
   getRentedInfo,
 } from "../Api.js";
 import { NavBar } from "../components/NavBar";
-import { EmptyStateCover } from "../components/EmptyStateCover";
 
-const Admin = () => {
+const AdminList = () => {
   const [waitListLoading, setWaitListLoading] = useState(true);
   const [rentedLoading, setRentedLoading] = useState(true);
   const [showAddAdminModal, setShowAddAdminModal] = useState(false);
@@ -123,8 +117,7 @@ const Admin = () => {
   const navBarItems = [
     {
       title: "盆栽管理",
-      onClick: () => { },
-      isCurrent: true,
+      onClick: () => navigate("/admin"),
     },
     {
       title: "新增管理員",
@@ -133,6 +126,7 @@ const Admin = () => {
     {
       title: "管理員列表",
       onClick: () => navigate("/admin/adminList"),
+      isCurrent: true,
     },
     {
       title: "使用者列表",
@@ -180,86 +174,32 @@ const Admin = () => {
           type="success"
           text={toastMsg}
         />
-        <div className="w-full h-full desktop:max-w-[1560px] tablet:max-w-[768px] max-w-[375px] grid grid-cols-12 gap-4">
-          {/* 左半邊 */}
-          <div className="desktop:col-span-5 col-span-12 flex flex-col">
-            <div className="flex flex-col items-center justify-center gap-4 p-8 flex-none">
-              <h1 className="text-[28px] text-center">租借數量</h1>
-              <div className="flex desktop:flex-row tablet:flex-row flex-col w-full items-center justify-center gap-12">
-                {data.map((item) => (
-                  <RentedCard
-                    key={item.state}
-                    data={item}
-                  ></RentedCard>
-                ))}
+
+        <div class="flex flex-col mt-8">
+          <h1 class="text-[28px] text-center">管理員列表</h1>
+          <div class=" w-[55vw] h-[540px] overflow-y-scroll overflow-x-hidden mt-6 bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md ">
+            <div class="max-w-3xl mt-8 mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+              <div class="flex flex-row p-8 px-10 justify-between">
+                <img
+                  src={lamu}
+                  class="w-32 rounded-xl shadow-md"
+                  alt="Admin"
+                />
+                <div class="w-96 flex flex-col">
+                  <div class="tracking-wide text-2xl text-black font-medium">
+                    管理員
+                  </div>
+                  <div class="h-20 mt-2 ml-2 flex flex-col text-gray-600 justify-between">
+                    <div>Email：zoe2636@kimo.com</div>
+                    <div>加入日期：2022-02-12</div>
+                    <div>上次登入時間：2002-02-12 12:12:00</div>
+                  </div>
+
+                </div>
+                <div class="flex flex-col justify-end">
+                  <button class="py-1 px-2 bg-red-400 text-red-50 rounded-lg">刪除管理員</button>
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col gap-4 p-8 flex-auto">
-              <h1 className="text-[28px] text-center flex-none">
-                候補名單
-              </h1>
-              <div
-                className={`scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg bg-[#F9F9F9] border border-[#F9F9F9] rounded-3xl shadow-md overflow-y-${info.length === 0 ? "hidden" : "scroll"
-                  } overflow-x-hidden p-4 flex flex-col gap-1 desktop:h-0 min-h-[45vh] desktop:flex-auto relative`}
-              >
-                {info.length === 0 ? (
-                  <EmptyStateCover loading={waitListLoading} title="候補名單為空" />
-                ) : undefined}
-                {info.length === 0
-                  ? [
-                    "flex",
-                    "flex",
-                    "flex",
-                    "flex",
-                    "flex",
-                    "desktop:flex tablet:flex hidden",
-                    "desktop:flex tablet:flex hidden",
-                    "desktop:flex hidden",
-                  ].map((item, index) => (
-                    <WaitEmpty key={index} display={item} />
-                  ))
-                  : info.map((item) => (
-                    <WaitLine
-                      key={item.index}
-                      data={item}
-                    ></WaitLine>
-                  ))}
-              </div>
-            </div>
-          </div>
-          {/* 右半邊 */}
-          <div className="flex flex-col desktop:col-span-7 col-span-12 h-full gap-4 p-8">
-            <h1 className="text-[28px] text-center flex-none">
-              已租資訊
-            </h1>
-            <div
-              className={`scrollbar-thin scrollbar-thumb-gray-300 scrollbar-thumb-rounded-lg overflow-y-${rentedInfo.length === 0 ? "hidden" : "scroll"
-                } overflow-x-hidden bg-[#F9F9F9] border-[#F9F9F9] rounded-3xl shadow-md grid desktop:grid-cols-2 grid-cols-1 auto-rows-min desktop:flex-auto desktop:h-0 desktop:gap-10 desktop:p-10 gap-4 p-4 relative`}
-            >
-              {rentedInfo.length === 0 ? (
-                <EmptyStateCover loading={rentedLoading} title="還沒有人租借盆器" />
-              ) : undefined}
-              {rentedInfo.length === 0
-                ? [
-                  "flex",
-                  "flex",
-                  "flex",
-                  "desktop:flex hidden",
-                  "desktop:flex hidden",
-                  "desktop:flex hidden",
-                  "desktop:flex hidden",
-                  "desktop:flex hidden",
-                ].map((item, index) => (
-                  <RentedEmpty key={index} display={item} />
-                ))
-                : rentedInfo.map((item) => (
-                  <Rented
-                    key={item.id}
-                    rentedInfo={item}
-                    path={url}
-                    onDeleteRent={onDeleteRent}
-                  ></Rented>
-                ))}
             </div>
           </div>
         </div>
@@ -268,4 +208,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default AdminList;
